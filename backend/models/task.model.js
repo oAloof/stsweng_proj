@@ -28,4 +28,12 @@ const taskSchema = new Schema(
 
 const Task = mongoose.model("Tasks", taskSchema);
 
+exports.getTask = (id) => {};
+
+exports.getTasks = () => {};
+
 exports.createTask = (obj) => {};
+
+exports.updateTask = (id, obj) => {};
+
+exports.deleteTask = (id) => {};

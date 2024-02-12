@@ -21,3 +21,7 @@ exports.createUser = (obj) => {
   const user = new User(obj);
   user.save();
 };
+
+exports.getUser = (id) => {}
+
+exports.getUsers = () => {}
