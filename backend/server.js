@@ -8,7 +8,7 @@ const app = express();
 
 // express app settings
 app.use(express.json()); //to parse json content
-app.use(express.urlencoded({ extended: true })); //to parse body from url
+app.use(express.urlencoded({ extended: true })); // to parse body from url
 
 app.use((req, res, next) => {
     console.log(req.path, req.method); // log the path and method of the request
