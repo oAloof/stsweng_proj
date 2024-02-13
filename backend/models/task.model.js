@@ -32,7 +32,15 @@ exports.getTask = (id) => {};
 
 exports.getTasks = () => {};
 
-exports.createTask = (obj) => {};
+exports.createTask = async (obj) => {
+  const task = new Task(obj);
+  try {
+    const result = await task.save();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 exports.updateTask = (id, obj) => {};
 
