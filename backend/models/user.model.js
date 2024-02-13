@@ -17,11 +17,8 @@ const userSchema = new Schema(
 
 const User = mongoose.model("Users", userSchema);
 
-exports.createUser = (obj) => {
-  const user = new User(obj);
-  user.save();
-};
+exports.createUser = (obj) => {};
 
-exports.getUser = (id) => {}
+exports.getUser = (id) => {};
 
-exports.getUsers = () => {}
+exports.getUsers = () => {};
