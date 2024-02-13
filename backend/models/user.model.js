@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const userSchema = new Schema(
   {
@@ -8,17 +8,26 @@ const userSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     password: { type: String, required: true },
-    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-);
+)
 
-const User = mongoose.model("Users", userSchema);
+const User = mongoose.model('Users', userSchema)
 
-exports.createUser = (obj) => {};
+exports.createUser = (obj) => {
+  // SAMPLE CODE: to create a user
+  const user = new User(obj)
+  try {
+    const result = user.save()
+    return result
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-exports.getUser = (id) => {};
+exports.getUser = (id) => {}
 
-exports.getUsers = () => {};
+exports.getUsers = () => {}
