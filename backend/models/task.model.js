@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const taskSchema = new Schema(
   {
@@ -10,28 +10,28 @@ const taskSchema = new Schema(
     description: { type: String },
     difficulty: {
       type: String,
-      enum: ["easy", "medium", "hard"],
-      default: "easy",
-      required: true,
+      enum: ['easy', 'medium', 'hard'],
+      default: 'easy',
+      required: true
     },
     deadline: { type: Date },
     status: {
       type: String,
-      enum: ["PLANNING", "TODO", "ONGOING", "COMPLETED", "DELAYED"],
-      default: "PLANNING",
-      required: true,
-    },
+      enum: ['PLANNING', 'TODO', 'ONGOING', 'COMPLETED', 'DELAYED'],
+      default: 'PLANNING',
+      required: true
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-);
+)
 
-const Task = mongoose.model("Tasks", taskSchema);
+const Task = mongoose.model('Tasks', taskSchema)
 
-exports.getTask = (id) => {};
+exports.getTask = (id) => {}
 
-exports.getTasks = () => {};
+exports.getTasks = () => {}
 
 /**
  * Creates a new task.
@@ -40,16 +40,16 @@ exports.getTasks = () => {};
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
 exports.createTask = async (obj) => {
-  const task = new Task(obj);
+  const task = new Task(obj)
   try {
-    const result = await task.save();
-    return { success: true, result };
+    const result = await task.save()
+    return { success: true, result }
   } catch (error) {
-    console.error(error);
-    return { success: false, error: "Failed to create task.", result: null };
+    console.error(error)
+    return { success: false, error: 'Failed to create task.', result: null }
   }
-};
+}
 
-exports.updateTask = (id, obj) => {};
+exports.updateTask = (id, obj) => {}
 
-exports.deleteTask = (id) => {};
+exports.deleteTask = (id) => {}
