@@ -17,15 +17,15 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    deadline: req.body.deadline,
+    deadline: req.body.deadline
   }
 
   try {
     const response = await TaskModel.createTask(task)
     if (!response.success) {
-      return res.status(400).send(response.error)
+      return res.status(400).send(response)
     }
-    res.status(201).send(response.result)
+    res.status(201).send(response)
   } catch (error) {
     console.error(error)
     res
