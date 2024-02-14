@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const taskSchema = new Schema(
   {
+    owner: { type: Schema.Types.ObjectId, ref: 'Users' },
     taskName: { type: String },
     category: { type: String },
     label: [String],
