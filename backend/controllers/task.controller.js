@@ -12,6 +12,7 @@ const TaskController = {}
 TaskController.create = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
+    owner: req.body.owner, // ! Change to the user ID of the logged-in user.
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
