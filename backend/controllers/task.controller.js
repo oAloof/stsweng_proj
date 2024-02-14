@@ -13,17 +13,17 @@
 
 // module.exports = TaskController
 
-const TaskModel = require('../models/task.model');
-const TaskController = {};
+const TaskModel = require('../models/task.model')
+const TaskController = {}
 
 TaskController.create = async (req, res) => {
   try {
-    const task = await TaskModel.createTask(req.body);
-    res.status(201).json(task);
+    const task = await TaskModel.createTask(req.body)
+    res.status(201).json(task)
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(err)
+    res.status(500).json({ error: 'Internal Server Error' })
   }
-};
+}
 
-module.exports = TaskController;
+module.exports = TaskController

@@ -1,7 +1,8 @@
-const taskModel = require('../models/task.model');
-const taskController = require('../controllers/task.controller');
+const jest = require('jest')
+const taskModel = require('../models/task.model')
+const taskController = require('../controllers/task.controller')
 
-/* Task CRUD Tests 
+/* Task CRUD Tests
     - create
     - view
     - edit
@@ -9,32 +10,32 @@ const taskController = require('../controllers/task.controller');
 */
 
 jest.mock('../models/task.model', () => ({
-    getTask: jest.fn(),
-    getTasks: jest.fn(),
-    createTask: jest.fn(),
-    updateTask: jest.fn(),
-    deleteTask: jest.fn()
-}));
+  getTask: jest.fn(),
+  getTasks: jest.fn(),
+  createTask: jest.fn(),
+  updateTask: jest.fn(),
+  deleteTask: jest.fn()
+}))
 
 describe('Task Controller', () => {
-    let req = {
-        body: {},
-        flash: jest.fn(),
-        // session: { user: 'Test Author' },
-    };
+  const req = {
+    body: {},
+    flash: jest.fn()
+    // session: { user: 'Test Author' },
+  }
 
-    let res = {
-        redirect: jest.fn(),
-        render: jest.fn(),
-        send: jest.fn(),
-        // status: jest.fn(),
-        // json: jest.fn(),
-      };
-      
-    let error = new Error({ error: 'Error message'});
+  const res = {
+    redirect: jest.fn(),
+    render: jest.fn(),
+    send: jest.fn()
+    // status: jest.fn(),
+    // json: jest.fn(),
+  }
 
-    //CREATE
-    /*Feature: Create Task in Inbox
+  const error = new Error({ error: 'Error message' })
+
+  // CREATE
+  /* Feature: Create Task in Inbox
 
     Scenario: User creates a task with all required details
         Given the user is on the create task page
@@ -56,48 +57,48 @@ describe('Task Controller', () => {
         When the user creates a task
         Then the task should immediately appear in the inbox as a tab
     */
-    describe('Create Task in Inbox', () => {
-        it('created task with all required details added to inbox', async () => {
-            //Arrange 
-            const taskDetails = {
-                taskName: 'sweng test cases',
-                category: 'sweng',
-                description: 'help',
-                difficulty: 'medium',
-                deadline: "2024-02-21",
-            };
-            req.body = taskDetails;
-            taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) //simulate success
+  describe('Create Task in Inbox', () => {
+    it('created task with all required details added to inbox', async () => {
+      // Arrange
+      const taskDetails = {
+        taskName: 'sweng test cases',
+        category: 'sweng',
+        description: 'help',
+        difficulty: 'medium',
+        deadline: '2024-02-21'
+      }
+      req.body = taskDetails
+      taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) // simulate success
 
-            //Act
-            await taskController.create(req, res);
-            
-            //Assert
-            expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails);
-            // expect(res.status).toHaveBeenCalledWith(201);
-            // expect(res.json).toHaveBeenCalledWith(taskDetails);
-        });
+      // Act
+      await taskController.create(req, res)
 
-        it('created task without all required details shows error msg', () => {
-            //Arrange 
-            //Act
-            //Assert
-        });
-        it('created task with additional optional details added to inbox', () => {
-            //Arrange 
-            //Act
-            //Assert
-        });
-        it('created task task immediately shows up in the inbox on create task', () => {
-            //Arrange 
-            //Act
-            //Assert
-        });
-    });
+      // Assert
+      expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
+      // expect(res.status).toHaveBeenCalledWith(201);
+      // expect(res.json).toHaveBeenCalledWith(taskDetails);
+    })
 
-    // NOT SURE IF ABLE TO IMPLEMENT TIS IN UNIT TEST?? PERO MMYA NA HEHE
-    //VIEW
-    /*Feature: View Task in Inbox
+    it('created task without all required details shows error msg', () => {
+      // Arrange
+      // Act
+      // Assert
+    })
+    it('created task with additional optional details added to inbox', () => {
+      // Arrange
+      // Act
+      // Assert
+    })
+    it('created task task immediately shows up in the inbox on create task', () => {
+      // Arrange
+      // Act
+      // Assert
+    })
+  })
+
+  // NOT SURE IF ABLE TO IMPLEMENT TIS IN UNIT TEST?? PERO MMYA NA HEHE
+  // VIEW
+  /* Feature: View Task in Inbox
 
     Scenario: User views a task by clicking on "view quest" option
         Given there are tasks available in the inbox
@@ -118,15 +119,15 @@ describe('Task Controller', () => {
         Given the user is viewing a task
         Then the user should confirm that the task view is visually appealing and meets the design expectations
     */
-    describe('View Task in Inbox', () => {
-        it('views a task by clicking on "view quest" option', () => {});
-        it('all details are viewable, even if the field is empty', () => {});
-        it('UI properly accounts for long inputs', () => {});
-        it('task view looks good', () => {});
-    });
+  describe('View Task in Inbox', () => {
+    it('views a task by clicking on "view quest" option', () => {})
+    it('all details are viewable, even if the field is empty', () => {})
+    it('UI properly accounts for long inputs', () => {})
+    it('task view looks good', () => {})
+  })
 
-    //EDIT
-    /*Feature: Edit Task in Inbox
+  // EDIT
+  /* Feature: Edit Task in Inbox
 
     Scenario: User edits a task by clicking on "edit quest" option
         Given there are tasks available in the inbox
@@ -153,16 +154,16 @@ describe('Task Controller', () => {
         When the user makes changes, clicks the save button, and exits the edit page
         Then the edited task details should be updated in the inbox
     */
-    describe('Edit Task in Inbox', () => {
-        it('edits a task by clicking on "edit quest" option', () => {});
-        it('popup appears when attempt to leave the edit page without saving', () => {});
-        it('display an error msg when the user removes input without replacement', () => {});
-        it('changes saved and the user can exit the edit page on clicking save button', () => {});
-        it('edited task details should be updated in the inbox on success', () => {});
-    });
+  describe('Edit Task in Inbox', () => {
+    it('edits a task by clicking on "edit quest" option', () => {})
+    it('popup appears when attempt to leave the edit page without saving', () => {})
+    it('display an error msg when the user removes input without replacement', () => {})
+    it('changes saved and the user can exit the edit page on clicking save button', () => {})
+    it('edited task details should be updated in the inbox on success', () => {})
+  })
 
-    //DELETE
-    /*Feature: Delete Task in Inbox
+  // DELETE
+  /* Feature: Delete Task in Inbox
 
     Scenario: User deletes a task by clicking on "delete quest" option
         Given there are tasks available in the inbox
@@ -189,12 +190,11 @@ describe('Task Controller', () => {
         When the user selects and confirms deletion for multiple tasks
         Then all selected tasks should be deleted, and their respective tabs and data removed from the inbox database
     */
-    describe('Delete Task in Inbox', () => {
-        it('prompted by clicking on "delete quest" option', () => {});
-        it('', () => {});
-        it('tab and data deleted on successful deletion', () => {});
-        it('', () => {});
-        it('(optional) respective tabs and data on multiple tasks deleted', () => {});
-    });
-
-});
+  describe('Delete Task in Inbox', () => {
+    it('prompted by clicking on "delete quest" option', () => {})
+    it('', () => {})
+    it('tab and data deleted on successful deletion', () => {})
+    it('', () => {})
+    it('(optional) respective tabs and data on multiple tasks deleted', () => {})
+  })
+})
