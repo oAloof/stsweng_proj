@@ -34,7 +34,7 @@ describe('Task Controller', () => {
     // json: jest.fn(),
   }
 
-  // const error = new Error({ error: 'Error message' })
+  const error = new Error({ error: 'Error message' })
 
   // CREATE
   /* Feature: Create Task in Inbox
@@ -60,7 +60,42 @@ describe('Task Controller', () => {
         Then the task should immediately appear in the inbox as a tab
     */
   describe('Create Task in Inbox', () => {
-    it('created task with all required details added to inbox', async () => {
+
+    it('created task with only title', async () => {
+      // Arrange
+      const taskDetails = {
+        taskName: 'sweng test cases',
+      }
+      req.body = taskDetails
+      taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) // simulate success
+
+      // Act
+      await taskController.create(req, res)
+
+      // Assert
+      expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
+
+    })
+
+    it('created task with additional optional details added to inbox', async () => {
+      // Arrange
+      const taskDetails = {
+        taskName: 'sweng test cases',
+        category: 'sweng',
+        difficulty: 'medium',
+      }
+      req.body = taskDetails
+      taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) // simulate success
+
+      // Act
+      await taskController.create(req, res)
+
+      // Assert
+      expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
+
+    })
+
+    it('created task with complete details added to inbox', async () => {
       // Arrange
       const taskDetails = {
         taskName: 'sweng test cases',
@@ -81,16 +116,27 @@ describe('Task Controller', () => {
       // expect(res.json).toHaveBeenCalledWith(taskDetails);
     })
 
-    // it('created task without all required details shows error msg', () => {
-    //   // Arrange
-    //   // Act
-    //   // Assert
-    // })
-    // it('created task with additional optional details added to inbox', () => {
-    //   // Arrange
-    //   // Act
-    //   // Assert
-    // })
+    it('created task without title shows error msg', async () => {
+      // Arrange
+      const taskDetails = {
+        category: 'sweng',
+        description: 'help',
+        difficulty: 'medium',
+        deadline: '2024-02-21'
+      }
+      req.body = taskDetails
+      taskModel.createTask.mockResolvedValue((data, callback) => callback(error, data)) // simulate failure
+
+      // Act
+      await taskController.create(req, res)
+
+      // Assert
+      expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
+
+    })
+    
+
+    //idk about this one
     // it('created task task immediately shows up in the inbox on create task', () => {
     //   // Arrange
     //   // Act
