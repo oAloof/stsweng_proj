@@ -60,11 +60,10 @@ describe('Task Controller', () => {
         Then the task should immediately appear in the inbox as a tab
     */
   describe('Create Task in Inbox', () => {
-
     it('created task with only title', async () => {
       // Arrange
       const taskDetails = {
-        taskName: 'sweng test cases',
+        taskName: 'sweng test cases'
       }
       req.body = taskDetails
       taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) // simulate success
@@ -74,7 +73,6 @@ describe('Task Controller', () => {
 
       // Assert
       expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
-
     })
 
     it('created task with additional optional details added to inbox', async () => {
@@ -82,7 +80,7 @@ describe('Task Controller', () => {
       const taskDetails = {
         taskName: 'sweng test cases',
         category: 'sweng',
-        difficulty: 'medium',
+        difficulty: 'medium'
       }
       req.body = taskDetails
       taskModel.createTask.mockResolvedValue((data, callback) => callback(null, data)) // simulate success
@@ -92,7 +90,6 @@ describe('Task Controller', () => {
 
       // Assert
       expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
-
     })
 
     it('created task with complete details added to inbox', async () => {
@@ -132,11 +129,9 @@ describe('Task Controller', () => {
 
       // Assert
       expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
-
     })
-    
 
-    //idk about this one
+    // idk about this one
     // it('created task task immediately shows up in the inbox on create task', () => {
     //   // Arrange
     //   // Act
