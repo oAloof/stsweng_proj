@@ -17,7 +17,9 @@
     "nodemon": "^3.0.3"
   },
   "devDependencies": {
-    "standard": "^17.1.0",
-    "jest": "^27.3.1"
+    "eslint": "^8.56.0",
+    "eslint-plugin-jest": "^27.9.0",
+    "jest": "^27.3.1",
+    "standard": "^17.1.0"
   }
 }

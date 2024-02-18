@@ -1,4 +1,6 @@
-const jest = require('jest')
+/* eslint-env jest */
+
+// const jest = require('jest')
 const taskModel = require('../models/task.model')
 const taskController = require('../controllers/task.controller')
 
@@ -32,7 +34,7 @@ describe('Task Controller', () => {
     // json: jest.fn(),
   }
 
-  const error = new Error({ error: 'Error message' })
+  // const error = new Error({ error: 'Error message' })
 
   // CREATE
   /* Feature: Create Task in Inbox
@@ -79,21 +81,21 @@ describe('Task Controller', () => {
       // expect(res.json).toHaveBeenCalledWith(taskDetails);
     })
 
-    it('created task without all required details shows error msg', () => {
-      // Arrange
-      // Act
-      // Assert
-    })
-    it('created task with additional optional details added to inbox', () => {
-      // Arrange
-      // Act
-      // Assert
-    })
-    it('created task task immediately shows up in the inbox on create task', () => {
-      // Arrange
-      // Act
-      // Assert
-    })
+    // it('created task without all required details shows error msg', () => {
+    //   // Arrange
+    //   // Act
+    //   // Assert
+    // })
+    // it('created task with additional optional details added to inbox', () => {
+    //   // Arrange
+    //   // Act
+    //   // Assert
+    // })
+    // it('created task task immediately shows up in the inbox on create task', () => {
+    //   // Arrange
+    //   // Act
+    //   // Assert
+    // })
   })
 
   // NOT SURE IF ABLE TO IMPLEMENT TIS IN UNIT TEST?? PERO MMYA NA HEHE
@@ -119,12 +121,12 @@ describe('Task Controller', () => {
         Given the user is viewing a task
         Then the user should confirm that the task view is visually appealing and meets the design expectations
     */
-  describe('View Task in Inbox', () => {
-    it('views a task by clicking on "view quest" option', () => {})
-    it('all details are viewable, even if the field is empty', () => {})
-    it('UI properly accounts for long inputs', () => {})
-    it('task view looks good', () => {})
-  })
+  //   describe('View Task in Inbox', () => {
+  //     it('views a task by clicking on "view quest" option', () => {})
+  //     it('all details are viewable, even if the field is empty', () => {})
+  //     it('UI properly accounts for long inputs', () => {})
+  //     it('task view looks good', () => {})
+  //   })
 
   // EDIT
   /* Feature: Edit Task in Inbox
@@ -154,13 +156,13 @@ describe('Task Controller', () => {
         When the user makes changes, clicks the save button, and exits the edit page
         Then the edited task details should be updated in the inbox
     */
-  describe('Edit Task in Inbox', () => {
-    it('edits a task by clicking on "edit quest" option', () => {})
-    it('popup appears when attempt to leave the edit page without saving', () => {})
-    it('display an error msg when the user removes input without replacement', () => {})
-    it('changes saved and the user can exit the edit page on clicking save button', () => {})
-    it('edited task details should be updated in the inbox on success', () => {})
-  })
+  //   describe('Edit Task in Inbox', () => {
+  //     it('edits a task by clicking on "edit quest" option', () => {})
+  //     it('popup appears when attempt to leave the edit page without saving', () => {})
+  //     it('display an error msg when the user removes input without replacement', () => {})
+  //     it('changes saved and the user can exit the edit page on clicking save button', () => {})
+  //     it('edited task details should be updated in the inbox on success', () => {})
+  //   })
 
   // DELETE
   /* Feature: Delete Task in Inbox
@@ -190,11 +192,11 @@ describe('Task Controller', () => {
         When the user selects and confirms deletion for multiple tasks
         Then all selected tasks should be deleted, and their respective tabs and data removed from the inbox database
     */
-  describe('Delete Task in Inbox', () => {
-    it('prompted by clicking on "delete quest" option', () => {})
-    it('', () => {})
-    it('tab and data deleted on successful deletion', () => {})
-    it('', () => {})
-    it('(optional) respective tabs and data on multiple tasks deleted', () => {})
-  })
+//   describe('Delete Task in Inbox', () => {
+//     it('prompted by clicking on "delete quest" option', () => {})
+//     it('', () => {})
+//     it('tab and data deleted on successful deletion', () => {})
+//     it('', () => {})
+//     it('(optional) respective tabs and data on multiple tasks deleted', () => {})
+//   })
 })
