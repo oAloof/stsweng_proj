@@ -2,17 +2,38 @@ const TaskModel = require('../models/task.model')
 const TaskController = {}
 
 /**
+ * Retrieves all tasks of user.
+ * 
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @returns The tasks of the user.
+ */
+TaskController.getTasks = async (req, res) => {
+  try {
+    const response = await TaskModel.getTasks(req.body.userId) // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(200).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to get tasks.', result: null })
+  }
+}
+
+/**
  * Creates a new task.
  *
  * @param {Object} req The request object.
  * @param {Object} res The response object.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
- * @async
  */
 TaskController.create = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
-    owner: req.body.owner, // ! Change to the user ID of the logged-in user.
+    owner: req.body.owner, // ! // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,

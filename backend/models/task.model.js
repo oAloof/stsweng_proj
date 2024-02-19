@@ -32,7 +32,21 @@ const Task = mongoose.model('Tasks', taskSchema)
 
 exports.getTask = (id) => {}
 
-exports.getTasks = () => {}
+/**
+ * Retrieves all tasks of user.
+ * 
+ * @param {String} userId The user ID.
+ * @returns The tasks of the user.
+ */
+exports.getTasks = async (userId) => {
+  try {
+    const tasks = await Task.find({ owner: userId })
+    return { success: true, result: tasks }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to get tasks.', result: null }
+  }
+}
 
 /**
  * Creates a new task.
