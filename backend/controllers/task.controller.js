@@ -33,7 +33,7 @@ TaskController.getTasks = async (req, res) => {
 TaskController.create = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
-    owner: req.body.owner, // ! // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
+    owner: req.body.owner, // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
