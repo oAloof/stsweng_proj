@@ -3,6 +3,9 @@ require('dotenv').config() // loads the environment variables from .env file
 const express = require('express')
 const mongoose = require('mongoose')
 
+// Route Imports
+const taskRoutes = require('./routes/taskRoutes')
+
 // express app
 const app = express()
 
@@ -20,6 +23,7 @@ app.use((req, res, next) => {
  * API routes go here
  *
  */
+app.use('/api/tasks', taskRoutes)
 
 // connect to the mongoDB database
 mongoose
