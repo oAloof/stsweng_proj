@@ -34,7 +34,7 @@ exports.getTask = (id) => {}
 
 /**
  * Retrieves all tasks of user.
- * 
+ *
  * @param {String} userId The user ID.
  * @returns The tasks of the user.
  */
