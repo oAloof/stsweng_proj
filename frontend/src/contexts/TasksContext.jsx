@@ -10,9 +10,8 @@ export const TasksProvider = ({ children }) => {
    * Fetches all tasks of a user from the server.
    *
    * @returns A promise that resolves to the tasks of the user. When the promise is
-   *          parsed as a JSON object, it should contain a success flag,
-   *          an error message if the operation failed, and the tasks of the user.
-   *
+   *          parsed as a JSON object, it should contain a success flag, an error 
+   *          message if the operation failed, and the tasks of the user.
    */
   const fetchAllTasks = async () => {
     try {
