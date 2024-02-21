@@ -3,7 +3,7 @@ const TaskController = {}
 
 /**
  * Retrieves all tasks of user.
- * 
+ *
  * @param {Object} req The request object.
  * @param {Object} res The response object.
  * @returns The tasks of the user.
