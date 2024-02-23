@@ -18,9 +18,9 @@ const options = {
 
 module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(options, async (jwt_payload, done) => {
+    new JwtStrategy(options, async (jwtPayload, done) => {
       try {
-        const user = await UserModel.getUser(jwt_payload.id)
+        const user = await UserModel.getUser(jwtPayload.id)
         if (user) {
           return done(null, user)
         } else {
