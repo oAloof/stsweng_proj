@@ -5,8 +5,8 @@ const UserModel = require('../models/user.model')
 
 const cookieExtractor = (req) => {
   let token = null
-  if (req && req.SignedCookies) {
-    token = req.SignedCookies.jwtToken
+  if (req && req.signedCookies) {
+    token = req.signedCookies.jwtToken
   }
   return token
 }
