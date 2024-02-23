@@ -3,14 +3,17 @@ import { DndContext } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import Droppable from "./components/DroppableCol";
 import Draggable from "./components/DraggableTask";
-
+import CategoryInput from "./components/CategoryInput";
+import SubLabel from "./components/SubLabelInput";
+// import DatePicker from "./components/DatePicker";
+import Difficulty from "./components/DifficultyInput";
 export default function App() {
   const containers = ["mon", "tues", "wed", "thu", "fri", "sat", "sun"];
   const [parent, setParent] = useState(null);
 
   const [taskList, setTaskList] = useState({
-    Mon: ["Learn React", "Learn dnd-kit", "Learn Typescript"],
-    Tue: ["Learn CSS"],
+    Mon: ["Hello", "Tasks", "Tasks"],
+    Tue: ["Tasks"],
     Wed: [],
     Thu: [],
     Fri: [],
@@ -103,15 +106,21 @@ export default function App() {
   };
 
   return (
-    <DndContext onDragEnd={dragEndHandler} onDragOver={dragOverHandler}>
-      <main className="">
-        <h1>Multi Sortable List</h1>
-        <section className="flex flex-row">
-          {Object.keys(taskList).map((key) => (
-            <Droppable key={key} title={key} tasks={taskList[key]} />
-          ))}
-        </section>
-      </main>
-    </DndContext>
+    // <DndContext onDragEnd={dragEndHandler} onDragOver={dragOverHandler}>
+    //   <main className="">
+    //     <h1>Multi Sortable List</h1>
+    //     <section className="flex flex-row">
+    //       {Object.keys(taskList).map((key) => (
+    //         <Droppable key={key} title={key} tasks={taskList[key]} />
+    //       ))}
+    //     </section>
+    //   </main>
+    // </DndContext>
+    <div className="w-1/4">
+      <CategoryInput />
+      <SubLabel />
+      {/* <DatePicker /> */}
+      <Difficulty />
+    </div>
   );
 }
