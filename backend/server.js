@@ -2,6 +2,7 @@ require('dotenv').config() // loads the environment variables from .env file
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 
 // Route Imports
 const taskRoutes = require('./routes/taskRoutes')
@@ -12,17 +13,14 @@ const app = express()
 // express app settings
 app.use(express.json()) // to parse json content
 app.use(express.urlencoded({ extended: true })) // to parse body from url
+app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
 
 app.use((req, res, next) => {
   console.log(req.path, req.method) // log the path and method of the request
   next()
 })
 
-/**
- *
- * API routes go here
- *
- */
+// Routes
 app.use('/api/tasks', taskRoutes)
 
 // connect to the mongoDB database
