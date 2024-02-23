@@ -26,7 +26,11 @@ app.use((req, res, next) => {
 })
 
 // Routes
-app.use('/api/tasks', taskRoutes)
+app.use(
+  '/api/tasks',
+  passport.authenticate('jwt', { session: false }),
+  taskRoutes
+)
 
 // connect to the mongoDB database
 mongoose
