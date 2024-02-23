@@ -107,41 +107,41 @@
 //     })
 //   })
 
-//   // // VIEW ALL
-//   //   describe('View Task in Inbox', () => {
-//   //     it('succesfully viewed all tasks', async () => {
-//   //       // Arrange
-//   //     const taskDetails = {
-//   //       owner: 'sir roge',
-//   //       taskName: 'sweng test cases',
-//   //       category: 'sweng',
-//   //       label: 'elp',
-//   //       description: 'help',
-//   //       difficulty: 'medium',
-//   //       deadline: '2024-02-21'
-//   //     }
-//   //     req.body = taskDetails
-//   //     taskModel.getTasks.mockImplementation((data, callback) => callback(null, data)) // simulate success
+//   // VIEW ALL
+//     describe('View Task in Inbox', () => {
+//       it('succesfully viewed all tasks', async () => {
+//         // Arrange
+//       const taskDetails = {
+//         owner: 'sir roge',
+//         taskName: 'sweng test cases',
+//         category: 'sweng',
+//         label: 'elp',
+//         description: 'help',
+//         difficulty: 'medium',
+//         deadline: '2024-02-21'
+//       }
+//       req.body = taskDetails
+//       taskModel.getTasks.mockImplementation((data, callback) => callback(null, data)) // simulate success
 
-//   //     // Act
-//   //     await taskController.create(req, res)
+//       // Act
+//       await taskController.create(req, res)
 
-//   //     // Assert
-//   //     expect(taskModel.getTasks).toHaveBeenCalledWith(taskDetails)
-//   //     })
+//       // Assert
+//       expect(taskModel.getTasks).toHaveBeenCalledWith(taskDetails)
+//       })
 
-//   //     it('failed to view all tasks', () => {})
-//   //   })
+//       it('failed to view all tasks', () => {})
+//     })
 
-//   // // EDIT
-//   //   describe('Edit Task in Inbox', () => {
-//   //     it('successfully edited a task', () => {})
-//   //     it('failed to edit a task', () => {})
-//   //   })
+//   // EDIT
+//     describe('Edit Task in Inbox', () => {
+//       it('successfully edited a task', () => {})
+//       it('failed to edit a task', () => {})
+//     })
 
-//   // // DELETE
-//   // describe('Delete Task in Inbox', () => {
-//   //   it('successfully deleted task', () => {})
-//   //   it('failed to delete task', () => {})
-//   //   })
+//   // DELETE
+//   describe('Delete Task in Inbox', () => {
+//     it('successfully deleted task', () => {})
+//     it('failed to delete task', () => {})
+//     })
 // })
