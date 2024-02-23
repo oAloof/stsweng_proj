@@ -22,6 +22,12 @@ export const TasksProvider = ({ children }) => {
           'Content-Type': 'application/json'
         }
       })
+
+      if (!response.ok) {
+        // Handle HTTP errors, e.g., 401 Unauthorized, 403 Forbidden
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
       const data = await response.json()
       if (!data.success) {
         console.error(data.error)
@@ -31,6 +37,7 @@ export const TasksProvider = ({ children }) => {
       setIsLoadingTasks(false)
     } catch (err) {
       console.error(err)
+      setIsLoadingTasks(false)
     }
   }
 
