@@ -4,9 +4,9 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 const UserModel = require('../models/user.model')
 
 const cookieExtractor = (req) => {
-  var token = null
+  let token = null
   if (req && req.SignedCookies) {
-    token = req.SignedCookies['jwtToken']
+    token = req.SignedCookies.jwtToken
   }
   return token
 }
