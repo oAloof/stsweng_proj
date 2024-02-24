@@ -107,15 +107,91 @@ describe('Task Controller', () => {
     })
   })
 
-  // // VIEW ALL
-  // describe('View Task in Inbox', () => {
-  //   it('succesfully viewed all tasks', async () => {
+  // VIEW ALL
+  describe('View Task in Inbox', () => {
+    it('success: VIEW ALL Task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: 'asdf',
+        userId: '1234567'
+      }
 
-  //   })
+      const tasks = [
+        {
+          owner: '1234567',
+          taskName: '1 test cases',
+          category: 'sweng',
+          label: 'elp',
+          description: 'help',
+          difficulty: 'medium',
+          deadline: '2024-02-21'
+        },
+        {
+          owner: '1234567',
+          taskName: '2 test cases',
+          category: 'sweng',
+          label: 'elp',
+          description: 'help',
+          difficulty: 'medium',
+          deadline: '2024-02-21'
+        },
+        {
+          owner: '1234567',
+          taskName: '3 test cases',
+          category: 'sweng',
+          label: 'elp',
+          description: 'help',
+          difficulty: 'medium',
+          deadline: '2024-02-21'
+        },
+        {
+          owner: '1234567',
+          taskName: '4 test cases',
+          category: 'sweng',
+          label: 'elp',
+          description: 'help',
+          difficulty: 'medium',
+          deadline: '2024-02-21'
+        },
+      ];
+      
 
-  //   it('failed to view all tasks', () => {})
+      const success = { success: true, result: tasks }
 
-  // })
+      req.body.userId = userDetails.userId
+
+      taskModel.getTasks.mockImplementation(() => success) // Simulate success
+
+      // Act
+      await taskController.getTasks(req, res)
+
+      // Assert
+      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
+      expect(res.status(201).send).toHaveBeenCalledWith(success)
+    })
+
+    it('failure: VIEW ALL task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: 'asdf',
+        userId: '1234567'
+      }
+
+      req.body.userId = userDetails.userId
+
+      const error = { success: false, error: 'Failed to get tasks.', result: null }
+
+      taskModel.getTasks.mockImplementation(() => error)
+
+      // Act
+      await taskController.getTasks(req, res)
+
+      // Assert
+      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
+      expect(res.status(500).send).toHaveBeenCalledWith(error)
+    })
+
+  })
 
   // EDIT
     describe('Edit Task in Inbox', () => {
