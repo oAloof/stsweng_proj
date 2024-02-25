@@ -58,6 +58,8 @@ TaskController.create = async (req, res) => {
 
 TaskController.update = async (req, res) => {}
 
+TaskController.delete = async (req, res) => {}
+
 module.exports = TaskController
 
 // const TaskModel = require('../models/task.model')

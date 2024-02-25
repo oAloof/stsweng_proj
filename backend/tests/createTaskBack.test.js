@@ -152,9 +152,8 @@ describe('Task Controller', () => {
           description: 'help',
           difficulty: 'medium',
           deadline: '2024-02-21'
-        },
-      ];
-      
+        }
+      ]
 
       const success = { success: true, result: tasks }
 
@@ -190,73 +189,72 @@ describe('Task Controller', () => {
       expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
     })
-
   })
 
   // EDIT
-    describe('Edit Task in Inbox', () => {
-      it('success: EDIT Task', async () => {
-        // Arrange
-        const userDetails = {
-          _id: '1234567'
-        }
-        const taskDetails = {
-          owner: '1234567',
-          taskName: 'sweng test cases',
-          category: 'sweng',
-          label: 'elp',
-          description: 'help',
-          difficulty: 'medium',
-          deadline: '2024-02-21'
-        }
+  describe('Edit Task in Inbox', () => {
+    it('success: EDIT Task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: '1234567'
+      }
+      const taskDetails = {
+        owner: '1234567',
+        taskName: 'sweng test cases',
+        category: 'sweng',
+        label: 'elp',
+        description: 'help',
+        difficulty: 'medium',
+        deadline: '2024-02-21'
+      }
 
-        const success = { success: true, result: taskDetails }
+      const success = { success: true, result: taskDetails }
 
-        // req.user._id = taskDetails.owner
-        req.user = userDetails
-        req.body = taskDetails
+      // req.user._id = taskDetails.owner
+      req.user = userDetails
+      req.body = taskDetails
 
-        taskModel.updateTask.mockImplementation((id, taskDetails) => success) // Simulate success
+      taskModel.updateTask.mockImplementation((id, taskDetails) => success) // Simulate success
 
-        // Act
-        await taskController.update(req, res)
+      // Act
+      await taskController.update(req, res)
 
-        // Assert
-        expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
-        expect(res.status(201).send).toHaveBeenCalledWith(success)
-      })
-
-      it('failure: EDIT task', async () => {
-        // Arrange
-        const userDetails = {
-          _id: '1234567'
-        }
-        const taskDetails = {
-          owner: '1234567',
-          taskName: 'sweng test cases',
-          category: 'sweng',
-          label: 'elp',
-          description: 'help',
-          difficulty: 'medium',
-          deadline: '2024-02-21'
-        }
-
-        // req.user._id = taskDetails.owner
-        req.user = userDetails
-        req.body = taskDetails
-
-        const error = { success: false, error: 'Failed to edit task.', result: null }
-
-        taskModel.updateTask.mockImplementation(() => error)
-
-        // Act
-        await taskController.update(req, res)
-
-        // Assert
-        expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
-        expect(res.status(500).send).toHaveBeenCalledWith(error)
-      })
+      // Assert
+      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
+      expect(res.status(201).send).toHaveBeenCalledWith(success)
     })
+
+    it('failure: EDIT task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: '1234567'
+      }
+      const taskDetails = {
+        owner: '1234567',
+        taskName: 'sweng test cases',
+        category: 'sweng',
+        label: 'elp',
+        description: 'help',
+        difficulty: 'medium',
+        deadline: '2024-02-21'
+      }
+
+      // req.user._id = taskDetails.owner
+      req.user = userDetails
+      req.body = taskDetails
+
+      const error = { success: false, error: 'Failed to edit task.', result: null }
+
+      taskModel.updateTask.mockImplementation(() => error)
+
+      // Act
+      await taskController.update(req, res)
+
+      // Assert
+      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
+      expect(res.status(500).send).toHaveBeenCalledWith(error)
+    })
+  })
 
 // // DELETE
 // describe('Delete Task in Inbox', () => {
