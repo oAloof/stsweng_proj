@@ -1,0 +1,48 @@
+.react-tagsinput {
+  
+  background-color: theme('colors.ghost-white');
+  overflow: hidden;
+  border-radius: 0.5rem;
+  min-height: 44px;
+ 
+} 
+
+.react-tagsinput--focused {
+  border-width: 2px;
+  border-style: solid;
+}
+
+.react-tagsinput-tag {
+  background-color: theme('colors.base-100');
+  border-radius: 2px;
+
+  color: theme('colors.secondary-content');
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 5px;
+  padding: 5px;
+  
+}
+  
+.react-tagsinput-remove {
+  cursor: pointer;
+  font-weight: bold;
+  
+}
+
+.react-tagsinput-tag a::before {
+  content: "×";
+  padding-left: 4px;
+}
+  
+.react-tagsinput-input {
+  background: transparent;
+  font-size: 13px;
+  font-weight: 400;
+  outline: none;
+  color: theme('colors.neutral');
+  padding: 4px;
+}
+
+ 

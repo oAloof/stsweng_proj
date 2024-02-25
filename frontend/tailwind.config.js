@@ -2,7 +2,7 @@
 export default {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    'node_modules/flowbite-react/lib/esm/**/*.js'
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js"
   ],
   theme: {
     colors: {
@@ -20,5 +20,8 @@ export default {
   plugins: [
     require("daisyui")
   ],
+  daisyui : {
+    themes: ["cyberpunk"]
+  }
 }
 

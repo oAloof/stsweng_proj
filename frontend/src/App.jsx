@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { DndContext } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import Droppable from "./components/DroppableCol";
 import Draggable from "./components/DraggableTask";
-import CategoryInput from "./components/CategoryInput";
-import SubLabel from "./components/SubLabelInput";
-// import DatePicker from "./components/DatePicker";
 import Difficulty from "./components/DifficultyInput";
+import TagTest from "./components/tagtest";
+import Form from "./components/Form";
+import DatePicker from "./components/DatePicker";
+
 export default function App() {
   const containers = ["mon", "tues", "wed", "thu", "fri", "sat", "sun"];
   const [parent, setParent] = useState(null);
@@ -116,11 +117,16 @@ export default function App() {
     //     </section>
     //   </main>
     // </DndContext>
-    <div className="w-1/4">
-      <CategoryInput />
-      <SubLabel />
-      {/* <DatePicker /> */}
-      <Difficulty />
+    // <div className="w-1/4">
+    //   <CategoryInput />
+    //   <SubLabel />
+    //   <Difficulty />
+    //   <DatePicker />
+    //   <TagTest />
+    //   <TitleInput />
+    // </div>
+    <div>
+      <Form />
     </div>
   );
 }
