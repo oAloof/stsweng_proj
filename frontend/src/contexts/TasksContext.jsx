@@ -4,7 +4,7 @@ export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
-  const [tasks, setTasks] = useState([])
+  const [setTasks] = useState([])
 
   /**
    * Fetches all tasks of a user from the server.
