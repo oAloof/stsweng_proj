@@ -24,15 +24,15 @@ TaskController.getTasks = async (req, res) => {
 }
 
 /**
- * Retrieves one task based on its ID 
+ * Retrieves one task based on its ID
  *
  * @param {Object} req The request object.
  * @param {Object} res The response object.
  * @returns The task with the specific task ID
  */
- TaskController.getOneTask = async (req, res) => {
+TaskController.getOneTask = async (req, res) => {
   try {
-    const response = await TaskModel.getOneTask(req.body.taskId) 
+    const response = await TaskModel.getOneTask(req.body.taskId)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -86,7 +86,7 @@ TaskController.create = async (req, res) => {
  * @param {Object} res The response object.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
- TaskController.update = async (req, res) => {
+TaskController.update = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
     owner: req.user._id,
@@ -100,7 +100,7 @@ TaskController.create = async (req, res) => {
   }
 
   try {
-    const response = await TaskModel.updateTask(taskId, task)
+    const response = await TaskModel.updateTask(req.body.taskId, task)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -113,17 +113,16 @@ TaskController.create = async (req, res) => {
   }
 }
 
-
 /**
- * Deletes one task based on its ID 
+ * Deletes one task based on its ID
  *
  * @param {Object} req The request object.
  * @param {Object} res The response object.
  * @returns The task deleted.
  */
- TaskController.delete = async (req, res) => {
+TaskController.delete = async (req, res) => {
   try {
-    const response = await TaskModel.deleteTask(req.body.taskId) 
+    const response = await TaskModel.deleteTask(req.body.taskId)
     if (!response.success) {
       return res.status(400).send(response)
     }

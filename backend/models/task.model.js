@@ -50,12 +50,12 @@ exports.getTasks = async (userId) => {
 }
 
 /**
- * Retrieves one task based on its ID 
+ * Retrieves one task based on its ID
  *
  * @param {String} taskId The task Id.
  * @returns The task with the specific task Id.
  */
- exports.getOneTask = async (taskId) => {
+exports.getOneTask = async (taskId) => {
   try {
     const tasks = await Task.findById(taskId)
     return { success: true, result: tasks }
@@ -88,7 +88,7 @@ exports.createTask = async (obj) => {
  * @param {Object} obj The task object, containing properties like 'title', 'description', and 'status'.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
- exports.updateTask = async (taskId, obj) => {
+exports.updateTask = async (taskId, obj) => {
   try {
     const result = await Task.findByIdAndUpdate(taskId, obj)
     return { success: true, result }
@@ -99,12 +99,12 @@ exports.createTask = async (obj) => {
 }
 
 /**
- * Deletes one task based on its ID 
+ * Deletes one task based on its ID
  *
  * @param {String} taskId The task Id.
  * @returns The task with the specific task Id.
  */
- exports.deleteTask = async (taskId) => {
+exports.deleteTask = async (taskId) => {
   try {
     const tasks = await Task.findByIdAndRemove(taskId)
     return { success: true, result: tasks }
