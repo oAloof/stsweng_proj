@@ -45,7 +45,9 @@ export const TasksProvider = ({ children }) => {
     fetchAllTasks()
   }, [])
 
-  const contextValue = {}
+  const contextValue = {
+    isLoadingTasks
+  }
 
   return (
     <TasksContext.Provider value={contextValue}>
