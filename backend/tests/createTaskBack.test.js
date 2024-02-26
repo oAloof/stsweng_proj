@@ -108,7 +108,7 @@ describe('Task Controller', () => {
   })
 
   // VIEW ALL
-  describe('View Task in Inbox', () => {
+  describe('View All Task in Inbox', () => {
     it('success: VIEW ALL Task', async () => {
       // Arrange
       const userDetails = {
@@ -256,9 +256,42 @@ describe('Task Controller', () => {
     })
   })
 
-// // DELETE
-// describe('Delete Task in Inbox', () => {
-//   it('successfully deleted task', () => {})
-//   it('failed to delete task', () => {})
-//   })
+  // DELETE
+  describe('Delete Task in Inbox', () => {
+    it('success: DELETE Task', async () => {
+    // Arrange
+      const taskID = '978230ahsdfaosd'
+
+      const success = { success: true }
+
+      req.body = taskID
+
+      taskModel.deleteTask.mockImplementation((id) => success) // Simulate success
+
+      // Act
+      await taskController.delete(req, res)
+
+      // Assert
+      expect(taskModel.deleteTask).toHaveBeenCalledWith(taskID)
+      expect(res.status(201).send).toHaveBeenCalledWith(success)
+    })
+
+    it('failure: DELETE task', async () => {
+    // Arrange
+      const taskID = '978230ahsdfaosd'
+
+      req.body = taskID
+
+      const error = { success: false, error: 'Failed to delete task.', result: null }
+
+      taskModel.deleteTask.mockImplementation(() => error)
+
+      // Act
+      await taskController.delete(req, res)
+
+      // Assert
+      expect(taskModel.deleteTask).toHaveBeenCalledWith(taskID)
+      expect(res.status(500).send).toHaveBeenCalledWith(error)
+    })
+  })
 })
