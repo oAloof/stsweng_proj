@@ -103,6 +103,7 @@ export default function App() {
     });
   };
 
+function App () {
   return (
     // <DndContext onDragEnd={dragEndHandler} onDragOver={dragOverHandler}>
     //   <main className="">
