@@ -1,0 +1,20 @@
+/* .ql-container.ql-snow:focus-within,
+.ql-toolbar.ql-snow:focus-within {
+    border-width: medium;        
+} */
+
+
+
+
+.ql-toolbar.ql-snow {
+    border-color: theme('colors.neutral');
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+
+.ql-container.ql-snow {
+    border-color: theme('colors.neutral');
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}

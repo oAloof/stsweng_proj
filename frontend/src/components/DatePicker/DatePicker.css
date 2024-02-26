@@ -1,0 +1,13 @@
+/* DatePicker.css */
+.react-datepicker-wrapper {
+  z-index: 1000; /* Ensure the date picker is above other elements */
+}
+  
+.react-datepicker {
+  background-color: theme('colors.base-100'); /* Change the background color of the date picker modal */
+}
+  
+
+.react-datepicker__header {
+ background-color: theme('colors.base-200');
+}
