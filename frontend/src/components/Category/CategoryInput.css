@@ -1,9 +1,9 @@
-.react-tagsinput {
-  
+.react-tagsinput { 
   background-color: theme('colors.ghost-white');
   overflow: hidden;
   border-radius: 0.5rem;
   min-height: 44px;
+
  
 } 
 
@@ -20,7 +20,7 @@
   display: inline-block;
   font-size: 13px;
   font-weight: 400;
-  margin: 5px;
+  margin: 7px;
   padding: 5px;
   
 }
@@ -43,6 +43,7 @@
   outline: none;
   color: theme('colors.neutral');
   padding: 4px;
+  margin: 7px;
 }
 
  

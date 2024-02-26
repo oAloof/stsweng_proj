@@ -3,10 +3,7 @@ import { DndContext } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import Droppable from "./components/DroppableCol";
 import Draggable from "./components/DraggableTask";
-import Difficulty from "./components/DifficultyInput";
-import TagTest from "./components/tagtest";
 import Form from "./components/Form";
-import DatePicker from "./components/DatePicker";
 
 export default function App() {
   const containers = ["mon", "tues", "wed", "thu", "fri", "sat", "sun"];
@@ -124,9 +121,26 @@ export default function App() {
     //   <DatePicker />
     //   <TagTest />
     //   <TitleInput />
+    //<Form />
     // </div>
-    <div>
-      <Form />
-    </div>
+    <>
+      <button
+        className="btn"
+        onClick={() => document.getElementById("my_modal_4").showModal()}
+      >
+        open modal
+      </button>
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box min-w-max">
+          <Form />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
   );
 }

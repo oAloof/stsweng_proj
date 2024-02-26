@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import TitleInput from "./TitleInput";
-import TextEditor from "./TextEditor";
-import DatePicker from "./DatePicker";
+import TextEditor from "./TextEditor/TextEditor";
+import DatePicker from "./DatePicker/DatePicker";
 import TimeStamp from "./TimeStamp";
 import SubLabel from "./Category/SubLabel/SubLabelInput";
 import Category from "./Category/CategoryInput";
@@ -50,16 +50,35 @@ export default function Form() {
           </div>
         </div>
 
-        <div>
-          <Category />
+        <div className="m-5">
+          <Controller
+            render={({ field }) => (
+              <Category onChange={field.onChange} value={field.value} />
+            )}
+            name="Category"
+            control={control}
+            defaultValue={[]}
+          />
 
-          <SubLabel />
+          <Controller
+            render={({ field }) => (
+              <SubLabel onChange={field.onChange} value={field.value} />
+            )}
+            name="Sub-Label"
+            control={control}
+            defaultValue={[]}
+          />
 
-          <Difficulty />
+          <Controller
+            render={({ field }) => <Difficulty onChange={field.onChange} />}
+            name="rating"
+            control={control}
+            defaultValue={0.5}
+          />
         </div>
       </div>
 
-      <input type="submit" />
+      <input className="btn" type="submit" />
     </form>
   );
 }

@@ -11,8 +11,15 @@ export default function TimeStamp() {
 
   return (
     <>
-      <div>Written On</div>
-      <div>{currentDate}</div>
+      <div>
+        <div>Written On</div>
+        <input
+          type="text"
+          placeholder={currentDate}
+          className="input input-bordered w-full max-w-xs"
+          disabled
+        />
+      </div>
     </>
   );
   //YYYY-MM-DD
