@@ -1,7 +1,7 @@
-import React from "react";
-import { useDroppable } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
-import DraggableTask from "./DraggableTask";
+import React from 'react'
+import { useDroppable } from '@dnd-kit/core'
+import { SortableContext } from '@dnd-kit/sortable'
+import DraggableTask from './DraggableTask'
 // function Droppable(props) {
 //   const { isOver, setNodeRef } = useDroppable({
 //     id: props.id,
@@ -23,16 +23,16 @@ import DraggableTask from "./DraggableTask";
 // }
 
 const DroppableCol = (props) => {
-  const { setNodeRef } = useDroppable({ id: props.title });
+  const { setNodeRef } = useDroppable({ id: props.title })
 
   return (
-    <article className="">
+    <article className=''>
       <h1>{props.title}</h1>
-      <div className="" />
+      <div className='' />
       <SortableContext id={props.title} items={props.tasks}>
         <ul
           ref={setNodeRef}
-          className="border-2 bg-light-orange m-5 p-5 min-h-screen"
+          className='border-2 bg-light-orange m-5 p-5 min-h-screen'
         >
           {props.tasks.map((task) => (
             <DraggableTask key={task} title={task} />
@@ -40,7 +40,7 @@ const DroppableCol = (props) => {
         </ul>
       </SortableContext>
     </article>
-  );
-};
+  )
+}
 
-export default DroppableCol;
+export default DroppableCol
