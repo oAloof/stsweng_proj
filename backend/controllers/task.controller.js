@@ -10,7 +10,7 @@ const TaskController = {}
  */
 TaskController.getTasks = async (req, res) => {
   try {
-    const response = await TaskModel.getTasks(req.body.userId) // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
+    const response = await TaskModel.getTasks(req.user._id) 
     if (!response.success) {
       return res.status(400).send(response)
     }
