@@ -7,20 +7,30 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form () {
+export default function Form() {
   const { handleSubmit, control } = useForm()
   const onSubmit = (data) => console.log(data)
   // watch input value by passing the name of it
+  function getDate() {
+    const date = new Date()
+    const result = date.toISOString().split('T')[0]
+    return result
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className=''>
-      <div className='flex'>
-        <div className='m-5'>
-          <div className='flex space-x-4'>
-            <TimeStamp />
+    <form onSubmit={handleSubmit(onSubmit)} className="">
+      <div className="flex">
+        <div className="m-5">
+          <div className="flex space-x-4">
+            <Controller
+              name="start"
+              control={control}
+              render={() => <TimeStamp date={getDate()} />}
+              defaultValue={getDate()}
+            />
 
             <Controller
-              name='dueDate'
+              name="dueDate"
               control={control}
               defaultValue={null} // Set default value to null
               render={({ field }) => (
@@ -34,28 +44,28 @@ export default function Form () {
               render={({ field }) => (
                 <TitleInput onChange={field.onChange} value={field.value} />
               )}
-              name='Title'
+              name="title"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
 
             <Controller
               render={({ field }) => (
                 <TextEditor onChange={field.onChange} value={field.value} />
               )}
-              name='Description'
+              name="Description"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
           </div>
         </div>
 
-        <div className='m-5'>
+        <div className="m-5">
           <Controller
             render={({ field }) => (
               <Category onChange={field.onChange} value={field.value} />
             )}
-            name='Category'
+            name="Category"
             control={control}
             defaultValue={[]}
           />
@@ -64,21 +74,21 @@ export default function Form () {
             render={({ field }) => (
               <SubLabel onChange={field.onChange} value={field.value} />
             )}
-            name='Sub-Label'
+            name="Sub-Label"
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name='rating'
+            name="rating"
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <input className='btn' type='submit' />
+      <input className="btn absolute mt-6" type="submit" />
     </form>
   )
 }
