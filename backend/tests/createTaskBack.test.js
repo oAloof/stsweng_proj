@@ -205,14 +205,15 @@ describe('Task Controller', () => {
         label: 'elp',
         description: 'help',
         difficulty: 'medium',
+        exp: 500,
         deadline: '2024-02-21'
       }
 
       const success = { success: true, result: taskDetails }
 
-      // req.user._id = taskDetails.owner
       req.user = userDetails
       req.body = taskDetails
+      // req.body.taskId = taskID
 
       taskModel.updateTask.mockImplementation((id, taskDetails) => success) // Simulate success
 
@@ -220,7 +221,7 @@ describe('Task Controller', () => {
       await taskController.update(req, res)
 
       // Assert
-      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
+      expect(taskModel.updateTask).toHaveBeenCalledWith(req.body.taskId, taskDetails)
       expect(res.status(201).send).toHaveBeenCalledWith(success)
     })
 
@@ -236,12 +237,13 @@ describe('Task Controller', () => {
         label: 'elp',
         description: 'help',
         difficulty: 'medium',
+        exp: 500,
         deadline: '2024-02-21'
       }
 
-      // req.user._id = taskDetails.owner
       req.user = userDetails
       req.body = taskDetails
+      // req.body.taskId = taskID
 
       const error = { success: false, error: 'Failed to edit task.', result: null }
 
@@ -251,7 +253,7 @@ describe('Task Controller', () => {
       await taskController.update(req, res)
 
       // Assert
-      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails.owner, taskDetails)
+      expect(taskModel.updateTask).toHaveBeenCalledWith(req.body.taskId, taskDetails)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
     })
   })
@@ -264,7 +266,7 @@ describe('Task Controller', () => {
 
       const success = { success: true }
 
-      req.body = taskID
+      req.body.taskId = taskID
 
       taskModel.deleteTask.mockImplementation((id) => success) // Simulate success
 
@@ -280,7 +282,7 @@ describe('Task Controller', () => {
     // Arrange
       const taskID = '978230ahsdfaosd'
 
-      req.body = taskID
+      req.body.taskId = taskID
 
       const error = { success: false, error: 'Failed to delete task.', result: null }
 
