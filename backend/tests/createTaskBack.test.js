@@ -193,16 +193,10 @@ describe('Task Controller', () => {
     })
   })
 
-  //-------------------------------------------------------
   // VIEW ALL
   describe('View One Task in Inbox', () => {
     it('success: VIEW ONE Task', async () => {
       // Arrange
-      const userDetails = {
-        _id: 'asdf',
-        userId: '1234567'
-      }
-
       const taskDetails = {
         owner: '1234567',
         taskName: 'sweng test cases',
@@ -232,10 +226,6 @@ describe('Task Controller', () => {
 
     it('failure: VIEW ONE task', async () => {
       // Arrange
-      const userDetails = {
-        _id: 'asdf',
-        userId: '1234567'
-      }
 
       const taskID = '978230ahsdfaosd'
 
@@ -254,8 +244,6 @@ describe('Task Controller', () => {
       expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
-
-  //====================================================
 
   // EDIT
   describe('Edit Task in Inbox', () => {
