@@ -24,6 +24,28 @@ TaskController.getTasks = async (req, res) => {
 }
 
 /**
+ * Retrieves one task based on its ID
+ *
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @returns The task with the specific task ID
+ */
+TaskController.getOneTask = async (req, res) => {
+  try {
+    const response = await TaskModel.getOneTask(req.body.taskId)
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(200).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to get task.', result: null })
+  }
+}
+
+/**
  * Creates a new task.
  *
  * @param {Object} req The request object.
@@ -39,6 +61,7 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
+    exp: req.body.exp,
     deadline: req.body.deadline
   }
 
@@ -56,9 +79,61 @@ TaskController.create = async (req, res) => {
   }
 }
 
-TaskController.update = async (req, res) => {}
+/**
+ * Updates an existing task.
+ *
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @returns The result of the operation, a success flag, and an error message if operation failed.
+ */
+TaskController.update = async (req, res) => {
+  // Parse the request body and extract the task properties into another object.
+  const task = {
+    owner: req.user._id,
+    taskName: req.body.taskName,
+    category: req.body.category,
+    label: req.body.label,
+    description: req.body.description,
+    difficulty: req.body.difficulty,
+    exp: req.body.exp,
+    deadline: req.body.deadline
+  }
 
-TaskController.delete = async (req, res) => {}
+  try {
+    const response = await TaskModel.updateTask(req.body.taskId, task)
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(201).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to update task.', result: null })
+  }
+}
+
+/**
+ * Deletes one task based on its ID
+ *
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @returns The task deleted.
+ */
+TaskController.delete = async (req, res) => {
+  try {
+    const response = await TaskModel.deleteTask(req.body.taskId)
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(200).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to delete task.', result: null })
+  }
+}
 
 module.exports = TaskController
 
