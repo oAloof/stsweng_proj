@@ -1,4 +1,5 @@
 const TaskModel = require('../models/task.model')
+const expCalc = require('../calculators/generalCalculator')
 const TaskController = {}
 
 /**
@@ -61,7 +62,7 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: req.body.exp,
+    exp: expCalc(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
@@ -95,7 +96,7 @@ TaskController.update = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: req.body.exp,
+    exp: expCalc(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
