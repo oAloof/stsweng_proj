@@ -10,7 +10,7 @@ const TaskController = {}
  */
 TaskController.getTasks = async (req, res) => {
   try {
-    const response = await TaskModel.getTasks(req.user._id) 
+    const response = await TaskModel.getTasks(req.user._id)
     if (!response.success) {
       return res.status(400).send(response)
     }

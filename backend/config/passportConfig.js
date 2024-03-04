@@ -5,7 +5,7 @@ const UserModel = require('../models/user.model')
 
 /**
  * Extracts the JWT token from the signed cookies in the request object.
- * 
+ *
  * @param {Object} req - The request object.
  * @returns {string|null} - The JWT token or null if not found.
  */
