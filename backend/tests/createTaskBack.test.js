@@ -11,7 +11,7 @@ const taskController = require('../controllers/task.controller')
 */
 
 jest.mock('../models/task.model', () => ({
-  getTask: jest.fn(),
+  getOneTask: jest.fn(),
   getTasks: jest.fn(),
   createTask: jest.fn(),
   updateTask: jest.fn(),
@@ -192,6 +192,70 @@ describe('Task Controller', () => {
       expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
+
+  //-------------------------------------------------------
+  // VIEW ALL
+  describe('View One Task in Inbox', () => {
+    it('success: VIEW ONE Task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: 'asdf',
+        userId: '1234567'
+      }
+
+      const taskDetails = {
+        owner: '1234567',
+        taskName: 'sweng test cases',
+        category: 'sweng',
+        label: 'elp',
+        description: 'help',
+        difficulty: 'medium',
+        exp: 500,
+        deadline: '2024-02-21'
+      }
+
+      const success = { success: true, result: taskDetails }
+
+      const taskID = '978230ahsdfaosd'
+
+      req.body.taskId = taskID
+
+      taskModel.getOneTask.mockImplementation((id) => success) // Simulate success
+
+      // Act
+      await taskController.getOneTask(req, res)
+
+      // Assert
+      expect(taskModel.getOneTask).toHaveBeenCalledWith(taskID)
+      expect(res.status(201).send).toHaveBeenCalledWith(success)
+    })
+
+    it('failure: VIEW ONE task', async () => {
+      // Arrange
+      const userDetails = {
+        _id: 'asdf',
+        userId: '1234567'
+      }
+
+      const taskID = '978230ahsdfaosd'
+
+      req.body.taskId = taskID
+
+      const error = { success: false, error: 'Failed to get task.', result: null }
+
+      taskModel.getOneTask.mockImplementation(() => error)
+
+      // Act
+      await taskController.getOneTask(req, res)
+
+      // Assert
+      expect(taskModel.getOneTask).toHaveBeenCalledWith(taskID)
+      expect(res.status(500).send).toHaveBeenCalledWith(error)
+      expect(res.status(400).send).toHaveBeenCalledWith(error)
+    })
+  })
+
+  //====================================================
 
   // EDIT
   describe('Edit Task in Inbox', () => {
