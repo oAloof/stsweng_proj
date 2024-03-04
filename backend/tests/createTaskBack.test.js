@@ -104,6 +104,7 @@ describe('Task Controller', () => {
       // Assert
       expect(taskModel.createTask).toHaveBeenCalledWith(taskDetails)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
+      expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
 
@@ -188,6 +189,7 @@ describe('Task Controller', () => {
       // Assert
       expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
+      expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
 
@@ -255,6 +257,7 @@ describe('Task Controller', () => {
       // Assert
       expect(taskModel.updateTask).toHaveBeenCalledWith(req.body.taskId, taskDetails)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
+      expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
 
@@ -294,6 +297,7 @@ describe('Task Controller', () => {
       // Assert
       expect(taskModel.deleteTask).toHaveBeenCalledWith(taskID)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
+      expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
   })
 })
