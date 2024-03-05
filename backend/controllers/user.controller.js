@@ -18,12 +18,16 @@ UserController.createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // Create the user
-    const user = await UserModel.createUser({
+    const response = await UserModel.createUser({
       username,
       firstName,
       lastName,
       password: hashedPassword
     })
+
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
 
     res.status(201).send({ success: true, result: user })
   } catch (error) {

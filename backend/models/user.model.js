@@ -16,29 +16,29 @@ const userSchema = new Schema(
 
 const User = mongoose.model('Users', userSchema)
 
-exports.createUser = (obj) => {
+exports.createUser = async (obj) => {
   const user = new User(obj)
   try {
-    const result = user.save()
-    return result
+    const result = await user.save()
+    return { success: true, result }
   } catch (error) {
-    console.error(error)
+    throw new Error('Failed to create user.')
   }
 }
 
-exports.getUserById = (userId) => {
+exports.getUserById = async (userId) => {
   try {
-    const user = User.findById(userId)
-    return user
+    const user = await User.findById(userId)
+    return { success: true, result: user}
   } catch (error) {
     throw new Error('Failed to get user.')
   }
 }
 
-exports.getUserByUsername = (username) => {
+exports.getUserByUsername = async (username) => {
   try {
-    const user = User.findOne({ username })
-    return user
+    const user = await User.findOne({ username })
+    return { success: true, result: user}
   } catch (error) {
     throw new Error('Failed to get user.')
   }
