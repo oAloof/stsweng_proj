@@ -33,3 +33,5 @@ UserController.createUser = async (req, res) => {
       .send({ success: false, error: 'Failed to create user.', result: null })
   }
 }
+
+module.exports = UserController
