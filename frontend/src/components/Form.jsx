@@ -8,7 +8,7 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form ({ setEvents, events }) {
+export default function Form({ setEvents, events }) {
   const { handleSubmit, control, reset } = useForm()
 
   const onSubmit = (data) => {
@@ -17,26 +17,30 @@ export default function Form ({ setEvents, events }) {
     reset()
   }
 
-  function getDate () {
+  function getDate() {
     const date = new Date()
     const result = date.toISOString().split('T')[0]
     return result
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className=''>
-      <div className='flex'>
-        <div className='m-5'>
-          <div className='flex space-x-4'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+    "
+    >
+      <div className="flex">
+        <div className="m-5">
+          <div className="flex space-x-4">
             <Controller
-              name='start'
+              name="start"
               control={control}
               render={() => <TimeStamp date={getDate()} />}
               defaultValue={getDate()}
             />
 
             <Controller
-              name='dueDate'
+              name="dueDate"
               control={control}
               defaultValue={null}
               render={({ field }) => (
@@ -56,9 +60,9 @@ export default function Form ({ setEvents, events }) {
                   value={field.value}
                 />
               )}
-              name='title'
+              name="title"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
 
             <Controller
@@ -68,19 +72,19 @@ export default function Form ({ setEvents, events }) {
                   value={field.value}
                 />
               )}
-              name='description'
+              name="description"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
           </div>
         </div>
 
-        <div className='m-5'>
+        <div className="m-5">
           <Controller
             render={({ field }) => (
               <Category handleOnChange={field.onChange} value={field.value} />
             )}
-            name='category'
+            name="category"
             control={control}
             defaultValue={[]}
           />
@@ -89,21 +93,27 @@ export default function Form ({ setEvents, events }) {
             render={({ field }) => (
               <SubLabel handleOnChange={field.onChange} value={field.value} />
             )}
-            name='subLabel'
+            name="subLabel"
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name='rating'
+            name="rating"
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <input className='btn absolute mt-6' type='submit' value='Submit' />
+      <div className="flex justify-end">
+        <input
+          className="btn flex absolute mt-6"
+          type="submit"
+          value="Submit"
+        />
+      </div>
     </form>
   )
 }
