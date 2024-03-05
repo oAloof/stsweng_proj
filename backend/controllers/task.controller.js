@@ -33,7 +33,7 @@ TaskController.getTasks = async (req, res) => {
  */
 TaskController.getOneTask = async (req, res) => {
   try {
-    const response = await TaskModel.getOneTask(req.body.taskId)
+    const response = await TaskModel.getTaskById(req.body.taskId)
     if (!response.success) {
       return res.status(400).send(response)
     }
