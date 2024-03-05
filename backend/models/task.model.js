@@ -55,7 +55,7 @@ exports.getTasks = async (userId) => {
  * @param {String} taskId The task Id.
  * @returns The task with the specific task Id.
  */
-exports.getOneTask = async (taskId) => {
+exports.getTaskById = async (taskId) => {
   try {
     const tasks = await Task.findById(taskId)
     return { success: true, result: tasks }
