@@ -6,7 +6,8 @@ UserController.createUser = async (req, res) => {
   try {
     const { username, firstName, lastName, password } = req.body
     // Check if the user already exists
-    const existingUser = await UserModel.getUserByUsername(username)
+    let response = await UserModel.getUserByUsername(username)
+    const existingUser = response.result
     if (existingUser) {
       return res
         .status(400)
@@ -18,7 +19,7 @@ UserController.createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // Create the user
-    const response = await UserModel.createUser({
+    response = await UserModel.createUser({
       username,
       firstName,
       lastName,
@@ -29,7 +30,7 @@ UserController.createUser = async (req, res) => {
       return res.status(400).send(response)
     }
 
-    res.status(201).send({ success: true, result: user })
+    res.status(201).send({ success: true, result: response.result })
   } catch (error) {
     console.error(error)
     res

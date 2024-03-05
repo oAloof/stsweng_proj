@@ -29,7 +29,7 @@ exports.createUser = async (obj) => {
 exports.getUserById = async (userId) => {
   try {
     const user = await User.findById(userId)
-    return { success: true, result: user}
+    return { success: true, result: user }
   } catch (error) {
     throw new Error('Failed to get user.')
   }
@@ -38,7 +38,7 @@ exports.getUserById = async (userId) => {
 exports.getUserByUsername = async (username) => {
   try {
     const user = await User.findOne({ username })
-    return { success: true, result: user}
+    return { success: true, result: user }
   } catch (error) {
     throw new Error('Failed to get user.')
   }
