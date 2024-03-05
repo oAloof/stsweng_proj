@@ -7,34 +7,42 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form() {
+export default function Form ({ setEvents }) {
   const { handleSubmit, control } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data) => {
+    console.log(data)
+    // Assuming data has the necessary structure for events
+    // Update the events in the parent component (App)
+    setEvents([data])
+  }
   // watch input value by passing the name of it
-  function getDate() {
+  function getDate () {
     const date = new Date()
     const result = date.toISOString().split('T')[0]
     return result
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
-      <div className="flex">
-        <div className="m-5">
-          <div className="flex space-x-4">
+    <form onSubmit={handleSubmit(onSubmit)} className=''>
+      <div className='flex'>
+        <div className='m-5'>
+          <div className='flex space-x-4'>
             <Controller
-              name="start"
+              name='start'
               control={control}
               render={() => <TimeStamp date={getDate()} />}
               defaultValue={getDate()}
             />
 
             <Controller
-              name="dueDate"
+              name='dueDate'
               control={control}
               defaultValue={null} // Set default value to null
               render={({ field }) => (
-                <DatePicker onChange={field.onChange} value={field.value} />
+                <DatePicker
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
               )} // Pass the field object to MyDatePicker component
             />
           </div>
@@ -42,53 +50,59 @@ export default function Form() {
           <div>
             <Controller
               render={({ field }) => (
-                <TitleInput onChange={field.onChange} value={field.value} />
+                <TitleInput
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
               )}
-              name="title"
+              name='title'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
 
             <Controller
               render={({ field }) => (
-                <TextEditor onChange={field.onChange} value={field.value} />
+                <TextEditor
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
               )}
-              name="Description"
+              name='description'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
           </div>
         </div>
 
-        <div className="m-5">
+        <div className='m-5'>
           <Controller
             render={({ field }) => (
-              <Category onChange={field.onChange} value={field.value} />
+              <Category handleOnChange={field.onChange} value={field.value} />
             )}
-            name="Category"
+            name='category'
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => (
-              <SubLabel onChange={field.onChange} value={field.value} />
+              <SubLabel handleOnChange={field.onChange} value={field.value} />
             )}
-            name="Sub-Label"
+            name='subLabel'
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name="rating"
+            name='rating'
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <input className="btn absolute mt-6" type="submit" />
+      <input className='btn absolute mt-6' type='submit' />
     </form>
   )
 }

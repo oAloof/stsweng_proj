@@ -1,13 +1,13 @@
 import React from 'react'
-export default function TimeStamp({ date }) {
+export default function TimeStamp ({ date }) {
   return (
     <>
       <div>
         <div>Written On</div>
         <input
-          type="text"
+          type='text'
           placeholder={date} // Access date prop directly
-          className="input input-bordered w-full max-w-xs"
+          className='input input-bordered w-full max-w-xs'
           disabled // make the input field read-only
         />
       </div>

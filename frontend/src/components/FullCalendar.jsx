@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 
-export default function CalendarComponent() {
+export default function CalendarComponent({ events }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
 
@@ -13,18 +13,13 @@ export default function CalendarComponent() {
 
       new Draggable(externalEventsRef.current, {
         itemSelector: '.fc-event',
-        eventData: function (eventEl) {
-          return {
-            title: eventEl.innerText
-          }
-        }
+        eventData: (event) => ({
+          title: event.innerText.trim()
+        })
       })
 
-      calendarApi.on('drop', function (info) {
-        const checkbox = document.getElementById('drop-remove')
-        if (checkbox.checked) {
-          info.draggedEl.parentNode.removeChild(info.draggedEl)
-        }
+      calendarApi.on('drop', (info) => {
+        info.draggedEl.parentNode.removeChild(info.draggedEl)
       })
     }
 
@@ -37,22 +32,14 @@ export default function CalendarComponent() {
         <p>
           <strong>Draggable Events</strong>
         </p>
-        <div className="fc-event">My Event 1</div>
-        <div className="fc-event">My Event 2</div>
-        <div className="fc-event">My Event 3</div>
-        <div className="fc-event">My Event 4</div>
-        <div className="fc-event">My Event 5</div>
-        <p>
-          <input type="checkbox" id="drop-remove" />
-          <label htmlFor="drop-remove">remove after drop</label>
-        </p>
       </div>
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        editable={true}
-        droppable={true}
+        editable
+        droppable
+        events={events} // Pass the events prop to FullCalendar
       />
     </div>
   )

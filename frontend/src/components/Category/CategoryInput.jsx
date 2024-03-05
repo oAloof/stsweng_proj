@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
 import TagsInput from 'react-tagsinput'
 import './CategoryInput.css'
 
-export default function Category ({ onChange, value }) {
+export default function Category ({ handleOnChange, value }) {
   return (
     <>
       <h1>Category</h1>
@@ -10,7 +9,7 @@ export default function Category ({ onChange, value }) {
         <TagsInput
           maxTags={1}
           value={value}
-          onChange={onChange}
+          onChange={handleOnChange}
           inputProps={{
             placeholder: 'Input Category'
           }}
