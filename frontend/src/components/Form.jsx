@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import TitleInput from './TitleInput'
 import TextEditor from './TextEditor/TextEditor'
@@ -7,15 +8,15 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form ({ setEvents }) {
-  const { handleSubmit, control } = useForm()
+export default function Form ({ setEvents, events }) {
+  const { handleSubmit, control, reset } = useForm()
+
   const onSubmit = (data) => {
     console.log(data)
-    // Assuming data has the necessary structure for events
-    // Update the events in the parent component (App)
-    setEvents([data])
+    setEvents([...events, data])
+    reset()
   }
-  // watch input value by passing the name of it
+
   function getDate () {
     const date = new Date()
     const result = date.toISOString().split('T')[0]
@@ -37,13 +38,13 @@ export default function Form ({ setEvents }) {
             <Controller
               name='dueDate'
               control={control}
-              defaultValue={null} // Set default value to null
+              defaultValue={null}
               render={({ field }) => (
                 <DatePicker
                   handleOnChange={field.onChange}
                   value={field.value}
                 />
-              )} // Pass the field object to MyDatePicker component
+              )}
             />
           </div>
 
@@ -102,7 +103,7 @@ export default function Form ({ setEvents }) {
         </div>
       </div>
 
-      <input className='btn absolute mt-6' type='submit' />
+      <input className='btn absolute mt-6' type='submit' value='Submit' />
     </form>
   )
 }

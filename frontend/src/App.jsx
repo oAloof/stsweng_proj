@@ -1,39 +1,17 @@
-import React, { useState } from 'react'
-import Form from './components/Form'
-import FullCalendar from './components/FullCalendar'
-import ModalMaker from './components/ModalMaker'
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LoginPage from './views/loginPage'
+import PlannerPage from './views/plannerPage'
+import RegisterPage from './views/registerPage'
 
-export default function App () {
-  const [events, setEvents] = useState([])
-  // there's gonna be other fields also like start, end.
-  const handleSetEvents = (newEvents) => {
-    setEvents(newEvents)
-  }
-
+export default function App() {
   return (
-    <>
-      <div className='w-10/12'>
-        <FullCalendar events={events} />
-      </div>
-      <button
-        className='btn'
-        onClick={() => document.getElementById('my_modal_4').showModal()}
-      >
-        Add Task
-      </button>
-      <dialog id='my_modal_4' className='modal'>
-        <div className='modal-box min-w-max'>
-          <Form setEvents={handleSetEvents} />
-          <div className='modal-action'>
-            <form method='dialog'>
-              {/* if there is a button in form, it will close the modal */}
-              <button className='btn'>Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
-
-      <ModalMaker />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/planner" element={<PlannerPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
