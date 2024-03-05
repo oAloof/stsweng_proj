@@ -31,8 +31,6 @@ const taskSchema = new Schema(
 
 const Task = mongoose.model('Tasks', taskSchema)
 
-exports.getTask = (id) => {}
-
 /**
  * Retrieves all tasks of user.
  *
@@ -55,9 +53,12 @@ exports.getTasks = async (userId) => {
  * @param {String} taskId The task Id.
  * @returns The task with the specific task Id.
  */
-exports.getOneTask = async (taskId) => {
+exports.getTaskById = async (taskId) => {
   try {
     const tasks = await Task.findById(taskId)
+    if (!tasks) {
+      return { success: false, error: 'Task not found.', result: null }
+    }
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
