@@ -7,6 +7,7 @@ const passport = require('passport')
 
 // Route Imports
 const taskRoutes = require('./routes/taskRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 // express app
 const app = express()
@@ -31,6 +32,8 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   taskRoutes
 )
+
+app.use('/api/users', userRoutes)
 
 // connect to the mongoDB database
 mongoose
