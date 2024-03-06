@@ -43,5 +43,3 @@ exports.getUserByUsername = async (username) => {
     throw new Error('Failed to get user.')
   }
 }
-
-exports.getUsers = () => {}
