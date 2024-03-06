@@ -7,25 +7,25 @@ const generalCalculator = {}
  * @param {Object} difficulty The task's difficulty.
  * @returns The calculated exp for the task.
  */
- generalCalculator.calculateExp = async (user, difficulty) => {
-  calculatedExp = 0 
+generalCalculator.calculateExp = async (user, difficulty) => {
+  let calculatedExp = 0
 
   // base exp
-  switch(task.exp) {
-    case easy:
-      calculateExp += 100
-      break;
-    case medium:
-      calculateExp += 300
-      break;
-    case hard:
-      calculateExp += 500
-      break;
+  switch (difficulty) {
+    case 'easy':
+      calculatedExp += 100
+      break
+    case 'medium':
+      calculatedExp += 300
+      break
+    case 'hard':
+      calculatedExp += 500
+      break
   }
 
   // additional exp
 
-  return calculatedExp;
+  return calculatedExp
 }
 
 /**
@@ -37,17 +37,19 @@ const generalCalculator = {}
  */
 
 generalCalculator.editDeduction = async (task, newtask) => {
-  currentExp = task.exp 
-  let date1 = new Date(newtask.deadline);
-  let date2 = new Date(task.deadline);
+  const currentExp = task.exp
+  let updatedExp = 0
 
-  if (date1 > date2){
-    updatedExp = currentExp*0.95
+  const date1 = new Date(newtask.deadline)
+  const date2 = new Date(task.deadline)
+
+  if (date1 > date2) {
+    updatedExp = currentExp * 0.95
   } else {
     updatedExp = currentExp
   }
 
-  return updatedExp;
+  return updatedExp
 }
 
 /**
@@ -57,17 +59,19 @@ generalCalculator.editDeduction = async (task, newtask) => {
  * @returns The updated exp for the task.
  */
 
- generalCalculator.overdueDeduction = async (task) => {
-  currentExp = task.exp 
-  let date1 = new Date(newtask.deadline);
-  let date2 = new Date();
+generalCalculator.overdueDeduction = async (task) => {
+  const currentExp = task.exp
+  let updatedExp = 0
 
-  if (date2 > date1){
-    overdue = Math.round(date2.getTime() - date1.getTime() / (1000 * 3600 * 24));
+  const date1 = new Date(task.deadline)
+  const date2 = new Date()
+
+  if (date2 > date1) {
+    const overdue = Math.round(date2.getTime() - date1.getTime() / (1000 * 3600 * 24))
     updatedExp = currentExp - currentExp * 0.05 * overdue
   } else {
     updatedExp = currentExp
   }
 
-  return updatedExp;
+  return updatedExp
 }
