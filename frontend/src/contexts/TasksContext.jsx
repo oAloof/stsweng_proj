@@ -15,7 +15,7 @@ export const TasksProvider = ({ children }) => {
    */
   const fetchAllTasks = async () => {
     try {
-      const response = await fetch('/api/tasks', {
+      const response = await fetch('/api/tasks/getTasks', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -41,12 +41,49 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Creates a new task by sending a POST request to the server. This will also set
+   * the isLoadingTasks state to true to trigger a re-fetch of the tasks.
+   * 
+   * @param {Object} task       The task object to be created.
+   * @returns {Promise<void>}   A promise that resolves when the task is created 
+   *                            successfully.
+   * @throws {Error}            If there is an HTTP error or if the response data 
+   *                            indicates failure.
+   */
+  const createTask = async (task) => {
+    try {
+      const response = await fetch('/api/tasks/create', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      if (!data.success) {
+        console.error(data.error)
+        return
+      }
+      isLoadingTasks(true)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   useEffect(() => {
     fetchAllTasks()
-  }, [])
+  }, [isLoadingTasks])
 
   const contextValue = {
-    isLoadingTasks
+    isLoadingTasks,
+    createTask
   }
 
   return (
