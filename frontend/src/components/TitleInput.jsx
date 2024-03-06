@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TitleInput ({ onChange, value }) {
+export default function TitleInput ({ handleOnChange, value }) {
   return (
     <>
       <div>TitleInput</div>
@@ -8,7 +8,7 @@ export default function TitleInput ({ onChange, value }) {
         type='text'
         placeholder='Title'
         className='input input-bordered w-full max-w-xs '
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => handleOnChange(e.target.value)}
         value={value}
       />
     </>

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import TitleInput from './TitleInput'
 import TextEditor from './TextEditor/TextEditor'
@@ -7,78 +8,112 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form () {
-  const { handleSubmit, control } = useForm()
-  const onSubmit = (data) => console.log(data)
-  // watch input value by passing the name of it
+export default function Form({ setEvents, events }) {
+  const { handleSubmit, control, reset } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data)
+    setEvents([...events, data])
+    reset()
+  }
+
+  function getDate() {
+    const date = new Date()
+    const result = date.toISOString().split('T')[0]
+    return result
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className=''>
-      <div className='flex'>
-        <div className='m-5'>
-          <div className='flex space-x-4'>
-            <TimeStamp />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+    "
+    >
+      <div className="flex">
+        <div className="m-5">
+          <div className="flex space-x-4">
+            <Controller
+              name="start"
+              control={control}
+              render={() => <TimeStamp date={getDate()} />}
+              defaultValue={getDate()}
+            />
 
             <Controller
-              name='dueDate'
+              name="dueDate"
               control={control}
-              defaultValue={null} // Set default value to null
+              defaultValue={null}
               render={({ field }) => (
-                <DatePicker onChange={field.onChange} value={field.value} />
-              )} // Pass the field object to MyDatePicker component
+                <DatePicker
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
+              )}
             />
           </div>
 
           <div>
             <Controller
               render={({ field }) => (
-                <TitleInput onChange={field.onChange} value={field.value} />
+                <TitleInput
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
               )}
-              name='Title'
+              name="title"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
 
             <Controller
               render={({ field }) => (
-                <TextEditor onChange={field.onChange} value={field.value} />
+                <TextEditor
+                  handleOnChange={field.onChange}
+                  value={field.value}
+                />
               )}
-              name='Description'
+              name="description"
               control={control}
-              defaultValue=''
+              defaultValue=""
             />
           </div>
         </div>
 
-        <div className='m-5'>
+        <div className="m-5">
           <Controller
             render={({ field }) => (
-              <Category onChange={field.onChange} value={field.value} />
+              <Category handleOnChange={field.onChange} value={field.value} />
             )}
-            name='Category'
+            name="category"
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => (
-              <SubLabel onChange={field.onChange} value={field.value} />
+              <SubLabel handleOnChange={field.onChange} value={field.value} />
             )}
-            name='Sub-Label'
+            name="subLabel"
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name='rating'
+            name="rating"
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <input className='btn' type='submit' />
+      <div className="flex justify-end">
+        <input
+          className="btn flex absolute mt-6"
+          type="submit"
+          value="Submit"
+        />
+      </div>
     </form>
   )
 }

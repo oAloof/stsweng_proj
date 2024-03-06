@@ -2,15 +2,15 @@ import DatePicker from 'react-datepicker' // Assuming DatePicker is exported fro
 import 'react-datepicker/dist/react-datepicker.css'
 import './DatePicker.css'
 
-export default function MyDatePicker({ onChange, value }) {
+export default function MyDatePicker ({ handleOnChange, value }) {
   return (
     <>
       <div>
         <div>Due Date</div>
         <DatePicker
           selected={value}
-          onChange={onChange}
-          placeholderText="Select Date"
+          onChange={handleOnChange}
+          placeholderText='Select Date'
         />
       </div>
     </>
