@@ -1,5 +1,6 @@
 const UserModel = require('../models/user.model')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const UserController = {}
 
 UserController.createUser = async (req, res) => {
@@ -36,6 +37,54 @@ UserController.createUser = async (req, res) => {
     res
       .status(500)
       .send({ success: false, error: 'Failed to create user.', result: null })
+  }
+}
+
+UserController.loginUser = async (req, res) => {
+  try {
+    // Find the user by username
+    const { username, password } = req.body
+    const response = await UserModel.getUserByUsername(username)
+    const user = response.result
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        error: 'Invalid username or password.',
+        result: null
+      })
+    }
+
+    // Compare the password
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (!validPassword) {
+      return res.status(400).send({
+        success: false,
+        error: 'Invalid username or password.',
+        result: null
+      })
+    }
+
+    // Create the JWT token
+    const payload = { id: user._id, username: user.username }
+    const token = await jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '1h'
+    })
+
+    // Set the JWT token in a signed cookie
+    res.cookie('jwtToken', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict',
+      signed: true,
+      maxAge: 3600000
+    })
+
+    res.status(200).send({ success: true, result: user })
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to login user.', result: null })
   }
 }
 
