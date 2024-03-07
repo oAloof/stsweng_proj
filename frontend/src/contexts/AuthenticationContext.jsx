@@ -38,14 +38,14 @@ export const AuthenticationProvider = ({ children }) => {
     }
   }
 
-  const register = async (username, password, firstName, lastName) => {
+  const register = async (username, password, firstName, lastName, email) => {
     try {
       const response = await fetch('/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password, firstName, lastName })
+        body: JSON.stringify({ username, password, firstName, lastName, email })
       })
       if (!response.ok) {
         throw new Error('Failed to register user.')

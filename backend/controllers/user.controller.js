@@ -32,7 +32,7 @@ UserController.checkAuthenticationStatus = async (req, res) => {
  */
 UserController.registerUser = async (req, res) => {
   try {
-    const { username, firstName, lastName, password } = req.body
+    const { username, firstName, lastName, email, password } = req.body
     // Check if the user already exists
     let response = await UserModel.getUserByUsername(username)
     const existingUser = response.result
@@ -51,6 +51,7 @@ UserController.registerUser = async (req, res) => {
       username,
       firstName,
       lastName,
+      email,
       password: hashedPassword
     })
 
