@@ -3,6 +3,33 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const UserController = {}
 
+UserController.checkAuthenticationStatus = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).send({ success: true, result: null })
+  }
+
+  const userId = req.user._id
+  // Check if the user exists
+  const response = await UserModel.getUserById(userId)
+  if (!response.success) {
+    return res.status(400).send(response)
+  }
+  const user = response.result
+  if (!user) {
+    return res.status(401).send({ success: true, result: null })
+  }
+
+  res.status(200).send({ success: true, result: response.result })
+}
+
+/**
+ * Creates a new user.
+ *
+ * @param {Object} req  The request object.
+ * @param {Object} res  The response object.
+ * @returns {Object}    The result of the operation, a success flag, and an error
+ *                      message if operation failed.
+ */
 UserController.registerUser = async (req, res) => {
   try {
     const { username, firstName, lastName, password } = req.body
