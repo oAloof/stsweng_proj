@@ -8,11 +8,13 @@ import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 
-export default function Form({ setEvents, events }) {
-  const { handleSubmit, control, reset } = useForm()
+export default function Form({ setEvents, events, event }) {
+  const { handleSubmit, control, reset } = useForm({
+    defaultValues: event // Pre-fill form fields with event data
+  })
 
   const onSubmit = (data) => {
-    console.log(data)
+    // console.log(data)
     setEvents([...events, data])
     reset()
   }
@@ -24,13 +26,9 @@ export default function Form({ setEvents, events }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="
-    "
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="flex">
-        <div className="m-5">
+        <div className="m-5 flex flex-col space-y-4">
           <div className="flex space-x-4">
             <Controller
               name="start"
@@ -40,7 +38,7 @@ export default function Form({ setEvents, events }) {
             />
 
             <Controller
-              name="dueDate"
+              name="end"
               control={control}
               defaultValue={null}
               render={({ field }) => (
@@ -52,7 +50,7 @@ export default function Form({ setEvents, events }) {
             />
           </div>
 
-          <div>
+          <div className="flex-col space-y-4">
             <Controller
               render={({ field }) => (
                 <TitleInput
@@ -79,7 +77,7 @@ export default function Form({ setEvents, events }) {
           </div>
         </div>
 
-        <div className="m-5">
+        <div className="m-5 flex-col space-y-4">
           <Controller
             render={({ field }) => (
               <Category handleOnChange={field.onChange} value={field.value} />

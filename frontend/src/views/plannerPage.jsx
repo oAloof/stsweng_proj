@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FullCalendar from '../components/FullCalendar'
 import Form from '../components/Form'
 import ModalMaker from '../components/ModalMaker'
@@ -10,10 +10,14 @@ export default function PlannerPage() {
     setEvents(newEvents)
   }
 
+  useEffect(() => {
+    console.log(events)
+  }, [events])
+
   return (
     <>
       <div className="w-10/12">
-        <FullCalendar events={events} setEvents={setEvents} />
+        <FullCalendar events={events} setEvents={handleSetEvents} />
       </div>
       <button
         className="btn"
