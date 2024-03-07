@@ -113,3 +113,41 @@ exports.deleteTask = async (taskId) => {
     return { success: false, error: 'Failed to delete task.', result: null }
   }
 }
+
+/**
+ * Sorts tasks based on a variable
+ *
+ * @param {String} query The variables to be sorted by
+ * @returns The task with the specific task Id.
+ */
+exports.sortTasks = async (query) => {
+  try {
+    const tasks = await Task.find({}).sort(query)
+    return { success: true, result: tasks }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+  }
+}
+
+/**
+ * Finds tasks based on a variable/s
+ *
+ * @param {Array} query The variables to be sorted by: [Category, [Labels]]
+ * @returns The task with the specific task Id.
+ */
+exports.getSpecificTasks = async (query) => {
+  let tasks
+
+  try {
+    if (query.length > 1) {
+      tasks = await Task.find({ category: query[0], label: query[1] })
+    } else {
+      tasks = await Task.find({ category: query[0] })
+    }
+    return { success: true, result: tasks }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+  }
+}
