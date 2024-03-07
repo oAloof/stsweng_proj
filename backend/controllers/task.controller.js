@@ -96,7 +96,7 @@ TaskController.update = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: expCalc(req.user, req.body.difficulty),
+    exp: req.body.exp, //expCalc(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
