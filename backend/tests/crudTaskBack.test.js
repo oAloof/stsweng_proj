@@ -54,6 +54,7 @@ describe('Task Controller', () => {
         label: 'elp',
         description: 'help',
         difficulty: 'medium',
+        exp: 300,
         deadline: '2024-02-21'
       }
 
@@ -85,6 +86,7 @@ describe('Task Controller', () => {
         label: 'elp',
         description: 'help',
         difficulty: 'medium',
+        exp: 300,
         deadline: '2024-02-21'
       }
 
