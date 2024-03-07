@@ -1,4 +1,5 @@
 const TaskModel = require('../models/task.model')
+const expCalc = require('../calculators/generalCalculator')
 const TaskController = {}
 
 /**
@@ -10,7 +11,7 @@ const TaskController = {}
  */
 TaskController.getTasks = async (req, res) => {
   try {
-    const response = await TaskModel.getTasks(req.body.userId) // ! To be changed. User ID should be taken from credentials field of the request from a cookie.
+    const response = await TaskModel.getTasks(req.user._id)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -61,7 +62,7 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: req.body.exp,
+    exp: expCalc(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
@@ -95,7 +96,7 @@ TaskController.update = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: req.body.exp,
+    exp: expCalc(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
@@ -136,18 +137,3 @@ TaskController.delete = async (req, res) => {
 }
 
 module.exports = TaskController
-
-// const TaskModel = require('../models/task.model')
-// const TaskController = {}
-
-// TaskController.create = async (req, res) => {
-//   try {
-//     const task = await TaskModel.createTask(req.body)
-//     res.status(201).json(task)
-//   } catch (err) {
-//     console.error(err)
-//     res.status(500).json({ error: 'Internal Server Error' })
-//   }
-// }
-
-// module.exports = TaskController

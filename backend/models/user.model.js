@@ -17,7 +17,7 @@ const userSchema = new Schema(
 const User = mongoose.model('Users', userSchema)
 
 exports.createUser = (obj) => {
-  // SAMPLE CODE: to create a user
+  // ! SAMPLE CODE: to create a user
   const user = new User(obj)
   try {
     const result = user.save()
