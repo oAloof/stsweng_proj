@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const UserController = {}
 
-UserController.createUser = async (req, res) => {
+UserController.registerUser = async (req, res) => {
   try {
     const { username, firstName, lastName, password } = req.body
     // Check if the user already exists
