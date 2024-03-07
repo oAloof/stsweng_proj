@@ -63,7 +63,7 @@ UserController.registerUser = async (req, res) => {
     console.error(error)
     res
       .status(500)
-      .send({ success: false, error: 'Failed to create user.', result: null })
+      .send({ success: false, error: 'Failed to register user.', result: null })
   }
 }
 
