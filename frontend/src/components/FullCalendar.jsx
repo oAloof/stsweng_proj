@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import listPlugin from '@fullcalendar/list'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import Form from './Form'
 import './FullCalendar.css'
@@ -26,13 +27,13 @@ export default function CalendarComponent({ events, setEvents }) {
       })
 
       calendarApi.on('eventClick', (info) => {
-        setSelectedEvent(events[0]) // Set the selected event
+        setSelectedEvent(info.event)
         document.getElementById('my_modal_3').showModal()
       })
     }
 
     initFullCalendar()
-  }, [events]) // Run effect when events change
+  }, [events])
 
   return (
     <div>
@@ -43,25 +44,27 @@ export default function CalendarComponent({ events, setEvents }) {
       </div>
       <FullCalendar
         ref={calendarRef}
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         initialView="dayGridMonth"
+        headerToolbar={{
+          left: 'prev,next',
+          center: 'title',
+          right: 'dayGridMonth,listWeek' // user can switch between the two
+        }}
         editable
         droppable
-        events={events} // Pass the events prop to FullCalendar
+        events={events}
       />
-      {/* <div>{selectedEvent.title}</div> */}
       <Form event={selectedEvent} setEvents={setEvents} />
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button, it will close the modal */}
               <button className="btn">Close</button>
             </form>
           </div>
         </div>
       </dialog>
-      {/* Use key prop to force re-render */}
     </div>
   )
 }
