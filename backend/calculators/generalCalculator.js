@@ -99,3 +99,5 @@ generalCalculator.advanceAddition = async (task) => {
 
   return updatedExp
 }
+
+module.exports = generalCalculator
