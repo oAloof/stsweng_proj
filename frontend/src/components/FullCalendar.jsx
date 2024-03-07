@@ -49,7 +49,7 @@ export default function CalendarComponent({ events, setEvents }) {
         headerToolbar={{
           left: 'prev,next',
           center: 'title',
-          right: 'dayGridMonth,listWeek' // user can switch between the two
+          right: 'dayGridMonth,dayGridWeek,listYear' // user can switch between the two
         }}
         editable
         droppable
