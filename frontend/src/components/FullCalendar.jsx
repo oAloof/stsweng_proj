@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import Form from './Form'
+import './FullCalendar.css'
 
-export default function CalendarComponent ({ events }) {
+export default function CalendarComponent({ events, setEvents }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   useEffect(() => {
     const initFullCalendar = () => {
@@ -24,18 +26,17 @@ export default function CalendarComponent ({ events }) {
       })
 
       calendarApi.on('eventClick', (info) => {
-        console.log('Event clicked:', info.event)
+        setSelectedEvent(events[0]) // Set the selected event
         document.getElementById('my_modal_3').showModal()
-        // Do whatever you want when an event is clicked
       })
     }
 
     initFullCalendar()
-  }, [])
+  }, [events]) // Run effect when events change
 
   return (
     <div>
-      <div ref={externalEventsRef} id='external-events'>
+      <div ref={externalEventsRef} id="external-events">
         <p>
           <strong>Draggable Events</strong>
         </p>
@@ -43,23 +44,24 @@ export default function CalendarComponent ({ events }) {
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
-        initialView='dayGridMonth'
+        initialView="dayGridMonth"
         editable
         droppable
         events={events} // Pass the events prop to FullCalendar
       />
-
-      <dialog id='my_modal_3' className='modal'>
-        <div className='modal-box min-w-max'>
-          <Form />
-          <div className='modal-action'>
-            <form method='dialog'>
-              {/* if there is a button in form, it will close the modal */}
-              <button className='btn'>Close</button>
+      {/* <div>{selectedEvent.title}</div> */}
+      <Form event={selectedEvent} setEvents={setEvents} />
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
             </form>
           </div>
         </div>
       </dialog>
+      {/* Use key prop to force re-render */}
     </div>
   )
 }
