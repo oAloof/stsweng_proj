@@ -75,3 +75,27 @@ generalCalculator.overdueDeduction = async (task) => {
 
   return updatedExp
 }
+
+/**
+ * Calculates the added Exp due to finishing task in advance.
+ *
+ * @param {Object} task the current task.
+ * @returns The updated exp for the task.
+ */
+
+generalCalculator.advanceAddition = async (task) => {
+  const currentExp = task.exp
+  let updatedExp = 0
+
+  const date1 = new Date(task.deadline)
+  const date2 = new Date()
+
+  if (date2 > date1) {
+    const advance = Math.round(date1.getTime() - date2.getTime() / (1000 * 3600 * 24))
+    updatedExp = currentExp + currentExp * 0.05 * advance
+  } else {
+    updatedExp = currentExp
+  }
+
+  return updatedExp
+}
