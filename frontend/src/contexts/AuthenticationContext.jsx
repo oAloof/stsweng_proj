@@ -9,9 +9,12 @@ export const AuthenticationProvider = ({ children }) => {
 
   const checkAuthentication = async () => {
     try {
-      const response = await fetch('/api/users/check-auth', {
+      const response = await fetch('http://localhost:4000/api/users/check-auth', {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        }
       })
       if (!response.ok) {
         throw new Error('User not authenticated.')
@@ -19,10 +22,12 @@ export const AuthenticationProvider = ({ children }) => {
 
       const data = await response.json()
       if (!data.success) {
-        throw new Error('User not authenticated.')
+        console.log('User not authenticated.');
+        return 
       }
       if (!data.result) {
-        throw new Error('User not authenticated.')
+        console.log('User not authenticated.');
+        return 
       }
       // Set the user data in the context except for the password
       setUser({
@@ -40,7 +45,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const register = async (username, password, firstName, lastName, email) => {
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch('http://localhost:4000/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -64,7 +69,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch('http://localhost:4000/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -79,7 +84,8 @@ export const AuthenticationProvider = ({ children }) => {
       if (!data.success) {
         throw new Error('Failed to login user.')
       }
-      setIsAuthenticated(true)
+      console.log(data);
+      setIsLoadingAuth(true)
     } catch (error) {
       console.error(error)
       return { success: false, error: 'Invalid username or password.', result: null }
@@ -88,7 +94,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthentication()
-  }, [isAuthenticated])
+  }, [isLoadingAuth, isAuthenticated])
 
   const contextValue = {
     isAuthenticated,

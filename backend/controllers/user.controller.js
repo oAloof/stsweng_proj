@@ -1,11 +1,13 @@
 const UserModel = require('../models/user.model')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const UserController = {}
 
 UserController.checkAuthenticationStatus = async (req, res) => {
+  console.log(req.cookies)
+  console.log('Checking authentication status...')
   if (!req.user) {
-    return res.status(401).send({ success: true, result: null })
+    return res.status(400).send({ success: true, result: null })
   }
 
   const userId = req.user._id
@@ -18,7 +20,6 @@ UserController.checkAuthenticationStatus = async (req, res) => {
   if (!user) {
     return res.status(401).send({ success: true, result: null })
   }
-
   res.status(200).send({ success: true, result: response.result })
 }
 
@@ -94,7 +95,7 @@ UserController.loginUser = async (req, res) => {
 
     // Create the JWT token
     const payload = { id: user._id, username: user.username }
-    const token = await jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '1h'
     })
 
@@ -102,8 +103,7 @@ UserController.loginUser = async (req, res) => {
     res.cookie('jwtToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
-      signed: true,
+      sameSite: 'None',
       maxAge: 3600000
     })
 

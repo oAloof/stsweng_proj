@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import UsernameInput from '../components/UsernameInput'
 import EmailInput from '../components/EmailInput'
 import PasswordInput from '../components/PasswordInput'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function Login () {
   const { handleSubmit, control } = useForm()
   const navigate = useNavigate()
+  const { login } = useContext(AuthenticationContext)
+
   const onSubmit = (data) => {
-    console.log(data)
+    login(data.username, data.password)
   }
   const handleRegister = () => {
     navigate('./register')

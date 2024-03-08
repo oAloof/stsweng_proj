@@ -10,6 +10,7 @@ const UserModel = require('../models/user.model')
  * @returns {string|null} - The JWT token or null if not found.
  */
 const cookieExtractor = (req) => {
+  console.log(req.cookies)
   let token = null
   if (req && req.signedCookies) {
     token = req.signedCookies.jwtToken
