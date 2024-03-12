@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import TitleInput from './TitleInput'
 import TextEditor from './TextEditor/TextEditor'
@@ -7,16 +7,19 @@ import TimeStamp from './TimeStamp'
 import SubLabel from './Category/SubLabel/SubLabelInput'
 import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
+import { TasksContext } from '../contexts/TasksContext'
 
-export default function Form({ setEvents, events, event }) {
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: event // Pre-fill form fields with event data
-  })
+export default function Form() {
+  const { dummyCreateTask } = useContext(TasksContext)
+  const { handleSubmit, control, reset } = useForm()
 
   const onSubmit = (data) => {
-    // console.log(data)
-    setEvents([...events, data])
-    reset()
+    try {
+      dummyCreateTask(data)
+      reset()
+    } catch (error) {
+      console.error('Error creating task:', error)
+    }
   }
 
   function getDate() {
@@ -98,7 +101,7 @@ export default function Form({ setEvents, events, event }) {
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name="rating"
+            name="difficulty"
             control={control}
             defaultValue={0.5}
           />
