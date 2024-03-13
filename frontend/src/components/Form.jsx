@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import TitleInput from './TitleInput'
 import TextEditor from './TextEditor/TextEditor'
@@ -12,14 +12,11 @@ import { TasksContext } from '../contexts/TasksContext'
 export default function Form() {
   const { dummyCreateTask } = useContext(TasksContext)
   const { handleSubmit, control, reset } = useForm()
+  const [newTask, setNewTask] = useState('')
 
   const onSubmit = (data) => {
-    try {
-      dummyCreateTask(data)
-      reset()
-    } catch (error) {
-      console.error('Error creating task:', error)
-    }
+    dummyCreateTask(data)
+    reset()
   }
 
   function getDate() {

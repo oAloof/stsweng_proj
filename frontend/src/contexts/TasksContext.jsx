@@ -6,6 +6,9 @@ export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
 
+  useEffect(() => {
+    console.log(tasks)
+  }, [tasks])
   /**
    * Fetches all tasks of a user from the server.
    *
@@ -78,16 +81,15 @@ export const TasksProvider = ({ children }) => {
   }
 
   // Create Task (no backend)
-  const dummyCreateTask = async (task) => {
+  const dummyCreateTask = (task) => {
     setTasks([...tasks, task])
-    console.log(task + 'inside context')
   }
   // Delete Task (no backend)
-  const dummyDeleteTask = async (taskId) => {
+  const dummyDeleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId))
   }
   // Update Task (no backend)
-  const dummyUpdateTask = async (updatedTask) => {
+  const dummyUpdateTask = (updatedTask) => {
     setTasks(
       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     )
@@ -97,12 +99,14 @@ export const TasksProvider = ({ children }) => {
     fetchAllTasks()
   }, [isLoadingTasks])
 
+  // when using context remember to pass in the stupid state or functions you're gonna use
   const contextValue = {
     isLoadingTasks,
     createTask,
     dummyCreateTask,
     dummyDeleteTask,
-    dummyUpdateTask
+    dummyUpdateTask,
+    tasks
   }
 
   return (
