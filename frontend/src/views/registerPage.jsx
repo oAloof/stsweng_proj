@@ -14,7 +14,15 @@ export default function Login() {
   const { register, isAuthenticated } = useContext(AuthenticationContext)
 
   const onSubmit = (data, event) => {
-    register(data.username, data.password, data.firstName, data.lastName, data.email)
+    try {
+      const result = register(data.username, data.password, data.firstName, data.lastName, data.email)
+      if (result.success) {
+        navigate('/login')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    
   }
 
   useEffect(() => {
