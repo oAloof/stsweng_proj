@@ -6,6 +6,7 @@ import RegisterPage from './views/registerPage'
 
 // CONTEXTS
 import { AuthenticationProvider } from './contexts/AuthenticationContext'
+import { TasksProvider } from './contexts/TasksContext'
 
 export default function App() {
   return (
