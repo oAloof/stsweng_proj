@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react'
 export const AuthenticationContext = createContext()
 
 export const AuthenticationProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
   const [user, setUser] = useState({ username: '', firstName: '', lastName: '' })
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
@@ -86,7 +86,7 @@ export const AuthenticationProvider = ({ children }) => {
         throw new Error('Failed to login user.')
       }
       localStorage.setItem('token', data.jwtToken)
-      setIsLoadingAuth(true)
+      setIsAuthenticated(true)
     } catch (error) {
       console.error(error)
       return { success: false, error: 'Invalid username or password.', result: null }
@@ -95,7 +95,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthentication()
-  }, [isLoadingAuth, isAuthenticated])
+  }, [])
 
   const contextValue = {
     isAuthenticated,
