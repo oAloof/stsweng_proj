@@ -8,12 +8,14 @@ export const AuthenticationProvider = ({ children }) => {
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
   const checkAuthentication = async () => {
+    const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch('http://localhost:4000/api/users/check-auth', {
         method: 'GET',
         credentials: 'include',
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`
         }
       })
       if (!response.ok) {
@@ -38,7 +40,6 @@ export const AuthenticationProvider = ({ children }) => {
       setIsAuthenticated(true)
       setIsLoadingAuth(false)
     } catch (error) {
-      console.error(error)
       setIsLoadingAuth(false)
     }
   }
@@ -84,7 +85,7 @@ export const AuthenticationProvider = ({ children }) => {
       if (!data.success) {
         throw new Error('Failed to login user.')
       }
-      console.log(data);
+      localStorage.setItem('token', data.jwtToken)
       setIsLoadingAuth(true)
     } catch (error) {
       console.error(error)

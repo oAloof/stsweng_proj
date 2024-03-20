@@ -10,10 +10,17 @@ const UserModel = require('../models/user.model')
  * @returns {string|null} - The JWT token or null if not found.
  */
 const cookieExtractor = (req) => {
-  console.log(req.cookies)
+  console.log("Inside cookieExtractor...");
   let token = null
-  if (req && req.signedCookies) {
-    token = req.signedCookies.jwtToken
+  // if (req && req.signedCookies) {
+  //   token = req.signedCookies.jwtToken
+  // }
+  // Get the token from the Authorization header
+  const bearerHeader = req.headers['authorization']
+
+  if (bearerHeader) {
+    const bearer = bearerHeader.split(' ')
+    token = bearer[1]
   }
   return token
 }
@@ -27,7 +34,7 @@ module.exports = (passport) => {
   passport.use(
     new JwtStrategy(options, async (jwtPayload, done) => {
       try {
-        const user = await UserModel.getUser(jwtPayload.id)
+        const user = await UserModel.getUserById(jwtPayload.id)
         if (user) {
           return done(null, user)
         } else {

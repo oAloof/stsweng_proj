@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 const UserController = {}
 
 UserController.checkAuthenticationStatus = async (req, res) => {
-  console.log(req.cookies)
   console.log('Checking authentication status...')
+  console.log(req.user);
   if (!req.user) {
     return res.status(400).send({ success: true, result: null })
   }
@@ -107,7 +107,7 @@ UserController.loginUser = async (req, res) => {
       maxAge: 3600000
     })
 
-    res.status(200).send({ success: true, result: user })
+    res.status(200).send({ success: true, result: user, jwtToken: token}) // Send the token in the response because cookies are not working
   } catch (error) {
     console.error(error)
     res
