@@ -47,7 +47,9 @@ export default function EmpathyPage () {
           <dialog id='my_modal_5' className='modal'>
             <div className='modal-box min-w-max'>
               <p>Are you sure you want to add more tasks?</p>
+              <br></br>
               <p>You already have <b>8</b> tasks due on the same day</p>
+              <br></br>
               <p>We suggest moving the deadline to a different day for better task distribution</p>
               <div className='modal-action justify-start'>
                 <form method='dialog'>
