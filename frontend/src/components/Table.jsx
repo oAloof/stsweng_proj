@@ -3,6 +3,7 @@ import { TasksContext } from '../contexts/TasksContext'
 
 export default function DataTable () {
   const { tasks, subtasks } = useContext(TasksContext)
+  
   return (
     <div className='overflow-x-auto'>
       <table className='table'>
@@ -42,10 +43,9 @@ export default function DataTable () {
                 <td>{task.category[0]}</td>
                 <td>
                   {task.subLabel && task.subLabel.map((label) => {
-                    return (
-                      <div class='text-sm opacity-50'>{label}</div>
-                    )
-                  })}
+                  return (
+                    <div class="text-sm opacity-50">{label}</div>
+                    )})}
                 </td>
                 <th>
                   <button className='btn btn-ghost btn-xs'>details</button>
@@ -56,7 +56,7 @@ export default function DataTable () {
           {/* row 2 */}
           {subtasks && subtasks.map((task) => {
             return (
-              <tr className='pl-30'>
+              <tr  className='pl-30'>
                 <th>
                   <label>
                     <input type='checkbox' className='checkbox' />
@@ -74,10 +74,9 @@ export default function DataTable () {
                 <td>{tasks[0].category[0]}</td>
                 <td>
                   {tasks[0].subLabel && tasks[0].subLabel.map((label) => {
-                    return (
-                      <div class='text-sm opacity-50'>{label}</div>
-                    )
-                  })}
+                  return (
+                    <div class="text-sm opacity-50">{label}</div>
+                    )})}
                 </td>
                 <th>
                   <button className='btn btn-ghost btn-xs'>details</button>

@@ -7,7 +7,12 @@ import { TasksProvider } from '../contexts/TasksContext'
 export default function EmpathyPage () {
   function refreshPage(){ 
     window.location.reload(); 
+
   }
+  useEffect(() => {
+    document.getElementById('my_modal_5').showModal()
+  }, [])
+
   return (
     <>
       <div className='flex justify-center min-w-full py-5'>
@@ -26,7 +31,7 @@ export default function EmpathyPage () {
               </button>
               <button
                 className='btn'
-                onClick={() => document.getElementById('my_modal_5').showModal()}
+                onClick={() => document.getElementById('my_modal_6').showModal()}
               >
                 Add Tasks
               </button>
@@ -46,16 +51,27 @@ export default function EmpathyPage () {
 
           <dialog id='my_modal_5' className='modal'>
             <div className='modal-box min-w-max'>
-              <p>Are you sure you want to add more tasks?</p>
+              <p className='text-lg font-bold'>Reminder! </p>
               <br></br>
-              <p>You already have <b>8</b> tasks due on the same day</p>
+              <p>You have <b>5</b> tasks due today</p>
               <br></br>
-              <p>We suggest moving the deadline to a different day for better task distribution</p>
+              <p>You also have <b>2</b> tasks overdue</p>
+              <p>Complete your tasks ASAP if you don't want any more dections in EXP</p>
               <div className='modal-action justify-start'>
                 <form method='dialog'>
-                  <button className='btn'>Edit Tasks</button>
+                  <button className='btn'>Close</button>
                 </form>
-                <button className='btn' onClick={refreshPage}>Add Tasks</button>
+              </div>
+            </div>
+          </dialog>
+
+          <dialog id='my_modal_6' className='modal'>
+            <div className='modal-box min-w-max'>
+              <p>Tasks Sucesssfully Added!</p>
+              <div className='modal-action justify-start'>
+                <form method='dialog'>
+                  <button className='btn' onClick={refreshPage}>Close</button>
+                </form>
               </div>
             </div>
           </dialog>
