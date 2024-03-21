@@ -5,6 +5,9 @@ import ModalMaker from '../components/ModalMaker'
 import { TasksProvider } from '../contexts/TasksContext'
 
 export default function EmpathyPage () {
+  function refreshPage(){ 
+    window.location.reload(); 
+  }
   return (
     <>
       <div className='flex justify-center min-w-full py-5'>
@@ -46,7 +49,7 @@ export default function EmpathyPage () {
               <p>Tasks Sucesssfully Added!</p>
               <div className='modal-action justify-start'>
                 <form method='dialog'>
-                  <button className='btn'>Close</button>
+                  <button className='btn' onClick={refreshPage}>Close</button>
                 </form>
               </div>
             </div>
