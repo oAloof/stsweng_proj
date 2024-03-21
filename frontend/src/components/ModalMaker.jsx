@@ -8,6 +8,4 @@ export default function ModalMaker () {
       category: 'category'
     }
   ])
-
-  return <div className='sticky bottom-0 bg-light-purple z-10'>ModalMaker</div>
 }

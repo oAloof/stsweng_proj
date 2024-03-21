@@ -9,7 +9,7 @@ import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function Form() {
+export default function Form () {
   const { dummyCreateTask } = useContext(TasksContext)
   const { handleSubmit, control, reset } = useForm()
   const [newTask, setNewTask] = useState('')
@@ -19,26 +19,26 @@ export default function Form() {
     reset()
   }
 
-  function getDate() {
+  function getDate () {
     const date = new Date()
     const result = date.toISOString().split('T')[0]
     return result
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
-      <div className="flex">
-        <div className="m-5 flex flex-col space-y-4">
-          <div className="flex space-x-4">
+    <form onSubmit={handleSubmit(onSubmit)} className=''>
+      <div className='flex'>
+        <div className='m-5 flex flex-col space-y-4'>
+          <div className='flex space-x-4'>
             <Controller
-              name="start"
+              name='start'
               control={control}
               render={() => <TimeStamp date={getDate()} />}
               defaultValue={getDate()}
             />
 
             <Controller
-              name="end"
+              name='end'
               control={control}
               defaultValue={null}
               render={({ field }) => (
@@ -50,7 +50,7 @@ export default function Form() {
             />
           </div>
 
-          <div className="flex-col space-y-4">
+          <div className='flex-col space-y-4'>
             <Controller
               render={({ field }) => (
                 <TitleInput
@@ -58,9 +58,9 @@ export default function Form() {
                   value={field.value}
                 />
               )}
-              name="title"
+              name='title'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
 
             <Controller
@@ -70,19 +70,19 @@ export default function Form() {
                   value={field.value}
                 />
               )}
-              name="description"
+              name='description'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
           </div>
         </div>
 
-        <div className="m-5 flex-col space-y-4">
+        <div className='m-5 flex-col space-y-4'>
           <Controller
             render={({ field }) => (
               <Category handleOnChange={field.onChange} value={field.value} />
             )}
-            name="category"
+            name='category'
             control={control}
             defaultValue={[]}
           />
@@ -91,25 +91,25 @@ export default function Form() {
             render={({ field }) => (
               <SubLabel handleOnChange={field.onChange} value={field.value} />
             )}
-            name="subLabel"
+            name='subLabel'
             control={control}
             defaultValue={[]}
           />
 
           <Controller
             render={({ field }) => <Difficulty onChange={field.onChange} />}
-            name="difficulty"
+            name='difficulty'
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className='flex justify-end'>
         <input
-          className="btn flex absolute mt-6"
-          type="submit"
-          value="Submit"
+          className='btn flex absolute mt-6'
+          type='submit'
+          value='Submit'
         />
       </div>
     </form>

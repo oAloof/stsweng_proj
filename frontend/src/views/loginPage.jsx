@@ -6,13 +6,13 @@ import PasswordInput from '../components/PasswordInput'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
-export default function Login() {
+export default function Login () {
   const { handleSubmit, control } = useForm()
   const navigate = useNavigate()
   const { isAuthenticated, isLoadingAuth, login } = useContext(AuthenticationContext)
 
   useEffect(() => {
-    console.log('isAuthenticated:', isAuthenticated);
+    console.log('isAuthenticated:', isAuthenticated)
     if (isAuthenticated) {
       navigate('/planner')
     }
@@ -30,17 +30,17 @@ export default function Login() {
   }
 
   if (isAuthenticated) {
-    navigate('/planner')  
+    navigate('/planner')
   }
 
   return (
-    <div className="min-h-screen flex justify-center">
+    <div className='min-h-screen flex justify-center'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-xs flex flex-col space-y-4 self-center"
+        className='max-w-xs flex flex-col space-y-4 self-center'
       >
         <Controller
-          name="username"
+          name='username'
           control={control}
           render={({ field }) => (
             <UsernameInput
@@ -48,11 +48,11 @@ export default function Login() {
               value={field.value}
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
         <Controller
-          name="password"
+          name='password'
           control={control}
           render={({ field }) => (
             <PasswordInput
@@ -60,16 +60,16 @@ export default function Login() {
               value={field.value}
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
-        <div className="flex justify-between">
-          <input className="btn mt-6" type="submit" value="Login" />
+        <div className='flex justify-between'>
+          <input className='btn mt-6' type='submit' value='Login' />
 
           <input
-            className="btn mt-6"
-            type="submit"
-            value="Register"
+            className='btn mt-6'
+            type='submit'
+            value='Register'
             onClick={handleRegister}
           />
         </div>

@@ -8,16 +8,17 @@ import EmpathyPage from './views/empathyPage'
 // CONTEXTS
 import { AuthenticationProvider } from './contexts/AuthenticationContext'
 
-export default function App() {
+export default function App () {
   return (
     <Router>
-      <AuthenticationProvider> 
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/planner" element={<PlannerPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-      </AuthenticationProvider>
+      {/* <AuthenticationProvider>  */}
+      <Routes>
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/planner' element={<PlannerPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/empathy' element={<EmpathyPage />} />
+      </Routes>
+      {/* </AuthenticationProvider> */}
     </Router>
   )
 }

@@ -1,10 +1,17 @@
 import React, { createContext, useState, useEffect } from 'react'
 
+import { GoogleGenerativeAI } from 'https://esm.run/@google/generative-ai'
+
+const API_KEY = 'AIzaSyBsiHEIwIELH8KYTaO2aZ8ieObRUdyJxNE'
+
+const genAI = new GoogleGenerativeAI(API_KEY)
+
 export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
+  const [subtasks, setSubtasks] = useState([])
 
   useEffect(() => {
     console.log(tasks)
@@ -81,8 +88,11 @@ export const TasksProvider = ({ children }) => {
   }
 
   // Create Task (no backend)
-  const dummyCreateTask = (task) => {
+  const dummyCreateTask = async (task) => {
     setTasks([...tasks, task])
+    const response = await generateSubTasks(task)
+    console.log('generatingSubTasks')
+    console.log(response)
   }
   // Delete Task (no backend)
   const dummyDeleteTask = (taskId) => {
@@ -93,6 +103,36 @@ export const TasksProvider = ({ children }) => {
     setTasks(
       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     )
+  }
+  async function getSubtasks (task) {
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+    let prompt = 'Generate short and simple subtasks for this task: "'
+    prompt += task
+    prompt += '"\nPut [Subtask] before each subtask'
+    prompt += '\n\n Sample format:\n'
+    prompt += '[Subtask] Subtask 1\n'
+    prompt += '[Subtask] Subtask 2\n'
+
+    const result = await model.generateContent(prompt)
+    const response = await result.response
+    const subtasks = response.text()
+    return subtasks
+  }
+
+  const generateSubTasks = async (task) => {
+    try {
+      const subtasksString = await getSubtasks(task.title) // subtasks
+
+      const subtasksArray = subtasksString.split('[Subtask]').filter(task => task.trim() !== '') // split by [Subtask], remvoe empty strinsg and store into an array
+
+      setSubtasks(subtasksArray)
+      setIsLoadingTasks(false)
+
+      console.log(subtasksArray)
+    } catch (err) {
+      console.error(err)
+      setIsLoadingTasks(false)
+    }
   }
 
   useEffect(() => {
@@ -106,7 +146,8 @@ export const TasksProvider = ({ children }) => {
     dummyCreateTask,
     dummyDeleteTask,
     dummyUpdateTask,
-    tasks
+    tasks,
+    subtasks
   }
 
   return (
