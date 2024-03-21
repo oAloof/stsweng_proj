@@ -5,6 +5,9 @@ import ModalMaker from '../components/ModalMaker'
 import { TasksProvider } from '../contexts/TasksContext'
 
 export default function EmpathyPage () {
+  function refreshPage(){ 
+    window.location.reload(); 
+  }
   return (
     <>
       <div className='flex justify-center min-w-full py-5'>
@@ -43,11 +46,14 @@ export default function EmpathyPage () {
 
           <dialog id='my_modal_5' className='modal'>
             <div className='modal-box min-w-max'>
-              <p>Tasks Sucesssfully Added!</p>
+              <p>Are you sure you want to add more tasks?</p>
+              <p>You already have <b>8</b> tasks due on the same day</p>
+              <p>We suggest moving the deadline to a different day for better task distribution</p>
               <div className='modal-action justify-start'>
                 <form method='dialog'>
-                  <button className='btn'>Close</button>
+                  <button className='btn'>Edit Tasks</button>
                 </form>
+                <button className='btn' onClick={refreshPage}>Add Tasks</button>
               </div>
             </div>
           </dialog>
