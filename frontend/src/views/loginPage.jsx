@@ -1,18 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import UsernameInput from '../components/UsernameInput'
 import EmailInput from '../components/EmailInput'
 import PasswordInput from '../components/PasswordInput'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function Login() {
   const { handleSubmit, control } = useForm()
   const navigate = useNavigate()
-  const onSubmit = (data) => {
-    console.log(data)
+  const { isAuthenticated, isLoadingAuth, login } = useContext(AuthenticationContext)
+
+  useEffect(() => {
+    console.log('isAuthenticated:', isAuthenticated);
+    if (isAuthenticated) {
+      navigate('/planner')
+    }
+  }, [isAuthenticated, navigate])
+
+  const onSubmit = async (data) => {
+    await login(data.username, data.password)
   }
   const handleRegister = () => {
-    navigate('./register')
+    navigate('/register')
+  }
+
+  if (isLoadingAuth) {
+    return <div>Loading...</div>
   }
 
   return (

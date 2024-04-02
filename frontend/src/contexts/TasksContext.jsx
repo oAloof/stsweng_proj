@@ -9,6 +9,7 @@ export const TasksProvider = ({ children }) => {
   useEffect(() => {
     console.log(tasks)
   }, [tasks])
+  
   /**
    * Fetches all tasks of a user from the server.
    *
@@ -106,7 +107,9 @@ export const TasksProvider = ({ children }) => {
     dummyCreateTask,
     dummyDeleteTask,
     dummyUpdateTask,
-    tasks
+    tasks,
+    setTasks,
+    createTask
   }
 
   return (

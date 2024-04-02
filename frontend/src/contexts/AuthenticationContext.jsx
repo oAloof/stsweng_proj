@@ -1,4 +1,3 @@
-import { set } from 'mongoose'
 import React, { createContext, useState, useEffect } from 'react'
 
 export const AuthenticationContext = createContext()
@@ -9,10 +8,15 @@ export const AuthenticationProvider = ({ children }) => {
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
   const checkAuthentication = async () => {
+    const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('/api/users/check-auth', {
+      const response = await fetch('http://localhost:4000/api/users/check-auth', {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`
+        }
       })
       if (!response.ok) {
         throw new Error('User not authenticated.')
@@ -20,10 +24,12 @@ export const AuthenticationProvider = ({ children }) => {
 
       const data = await response.json()
       if (!data.success) {
-        throw new Error('User not authenticated.')
+        console.log('User not authenticated.');
+        return 
       }
       if (!data.result) {
-        throw new Error('User not authenticated.')
+        console.log('User not authenticated.');
+        return 
       }
       // Set the user data in the context except for the password
       setUser({
@@ -34,19 +40,19 @@ export const AuthenticationProvider = ({ children }) => {
       setIsAuthenticated(true)
       setIsLoadingAuth(false)
     } catch (error) {
-      console.error(error)
       setIsLoadingAuth(false)
+      setIsAuthenticated(true)
     }
   }
 
-  const register = async (username, password, firstName, lastName) => {
+  const register = async (username, password, firstName, lastName, email) => {
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch('http://localhost:4000/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password, firstName, lastName })
+        body: JSON.stringify({ username, password, firstName, lastName, email })
       })
       if (!response.ok) {
         throw new Error('Failed to register user.')
@@ -65,7 +71,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch('http://localhost:4000/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -80,6 +86,7 @@ export const AuthenticationProvider = ({ children }) => {
       if (!data.success) {
         throw new Error('Failed to login user.')
       }
+      localStorage.setItem('token', data.jwtToken)
       setIsAuthenticated(true)
     } catch (error) {
       console.error(error)
@@ -89,7 +96,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthentication()
-  }, [isAuthenticated])
+  }, [checkAuthentication])
 
   const contextValue = {
     isAuthenticated,
