@@ -1,67 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import listPlugin from '@fullcalendar/list'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
-import Form from './Form'
 import './FullCalendar.css'
+import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent({ events, setEvents }) {
+export default function CalendarComponent() {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const { tasks } = useContext(TasksContext)
 
   useEffect(() => {
     const initFullCalendar = () => {
       const calendarApi = calendarRef.current.getApi()
 
-      new Draggable(externalEventsRef.current, {
-        itemSelector: '.fc-event',
-        eventData: (event) => ({
-          title: event.innerText.trim()
+      if (calendarApi) {
+        new Draggable(externalEventsRef.current, {
+          itemSelector: '.fc-event',
+          eventData: (eventEl) => ({
+            title: eventEl.innerText.trim()
+          })
         })
-      })
 
-      calendarApi.on('drop', (info) => {
-        info.draggedEl.parentNode.removeChild(info.draggedEl)
-      })
-
-      calendarApi.on('eventClick', (info) => {
-        setSelectedEvent(events[0]) // Set the selected event
-        document.getElementById('my_modal_3').showModal()
-      })
+        calendarApi.on('eventClick', (info) => {
+          console.log(info)
+        })
+      }
     }
 
     initFullCalendar()
-  }, [events]) // Run effect when events change
+  }, [])
 
   return (
-    <div>
-      <div ref={externalEventsRef} id="external-events">
-        <p>
-          <strong>Draggable Events</strong>
-        </p>
-      </div>
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        editable
-        droppable
-        events={events} // Pass the events prop to FullCalendar
-      />
-      {/* <div>{selectedEvent.title}</div> */}
-      <Form event={selectedEvent} setEvents={setEvents} />
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
-          </div>
+    <>
+      <div>
+        <div ref={externalEventsRef} id="external-events">
+          <p>
+            <strong>Draggable Events</strong>
+          </p>
         </div>
-      </dialog>
-      {/* Use key prop to force re-render */}
-    </div>
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: 'prev,next',
+            center: 'title',
+            right: 'dayGridMonth,listWeek' // user can switch between the two
+          }}
+          editable
+          droppable
+          events={tasks}
+        />
+      </div>
+    </>
   )
 }

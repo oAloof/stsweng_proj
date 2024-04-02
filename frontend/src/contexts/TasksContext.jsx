@@ -5,6 +5,10 @@ export const TasksContext = createContext()
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    console.log(tasks)
+  }, [tasks])
   
   /**
    * Fetches all tasks of a user from the server.
@@ -44,11 +48,11 @@ export const TasksProvider = ({ children }) => {
   /**
    * Creates a new task by sending a POST request to the server. This will also set
    * the isLoadingTasks state to true to trigger a re-fetch of the tasks.
-   * 
+   *
    * @param {Object} task       The task object to be created.
-   * @returns {Promise<void>}   A promise that resolves when the task is created 
+   * @returns {Promise<void>}   A promise that resolves when the task is created
    *                            successfully.
-   * @throws {Error}            If there is an HTTP error or if the response data 
+   * @throws {Error}            If there is an HTTP error or if the response data
    *                            indicates failure.
    */
   const createTask = async (task) => {
@@ -77,12 +81,32 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
+  // Create Task (no backend)
+  const dummyCreateTask = (task) => {
+    setTasks([...tasks, task])
+  }
+  // Delete Task (no backend)
+  const dummyDeleteTask = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId))
+  }
+  // Update Task (no backend)
+  const dummyUpdateTask = (updatedTask) => {
+    setTasks(
+      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    )
+  }
+
   useEffect(() => {
     fetchAllTasks()
   }, [isLoadingTasks])
 
+  // when using context remember to pass in the stupid state or functions you're gonna use
   const contextValue = {
     isLoadingTasks,
+    createTask,
+    dummyCreateTask,
+    dummyDeleteTask,
+    dummyUpdateTask,
     tasks,
     setTasks,
     createTask
