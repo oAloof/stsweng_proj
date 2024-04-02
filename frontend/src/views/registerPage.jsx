@@ -11,7 +11,7 @@ import { AuthenticationContext } from '../contexts/AuthenticationContext'
 export default function Login() {
   const { handleSubmit, control } = useForm()
   const navigate = useNavigate()
-  const { register, isAuthenticated } = useContext(AuthenticationContext)
+  const { register, isAuthenticated, isLoadingAuth } = useContext(AuthenticationContext)
 
   const onSubmit = (data, event) => {
     try {
@@ -30,6 +30,10 @@ export default function Login() {
       navigate('/planner')
     }
   }, [isAuthenticated])
+
+  if (isLoadingAuth) {
+    return <div>Loading...</div>
+  }
   
   return (
     <div className="min-h-screen flex justify-center">

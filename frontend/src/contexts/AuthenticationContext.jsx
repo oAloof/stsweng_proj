@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react'
 export const AuthenticationContext = createContext()
 
 export const AuthenticationProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState({ username: '', firstName: '', lastName: '' })
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
@@ -41,6 +41,7 @@ export const AuthenticationProvider = ({ children }) => {
       setIsLoadingAuth(false)
     } catch (error) {
       setIsLoadingAuth(false)
+      setIsAuthenticated(true)
     }
   }
 
@@ -95,7 +96,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthentication()
-  }, [])
+  }, [checkAuthentication])
 
   const contextValue = {
     isAuthenticated,

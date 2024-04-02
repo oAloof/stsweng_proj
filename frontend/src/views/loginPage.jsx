@@ -29,10 +29,6 @@ export default function Login () {
     return <div>Loading...</div>
   }
 
-  if (isAuthenticated) {
-    navigate('/planner')  
-  }
-
   return (
     <div className='min-h-screen flex justify-center'>
       <form
