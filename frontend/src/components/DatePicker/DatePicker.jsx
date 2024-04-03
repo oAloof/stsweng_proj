@@ -10,8 +10,11 @@ export default function MyDatePicker ({ handleOnChange, value }) {
         <DatePicker
           selected={value}
           onChange={handleOnChange}
-          placeholderText='Select Date'
-
+          minDate={new Date()}
+          showTimeSelect
+          timeFormat="h:mm aa"
+          dateFormat="MMMM d h:mm aa"
+          placeholderText='Select Date and Time'
         />
       </div>
     </>
