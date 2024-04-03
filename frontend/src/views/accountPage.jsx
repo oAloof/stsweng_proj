@@ -32,7 +32,7 @@ export default function Login () {
   return (
     <div>
     <NavBar/>
-      <div className=' mx-auto min-h-screen flex justify-center items-center space-x-5 p-20 max-w-[2000px]'>
+      <div className=' mx-auto min-h-screen flex justify-center space-x-5 p-20 max-w-[2000px]'>
         <div className='w-1/4'>
           <Card />
         </div>

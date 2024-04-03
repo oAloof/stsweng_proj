@@ -25,12 +25,12 @@ export default function Stats ({ user, tasks }) {
       <div className='stat'>
         <div className='stat-figure text-secondary'>
           <div className='stat-figure text-secondary'>
-            <svg xmlns='http://www.w3.org/2000/svg' className='inline-block w-6 h-6 stroke-black' viewBox='0 0 24 24' fill='none' stroke='#000000' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><polyline points='9 11 12 14 22 4' /><path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' /></svg>
+            <svg xmlns='http://www.w3.org/2000/svg' className='inline-block w-6 h-6 stroke-accent' viewBox='0 0 24 24' fill='none' stroke='#000000' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><polyline points='9 11 12 14 22 4' /><path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' /></svg>
           </div>
         </div>
         <div className='stat-value'>86%</div>
         <div className='stat-title'>Tasks done</div>
-        <div className='stat-desc text-secondary'>31 tasks remaining</div>
+        <div className='stat-desc text-accent'>31 tasks remaining</div>
       </div>
 
     </div>
