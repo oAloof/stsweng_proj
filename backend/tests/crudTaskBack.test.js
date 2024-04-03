@@ -11,7 +11,7 @@ const taskController = require('../controllers/task.controller')
 */
 
 jest.mock('../models/task.model', () => ({
-  getOneTask: jest.fn(),
+  getTaskById: jest.fn(),
   getTasks: jest.fn(),
   createTask: jest.fn(),
   updateTask: jest.fn(),
@@ -45,7 +45,7 @@ describe('Task Controller', () => {
     it('success: create Task', async () => {
       // Arrange
       const userDetails = {
-        _id: '1234567'
+        id: '1234567'
       }
       const taskDetails = {
         owner: '1234567',
@@ -53,7 +53,7 @@ describe('Task Controller', () => {
         category: 'sweng',
         label: 'elp',
         description: 'help',
-        difficulty: 'medium',
+        difficulty: 2.5,
         exp: 300,
         deadline: '2024-02-21'
       }
@@ -77,7 +77,7 @@ describe('Task Controller', () => {
     it('failure: create task', async () => {
       // Arrange
       const userDetails = {
-        _id: '1234567'
+        id: '1234567'
       }
       const taskDetails = {
         owner: '1234567',
@@ -85,7 +85,7 @@ describe('Task Controller', () => {
         category: 'sweng',
         label: 'elp',
         description: 'help',
-        difficulty: 'medium',
+        difficulty: 2.5,
         exp: 300,
         deadline: '2024-02-21'
       }
@@ -126,7 +126,7 @@ describe('Task Controller', () => {
           category: 'sweng',
           label: 'elp',
           description: 'help',
-          difficulty: 'medium',
+          difficulty: 4.5,
           deadline: '2024-02-21'
         },
         {
@@ -135,7 +135,7 @@ describe('Task Controller', () => {
           category: 'sweng',
           label: 'elp',
           description: 'help',
-          difficulty: 'medium',
+          difficulty: 4.5,
           deadline: '2024-02-21'
         },
         {
@@ -144,7 +144,7 @@ describe('Task Controller', () => {
           category: 'sweng',
           label: 'elp',
           description: 'help',
-          difficulty: 'medium',
+          difficulty: 4.5,
           deadline: '2024-02-21'
         },
         {
@@ -153,14 +153,14 @@ describe('Task Controller', () => {
           category: 'sweng',
           label: 'elp',
           description: 'help',
-          difficulty: 'medium',
+          difficulty: 4.5,
           deadline: '2024-02-21'
         }
       ]
 
       const success = { success: true, result: tasks }
 
-      req.body.userId = userDetails.userId
+      req.user._id = userDetails._id
 
       taskModel.getTasks.mockImplementation(() => success) // Simulate success
 
@@ -168,7 +168,7 @@ describe('Task Controller', () => {
       await taskController.getTasks(req, res)
 
       // Assert
-      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
+      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails._id)
       expect(res.status(201).send).toHaveBeenCalledWith(success)
     })
 
@@ -179,7 +179,7 @@ describe('Task Controller', () => {
         userId: '1234567'
       }
 
-      req.body.userId = userDetails.userId
+      req.user._id = userDetails._id
 
       const error = { success: false, error: 'Failed to get tasks.', result: null }
 
@@ -189,7 +189,7 @@ describe('Task Controller', () => {
       await taskController.getTasks(req, res)
 
       // Assert
-      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails.userId)
+      expect(taskModel.getTasks).toHaveBeenCalledWith(userDetails._id)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
       expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
@@ -205,7 +205,7 @@ describe('Task Controller', () => {
         category: 'sweng',
         label: 'elp',
         description: 'help',
-        difficulty: 'medium',
+        difficulty: 4.5,
         exp: 500,
         deadline: '2024-02-21'
       }
@@ -216,13 +216,13 @@ describe('Task Controller', () => {
 
       req.body.taskId = taskID
 
-      taskModel.getOneTask.mockImplementation((id) => success) // Simulate success
+      taskModel.getTaskById.mockImplementation((id) => success) // Simulate success
 
       // Act
       await taskController.getOneTask(req, res)
 
       // Assert
-      expect(taskModel.getOneTask).toHaveBeenCalledWith(taskID)
+      expect(taskModel.getTaskById).toHaveBeenCalledWith(taskID)
       expect(res.status(201).send).toHaveBeenCalledWith(success)
     })
 
@@ -235,13 +235,13 @@ describe('Task Controller', () => {
 
       const error = { success: false, error: 'Failed to get task.', result: null }
 
-      taskModel.getOneTask.mockImplementation(() => error)
+      taskModel.getTaskById.mockImplementation(() => error)
 
       // Act
       await taskController.getOneTask(req, res)
 
       // Assert
-      expect(taskModel.getOneTask).toHaveBeenCalledWith(taskID)
+      expect(taskModel.getTaskById).toHaveBeenCalledWith(taskID)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
       expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
@@ -260,7 +260,7 @@ describe('Task Controller', () => {
         category: 'sweng',
         label: 'elp',
         description: 'help',
-        difficulty: 'medium',
+        difficulty: 4.5,
         exp: 500,
         deadline: '2024-02-21'
       }
@@ -271,13 +271,13 @@ describe('Task Controller', () => {
       req.body = taskDetails
       // req.body.taskId = taskID
 
-      taskModel.updateTask.mockImplementation((id, taskDetails) => success) // Simulate success
+      taskModel.updateTask.mockImplementation((taskDetails) => success) // Simulate success
 
       // Act
       await taskController.update(req, res)
 
       // Assert
-      expect(taskModel.updateTask).toHaveBeenCalledWith(req.body.taskId, taskDetails)
+      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails)
       expect(res.status(201).send).toHaveBeenCalledWith(success)
     })
 
@@ -292,7 +292,7 @@ describe('Task Controller', () => {
         category: 'sweng',
         label: 'elp',
         description: 'help',
-        difficulty: 'medium',
+        difficulty: 4.5,
         exp: 500,
         deadline: '2024-02-21'
       }
@@ -309,7 +309,7 @@ describe('Task Controller', () => {
       await taskController.update(req, res)
 
       // Assert
-      expect(taskModel.updateTask).toHaveBeenCalledWith(req.body.taskId, taskDetails)
+      expect(taskModel.updateTask).toHaveBeenCalledWith(taskDetails)
       expect(res.status(500).send).toHaveBeenCalledWith(error)
       expect(res.status(400).send).toHaveBeenCalledWith(error)
     })
