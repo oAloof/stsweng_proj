@@ -85,9 +85,6 @@ export default function CalendarComponent () {
     <>
       <div>
         <div ref={externalEventsRef} id='external-events'>
-          <p>
-            <strong>Draggable Events</strong>
-          </p>
         </div>
         <FullCalendar
           ref={calendarRef}

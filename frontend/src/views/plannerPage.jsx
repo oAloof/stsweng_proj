@@ -15,15 +15,19 @@ export default function PlannerPage () {
   return (
     <>
       <NavBar/>
-      <div className='w-10/12'>
-        <FullCalendar onEventClick={handleEventClick} />
+      <div className='flex p-10 space-x-5'>
+        <div className='w-2/12 flex-col shadow'>
+          <button
+            className='btn'
+            onClick={() => document.getElementById('my_modal_4').showModal()}
+          >
+            Add Task
+          </button>
+        </div>
+        <div className='w-10/12 flex-col'>
+          <FullCalendar onEventClick={handleEventClick} />
+        </div>
       </div>
-      <button
-        className='btn'
-        onClick={() => document.getElementById('my_modal_4').showModal()}
-      >
-        Add Task
-      </button>
       <dialog id='my_modal_4' className='modal'>
         <div className='modal-box min-w-max'>
           <Form />
@@ -34,8 +38,6 @@ export default function PlannerPage () {
           </div>
         </div>
       </dialog>
-
-      <ModalMaker />
     </>
   )
 }
