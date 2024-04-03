@@ -1,10 +1,12 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
+import { AuthenticationContext } from './AuthenticationContext'
 
 export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
+  const { isAuthenticated } = useContext(AuthenticationContext)
   
   /**
    * Fetches all tasks of a user from the server.
@@ -14,12 +16,14 @@ export const TasksProvider = ({ children }) => {
    *          message if the operation failed, and the tasks of the user.
    */
   const fetchAllTasks = async () => {
+    const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('/api/tasks/getTasks', {
+      const response = await fetch('http://localhost:4000/api/tasks/getTasks', {
         method: 'GET',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
         }
       })
 
@@ -33,6 +37,7 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
+      console.log(data.result);
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -53,6 +58,7 @@ export const TasksProvider = ({ children }) => {
    */
   const createTask = async (task) => {
     const jwtToken = localStorage.getItem('token')
+    console.log("Inside createTask...", task);
     try {
       const response = await fetch('http://localhost:4000/api/tasks/create', {
         method: 'POST',
@@ -73,13 +79,14 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
-      isLoadingTasks(true)
+      setIsLoadingTasks(true)
     } catch (err) {
       console.error(err)
     }
   }
 
   const updateTask = async (task) => {
+    console.log("Inside updateTask...", task);
     const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch('http://localhost:4000/api/tasks/update', {
@@ -101,18 +108,12 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
-      isLoadingTasks(true)
+      setIsLoadingTasks(true)
     } catch (err) {
       console.error(err)
     }
   }
 
-  // Create Task (no backend)
-  const dummyCreateTask = (task) => {
-    console.log("Inside dummyCreateTask...")
-    console.log(task);
-    setTasks([...tasks, task])
-  }
   // Delete Task (no backend)
   const dummyDeleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId))
@@ -125,20 +126,21 @@ export const TasksProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('isLoadingTasks: ', isLoadingTasks);
+    console.log('Is Authenticated: ', isAuthenticated);
     fetchAllTasks()
-  }, [isLoadingTasks])
+    console.log('Tasks: ', tasks);
+  }, [isAuthenticated, isLoadingTasks])
 
   // when using context remember to pass in the stupid state or functions you're gonna use
   const contextValue = {
     isLoadingTasks,
     createTask,
-    dummyCreateTask,
     dummyDeleteTask,
     dummyUpdateTask,
     tasks,
     setTasks,
-    createTask
+    createTask,
+    updateTask,
   }
 
   return (

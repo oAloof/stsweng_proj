@@ -10,7 +10,7 @@ import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
 export default function Form() {
-  const { createTask, dummyCreateTask } = useContext(TasksContext)
+  const { createTask } = useContext(TasksContext)
   const { handleSubmit, control, reset } = useForm()
 
   const onSubmit = (data) => {
@@ -23,10 +23,7 @@ export default function Form() {
       deadline: data.end,
       start: data.start
     }
-    // console.log(data)
-    // console.log(dataToSend)
-    dummyCreateTask(dataToSend)
-    // createTask(dataToSend)
+    createTask(dataToSend)
     reset()
   }
 

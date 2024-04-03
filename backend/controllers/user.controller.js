@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken')
 const UserController = {}
 
 UserController.checkAuthenticationStatus = async (req, res) => {
-  console.log('Checking authentication status...')
-  console.log(req.user);
   if (!req.user) {
     return res.status(400).send({ success: true, result: null })
   }

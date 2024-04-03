@@ -9,14 +9,19 @@ import { TasksContext } from '../contexts/TasksContext'
 export default function CalendarComponent() {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
-  const { tasks } = useContext(TasksContext)
+  const { tasks, isLoadingTasks, updateTask } = useContext(TasksContext)
   const [calendarEvents, setCalendarEvents] = useState([])
+  const tasksRef = useRef(tasks)
+
+  useEffect(() => {
+    tasksRef.current = tasks // Update the ref whenever tasks change
+  }, [tasks])
 
   useEffect(() => {
     const transformTasksToEvents = tasks.map((task) => ({
-      id: task.id,
+      id: task._id,
       title: task.taskName,
-      start: task.start,
+      start: task.deadline,
       end: task.deadline
     }))
 
@@ -54,14 +59,19 @@ export default function CalendarComponent() {
 
         calendarApi.on('eventDrop', ({event}) => {
           // Update tasks state (used in the backend)
-          console.log(event.start)
-          
+          const currentTasks = tasksRef.current
+          // Look for the task in the tasks array
+          const task = currentTasks.find((task) => task._id.toString() === event.id.toString())
+          // Update the task with the new start and deadline
+          task.deadline = event.start
+          // Update the task in the backend
+          updateTask(task)
         })
       }
     }
 
     initFullCalendar()
-  }, [tasks])
+  }, [isLoadingTasks])
 
   return (
     <>

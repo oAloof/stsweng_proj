@@ -10,9 +10,9 @@ const taskSchema = new Schema(
     label: [String],
     description: { type: String },
     difficulty: {
-      type: String,
-      enum: ["0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"],
-      default: '0.5',
+      type: Number,
+      enum: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+      default: 0.5,
       required: true
     },
     exp: { type: Number },
@@ -89,9 +89,9 @@ exports.createTask = async (obj) => {
  * @param {Object} obj The task object, containing properties like 'title', 'description', and 'status'.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
-exports.updateTask = async (taskId, obj) => {
+exports.updateTask = async (task) => {
   try {
-    const result = await Task.findByIdAndUpdate(taskId, obj)
+    const result = await Task.findByIdAndUpdate(task._id, task, { new: true })
     return { success: true, result }
   } catch (error) {
     console.error(error)

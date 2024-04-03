@@ -97,7 +97,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthentication()
-  }, [checkAuthentication])
+  }, [])
 
   const contextValue = {
     isAuthenticated,

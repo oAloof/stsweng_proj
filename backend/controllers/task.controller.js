@@ -54,15 +54,16 @@ TaskController.getOneTask = async (req, res) => {
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
 TaskController.create = async (req, res) => {
+  const exp = await expCalc.calculateExp(req.user, req.body.difficulty)
   // Parse the request body and extract the task properties into another object.
   const task = {
-    owner: req.user._id,
+    owner: req.user.id,
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: expCalc(req.user, req.body.difficulty),
+    exp: exp,
     deadline: req.body.deadline
   }
 
@@ -90,18 +91,19 @@ TaskController.create = async (req, res) => {
 TaskController.update = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
+    _id: req.body._id,
     owner: req.user._id,
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: expCalc(req.user, req.body.difficulty),
+    exp: await expCalc.calculateExp(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
   try {
-    const response = await TaskModel.updateTask(req.body.taskId, task)
+    const response = await TaskModel.updateTask(task)
     if (!response.success) {
       return res.status(400).send(response)
     }
