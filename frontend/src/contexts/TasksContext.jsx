@@ -126,9 +126,7 @@ export const TasksProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('Is Authenticated: ', isAuthenticated)
     fetchAllTasks()
-    console.log('Tasks: ', tasks)
   }, [isAuthenticated, isLoadingTasks])
 
   // when using context remember to pass in the stupid state or functions you're gonna use
