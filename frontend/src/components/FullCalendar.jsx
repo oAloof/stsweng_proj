@@ -22,7 +22,13 @@ export default function CalendarComponent () {
       id: task._id,
       title: task.taskName,
       start: task.deadline,
-      end: task.deadline
+      end: task.deadline,
+      extendedProps: {
+        category: task.category,
+        label: task.label,
+        description: task.description,
+        difficulty: task.difficulty
+      }
     }))
 
     setCalendarEvents(transformTasksToEvents)
@@ -48,13 +54,15 @@ export default function CalendarComponent () {
         // start: data.start
         calendarApi.on('eventClick', ({ event }) => {
           // Open Modal
-          document.getElementById('my_modal_4').showModal()
-
-          document.getElementById('Title').value = event.title
-
-          document.getElementsByClassName('Category').value = event.category[0]
-
-          console.log(info)
+          const eventData = {
+            title: event.title,
+            category: event.extendedProps.category,
+            label: event.extendedProps.label,
+            description: event.extendedProps.description,
+            difficulty: event.extendedProps.difficulty,
+            deadline: event.end,
+            start: event.start
+          }
         })
 
         calendarApi.on('eventDrop', ({ event }) => {

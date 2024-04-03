@@ -5,11 +5,18 @@ import ModalMaker from '../components/ModalMaker'
 import NavBar from '../components/NavBar'
 
 export default function PlannerPage () {
+  const [selectedEventData, setSelectedEventData] = useState(null)
+
+  const handleEventClick = (data) => {
+    setSelectedEventData(data)
+    document.getElementById('my_modal_4').showModal()
+  }
+
   return (
     <>
       <NavBar/>
       <div className='w-10/12'>
-        <FullCalendar />
+        <FullCalendar onEventClick={handleEventClick} />
       </div>
       <button
         className='btn'

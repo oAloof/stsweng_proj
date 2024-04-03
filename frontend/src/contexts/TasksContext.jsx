@@ -37,7 +37,6 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
-      console.log(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -86,7 +85,6 @@ export const TasksProvider = ({ children }) => {
   }
 
   const updateTask = async (task) => {
-    console.log('Inside updateTask...', task)
     const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch('http://localhost:4000/api/tasks/update', {
