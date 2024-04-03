@@ -2,7 +2,7 @@ import DatePicker from 'react-datepicker' // Assuming DatePicker is exported fro
 import 'react-datepicker/dist/react-datepicker.css'
 import './DatePicker.css'
 
-export default function MyDatePicker ({ handleOnChange, value }) {
+export default function MyDatePicker({ handleOnChange, value }) {
   return (
     <>
       <div>
@@ -16,7 +16,7 @@ export default function MyDatePicker ({ handleOnChange, value }) {
           showTimeSelect
           timeFormat="h:mm aa"
           dateFormat="MMMM d h:mm aa"
-          placeholderText='Select Date and Time'
+          placeholderText="Select Date and Time"
         />
       </div>
     </>
