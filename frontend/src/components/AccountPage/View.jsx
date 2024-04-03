@@ -2,15 +2,14 @@ import React, { useState, useContext } from 'react'
 import { EditContext } from '../../contexts/EditContext'
 
 export default function View ({ }) {
-  const [table, setTable] = useState(false)
   const [type, setType] = useState(false)
   const [editPass, setEditPass] = useState(false)
   const [newIcon, setNewIcon] = useState(false)
-  const { edit, noEdit, accountView, noAccount, account } = useContext(EditContext)
+  const { edit, noEdit, accountView, noAccount, account, table, tableView, noTable} = useContext(EditContext)
 
   const Account = () => {
     accountView()
-    setTable(false)
+    noTable()
     setEditPass(false)
     setNewIcon(false)
     noEdit()
@@ -18,14 +17,14 @@ export default function View ({ }) {
 
   const Overdue = () => {
     noAccount()
-    setTable(true)
+    tableView()
     setType('Overdue Tasks')
     noEdit()
   }
 
   const Finished = () => {
     noAccount()
-    setTable(true)
+    tableView()
     setType('Finished Tasks')
     noEdit()
   }
@@ -45,7 +44,7 @@ export default function View ({ }) {
   }
 
   return (
-    <div className=' min-w-[800px] max-w-[1200px]'>
+    <div className=' min-w-[800px] max-w-[1200px] '>
       <ul className='mt-5 menu menu-horizontal bg-base-200 rounded-box flex space-x-3'>
         <li>
           <button className='btn shadow' onClick={Account}>
@@ -68,7 +67,7 @@ export default function View ({ }) {
         </li>
       </ul>
 
-      <div className='shadow items-center space-y-5 p-5 mt-5'>
+      <div className='shadow items-center space-y-5 p-5 mt-5 bg-[#ffffff] rounded-xl'>
         {table &&
           <div className='overflow-x-auto'>
             <p class='font-bold'>{type}</p>

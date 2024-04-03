@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import FullCalendar from '../components/FullCalendar'
 import Form from '../components/Form'
 import ModalMaker from '../components/ModalMaker'
+import NavBar from '../components/NavBar'
 
 export default function PlannerPage () {
   return (
     <>
+      <NavBar/>
       <div className='w-10/12'>
         <FullCalendar />
       </div>

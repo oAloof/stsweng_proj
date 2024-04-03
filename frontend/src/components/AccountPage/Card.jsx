@@ -3,20 +3,21 @@ import { EditContext } from '../../contexts/EditContext'
 import Icon from './Icon'
 
 export default function Card ({}) {
-  const { editTask, accountView } = useContext(EditContext)
+  const { editTask, accountView, noTable } = useContext(EditContext)
 
   const Edit = () => {
+    noTable()
     editTask()
     accountView()
   }
 
   return (
-    <div className='shadow flex flex-col items-center space-y-5 p-5 max-w-[400px]'>
+    <div className='shadow flex flex-col items-center space-y-5 p-5 max-w-[400px] rounded-xl	'>
       <div className=''>
         <Icon iconLInk='link' userName='UserNumber1' />
       </div>
       <div>
-        <p>Username</p>
+        <p >Username</p>
       </div>
       <div>
         <div className='flex justify-between'>

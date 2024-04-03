@@ -5,6 +5,7 @@ export const EditContext = createContext()
 export const EditProvider = ({ children }) => {
   const [edit, setEdit] = useState(false)
   const [account, setAccount] = useState(true)
+  const [table, setTable] = useState(false)
 
   const editTask = () => {
     setEdit(true)
@@ -22,13 +23,25 @@ export const EditProvider = ({ children }) => {
     setAccount(false)
   }
 
+  const tableView = () => {
+    setTable(true)
+  }
+
+  const noTable = () => {
+    setTable(false)
+  }
+
   const contextValue = {
     editTask,
     noEdit,
     accountView,
     noAccount,
     account,
-    edit
+    edit,
+    table,
+    tableView,
+    noTable
+
   }
 
   return (
