@@ -12,6 +12,11 @@ export default function PlannerPage () {
     document.getElementById('my_modal_4').showModal()
   }
 
+  const closeModal = () => {
+    document.getElementById('my_modal_4').close();
+    setSelectedEventData(null) // Reset for next use
+  };
+
   return (
     <>
       <NavBar/>
@@ -30,10 +35,10 @@ export default function PlannerPage () {
       </div>
       <dialog id='my_modal_4' className='modal'>
         <div className='modal-box min-w-max'>
-          <Form />
+          <Form eventData={selectedEventData} />
           <div className='modal-action justify-start'>
             <form method='dialog'>
-              <button className='btn'>Close</button>
+              <button className='btn' onClick={closeModal}>Close</button>
             </form>
           </div>
         </div>

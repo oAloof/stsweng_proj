@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import TitleInput from './TitleInput'
 import TextEditor from './TextEditor/TextEditor'
@@ -9,9 +9,19 @@ import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function Form () {
+export default function Form ({eventData}) {
   const { createTask } = useContext(TasksContext)
-  const { handleSubmit, control, reset } = useForm()
+  const { handleSubmit, control, setValue, reset } = useForm()
+
+  useEffect(() => {
+    if (eventData) {
+      Object.keys(eventData).forEach(field => {
+        setValue(field, eventData[field]);
+      }) 
+    } else {
+      reset()
+    }
+  }, [eventData, setValue, reset]);
 
   const onSubmit = (data) => {
     const dataToSend = {
@@ -68,7 +78,7 @@ export default function Form () {
               )}
               name='title'
               control={control}
-              // defaultValue=""
+              defaultValue=""
             />
 
             <Controller

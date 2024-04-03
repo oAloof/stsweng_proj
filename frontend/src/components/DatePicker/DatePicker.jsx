@@ -8,8 +8,10 @@ export default function MyDatePicker ({ handleOnChange, value }) {
       <div>
         <div>Due Date</div>
         <DatePicker
-          selected={value}
-          onChange={handleOnChange}
+          // value={value}
+          preventOpenOnFocus={true}
+          selected={value ? new Date(value) : null}
+          onChange={(date) => handleOnChange(date)}
           minDate={new Date()}
           showTimeSelect
           timeFormat="h:mm aa"

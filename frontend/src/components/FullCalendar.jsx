@@ -6,7 +6,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import './FullCalendar.css'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent () {
+export default function CalendarComponent ({ onEventClick }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
   const { tasks, isLoadingTasks, updateTask } = useContext(TasksContext)
@@ -56,13 +56,15 @@ export default function CalendarComponent () {
           // Open Modal
           const eventData = {
             title: event.title,
-            category: event.extendedProps.category,
-            label: event.extendedProps.label,
+            category: [event.extendedProps.category],
+            subLabel: event.extendedProps.label,
             description: event.extendedProps.description,
             difficulty: event.extendedProps.difficulty,
-            deadline: event.end,
+            end: event.end,
             start: event.start
           }
+
+          onEventClick(eventData)
         })
 
         calendarApi.on('eventDrop', ({ event }) => {

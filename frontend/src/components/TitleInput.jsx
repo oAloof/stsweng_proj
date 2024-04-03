@@ -10,7 +10,7 @@ export default function TitleInput ({ handleOnChange, value }) {
           type='text'
           placeholder='Title'
           className='input input-bordered w-full max-w-xs '
-          onChange={(e) => handleOnChange(e.target.value)}
+          onChange={handleOnChange}
           value={value}
           defaultValue=''
         />
