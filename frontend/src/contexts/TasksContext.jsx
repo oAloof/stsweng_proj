@@ -7,7 +7,7 @@ export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
   const { isAuthenticated } = useContext(AuthenticationContext)
-  
+
   /**
    * Fetches all tasks of a user from the server.
    *
@@ -23,7 +23,7 @@ export const TasksProvider = ({ children }) => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         }
       })
 
@@ -37,7 +37,7 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
-      console.log(data.result);
+      console.log(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -58,14 +58,14 @@ export const TasksProvider = ({ children }) => {
    */
   const createTask = async (task) => {
     const jwtToken = localStorage.getItem('token')
-    console.log("Inside createTask...", task);
+    console.log('Inside createTask...', task)
     try {
       const response = await fetch('http://localhost:4000/api/tasks/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })
@@ -86,7 +86,7 @@ export const TasksProvider = ({ children }) => {
   }
 
   const updateTask = async (task) => {
-    console.log("Inside updateTask...", task);
+    console.log('Inside updateTask...', task)
     const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch('http://localhost:4000/api/tasks/update', {
@@ -94,7 +94,7 @@ export const TasksProvider = ({ children }) => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })
@@ -126,9 +126,9 @@ export const TasksProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('Is Authenticated: ', isAuthenticated);
+    console.log('Is Authenticated: ', isAuthenticated)
     fetchAllTasks()
-    console.log('Tasks: ', tasks);
+    console.log('Tasks: ', tasks)
   }, [isAuthenticated, isLoadingTasks])
 
   // when using context remember to pass in the stupid state or functions you're gonna use
@@ -140,7 +140,7 @@ export const TasksProvider = ({ children }) => {
     tasks,
     setTasks,
     createTask,
-    updateTask,
+    updateTask
   }
 
   return (

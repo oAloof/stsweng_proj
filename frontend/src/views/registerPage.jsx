@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import UsernameInput from '../components/UsernameInput'
 import EmailInput from '../components/EmailInput'
@@ -8,7 +8,7 @@ import ConfirmPasswordInput from '../components/ConfirmPasswordInput'
 import NameInput from '../components/NameInput'
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
-export default function Login() {
+export default function Login () {
   const { handleSubmit, control } = useForm()
   const navigate = useNavigate()
   const { register, isAuthenticated, isLoadingAuth } = useContext(AuthenticationContext)
@@ -22,7 +22,6 @@ export default function Login() {
     } catch (error) {
       console.error(error)
     }
-    
   }
 
   useEffect(() => {
@@ -34,15 +33,15 @@ export default function Login() {
   if (isLoadingAuth) {
     return <div>Loading...</div>
   }
-  
+
   return (
-    <div className="min-h-screen flex justify-center">
+    <div className='min-h-screen flex justify-center'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-xs flex flex-col space-y-4 self-center"
+        className='max-w-xs flex flex-col space-y-4 self-center'
       >
         <Controller
-          name="username"
+          name='username'
           control={control}
           render={({ field }) => (
             <UsernameInput
@@ -50,20 +49,20 @@ export default function Login() {
               value={field.value}
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
         <Controller
-          name="email"
+          name='email'
           control={control}
           render={({ field }) => (
             <EmailInput handleOnChange={field.onChange} value={field.value} />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
         <Controller
-          name="password"
+          name='password'
           control={control}
           render={({ field }) => (
             <PasswordInput
@@ -71,12 +70,12 @@ export default function Login() {
               value={field.value}
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
         <Controller
-          
-          name="confirmPassword"
+
+          name='confirmPassword'
           control={control}
           render={({ field }) => (
             <ConfirmPasswordInput
@@ -84,40 +83,40 @@ export default function Login() {
               value={field.value}
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
-      <Controller
-          name="firstName"
+        <Controller
+          name='firstName'
           control={control}
           render={({ field }) => (
-            <NameInput 
+            <NameInput
               handleOnChange={field.onChange}
               value={field.value}
-              placeholder="First Name"
+              placeholder='First Name'
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
-      <Controller
-          name="lastName"
+        <Controller
+          name='lastName'
           control={control}
           render={({ field }) => (
-            <NameInput 
+            <NameInput
               handleOnChange={field.onChange}
               value={field.value}
-              placeholder="Last Name"
+              placeholder='Last Name'
             />
           )}
-          defaultValue=""
+          defaultValue=''
         />
 
-        <div className="flex self-center">
+        <div className='flex self-center'>
           <input
-            className="btn mt-6"
-            type="submit"
-            value="Register"
+            className='btn mt-6'
+            type='submit'
+            value='Register'
           />
         </div>
       </form>

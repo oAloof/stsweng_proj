@@ -105,7 +105,7 @@ UserController.loginUser = async (req, res) => {
       maxAge: 3600000
     })
 
-    res.status(200).send({ success: true, result: user, jwtToken: token}) // Send the token in the response because cookies are not working
+    res.status(200).send({ success: true, result: user, jwtToken: token }) // Send the token in the response because cookies are not working
   } catch (error) {
     console.error(error)
     res

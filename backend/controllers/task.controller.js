@@ -63,7 +63,7 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: exp,
+    exp,
     deadline: req.body.deadline
   }
 

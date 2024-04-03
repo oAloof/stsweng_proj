@@ -14,8 +14,8 @@ export const AuthenticationProvider = ({ children }) => {
         method: 'GET',
         credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwtToken}`
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`
         }
       })
       if (!response.ok) {
@@ -25,11 +25,11 @@ export const AuthenticationProvider = ({ children }) => {
       const data = await response.json()
       if (!data.success) {
         console.log('User not authenticated.')
-        return 
+        return
       }
       if (!data.result) {
         console.log('User not authenticated.')
-        return 
+        return
       }
       // Set the user data in the context except for the password
       setUser({

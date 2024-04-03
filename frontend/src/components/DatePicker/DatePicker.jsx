@@ -11,7 +11,7 @@ export default function MyDatePicker ({ handleOnChange, value }) {
           selected={value}
           onChange={handleOnChange}
           placeholderText='Select Date'
-          
+
         />
       </div>
     </>
