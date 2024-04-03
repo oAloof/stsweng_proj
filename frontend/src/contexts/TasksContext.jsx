@@ -79,8 +79,38 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
+  const updateTask = async (task) => {
+    const jwtToken = localStorage.getItem('token')
+    try {
+      const response = await fetch('http://localhost:4000/api/tasks/update', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
+        },
+        body: JSON.stringify(task)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      if (!data.success) {
+        console.error(data.error)
+        return
+      }
+      isLoadingTasks(true)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   // Create Task (no backend)
   const dummyCreateTask = (task) => {
+    console.log("Inside dummyCreateTask...")
+    console.log(task);
     setTasks([...tasks, task])
   }
   // Delete Task (no backend)
@@ -95,6 +125,7 @@ export const TasksProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    console.log('isLoadingTasks: ', isLoadingTasks);
     fetchAllTasks()
   }, [isLoadingTasks])
 

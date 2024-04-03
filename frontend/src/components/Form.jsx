@@ -21,9 +21,12 @@ export default function Form() {
       description: data.description,
       difficulty: data.difficulty,
       deadline: data.end,
+      start: data.start
     }
+    // console.log(data)
+    // console.log(dataToSend)
     dummyCreateTask(dataToSend)
-    createTask(dataToSend)
+    // createTask(dataToSend)
     reset()
   }
 
@@ -68,7 +71,7 @@ export default function Form() {
               )}
               name="title"
               control={control}
-              defaultValue=""
+              //defaultValue=""
             />
 
             <Controller

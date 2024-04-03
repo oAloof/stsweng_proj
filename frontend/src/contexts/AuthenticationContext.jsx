@@ -24,11 +24,11 @@ export const AuthenticationProvider = ({ children }) => {
 
       const data = await response.json()
       if (!data.success) {
-        console.log('User not authenticated.');
+        console.log('User not authenticated.')
         return 
       }
       if (!data.result) {
-        console.log('User not authenticated.');
+        console.log('User not authenticated.')
         return 
       }
       // Set the user data in the context except for the password
@@ -40,6 +40,7 @@ export const AuthenticationProvider = ({ children }) => {
       setIsAuthenticated(true)
       setIsLoadingAuth(false)
     } catch (error) {
+      // localStorage.removeItem('token')
       setIsLoadingAuth(false)
       setIsAuthenticated(false)
     }
