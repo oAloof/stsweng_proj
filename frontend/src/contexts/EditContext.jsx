@@ -6,22 +6,22 @@ export const EditProvider = ({ children }) => {
   const [edit, setEdit] = useState(false)
   const [account, setAccount] = useState(true)
 
-  const editTask = ()=> {
-    setEdit(true);
-  };
+  const editTask = () => {
+    setEdit(true)
+  }
 
-  const noEdit = ()=> {
-    setEdit(false);
-  };
+  const noEdit = () => {
+    setEdit(false)
+  }
 
-  const accountView = ()=> {
-    setAccount(true);
-  };
+  const accountView = () => {
+    setAccount(true)
+  }
 
-  const noAccount = ()=> {
-    setAccount(false);
-  };
- 
+  const noAccount = () => {
+    setAccount(false)
+  }
+
   const contextValue = {
     editTask,
     noEdit,

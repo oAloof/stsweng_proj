@@ -10,19 +10,21 @@ import { AuthenticationProvider } from './contexts/AuthenticationContext'
 import { TasksProvider } from './contexts/TasksContext'
 import { EditProvider } from './contexts/EditContext'
 
-export default function App() {
+export default function App () {
   return (
     <Router>
-      <AuthenticationProvider> 
+      <AuthenticationProvider>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-            <Route path="/planner" element={
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route
+            path='/planner' element={
               <TasksProvider>
                 <PlannerPage />
               </TasksProvider>
-            } />
-          <Route path="/accounts" element={<EditProvider><AccountPage /></EditProvider>} />
+            }
+          />
+          <Route path='/accounts' element={<EditProvider><AccountPage /></EditProvider>} />
         </Routes>
       </AuthenticationProvider>
     </Router>

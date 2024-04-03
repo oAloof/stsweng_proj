@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 
-export default function Table({}) {
-
+export default function Table ({}) {
   return (
-    <div className="overflow-x-auto">
-      <table className="table">
+    <div className='overflow-x-auto'>
+      <table className='table'>
         {/* head */}
         <thead>
           <tr>
-            <th></th>
+            <th />
             <th>Name</th>
             <th>Job</th>
             <th>Favorite Color</th>
@@ -23,7 +22,7 @@ export default function Table({}) {
             <td>Blue</td>
           </tr>
           {/* row 2 */}
-          <tr className="hover">
+          <tr className='hover'>
             <th>2</th>
             <td>Hart Hagerty</td>
             <td>Desktop Support Technician</td>

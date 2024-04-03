@@ -6,7 +6,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import './FullCalendar.css'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent() {
+export default function CalendarComponent () {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
   const { tasks } = useContext(TasksContext)
@@ -30,7 +30,7 @@ export default function CalendarComponent() {
           itemSelector: '.fc-event',
           eventData: (event) => ({
             title: event.innerText.trim()
-            //taskID: (from the mongoDB)
+            // taskID: (from the mongoDB)
           })
         })
 
@@ -41,21 +41,20 @@ export default function CalendarComponent() {
         // difficulty: data.difficulty,
         // deadline: data.end,
         // start: data.start
-        calendarApi.on('eventClick', ({event}) => {
+        calendarApi.on('eventClick', ({ event }) => {
           // Open Modal
           document.getElementById('my_modal_4').showModal()
 
           document.getElementById('Title').value = event.title
 
           document.getElementsByClassName('Category').value = event.category[0]
-          
+
           console.log(info)
         })
 
-        calendarApi.on('eventDrop', ({event}) => {
+        calendarApi.on('eventDrop', ({ event }) => {
           // Update tasks state (used in the backend)
           console.log(event.start)
-          
         })
       }
     }
@@ -66,7 +65,7 @@ export default function CalendarComponent() {
   return (
     <>
       <div>
-        <div ref={externalEventsRef} id="external-events">
+        <div ref={externalEventsRef} id='external-events'>
           <p>
             <strong>Draggable Events</strong>
           </p>
@@ -74,7 +73,7 @@ export default function CalendarComponent() {
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
+          initialView='dayGridMonth'
           headerToolbar={{
             left: 'prev,next',
             center: 'title',

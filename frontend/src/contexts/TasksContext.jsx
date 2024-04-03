@@ -5,7 +5,7 @@ export const TasksContext = createContext()
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
-  
+
   /**
    * Fetches all tasks of a user from the server.
    *
@@ -59,7 +59,7 @@ export const TasksProvider = ({ children }) => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })
@@ -87,7 +87,7 @@ export const TasksProvider = ({ children }) => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })
@@ -109,8 +109,8 @@ export const TasksProvider = ({ children }) => {
 
   // Create Task (no backend)
   const dummyCreateTask = (task) => {
-    console.log("Inside dummyCreateTask...")
-    console.log(task);
+    console.log('Inside dummyCreateTask...')
+    console.log(task)
     setTasks([...tasks, task])
   }
   // Delete Task (no backend)
@@ -125,7 +125,7 @@ export const TasksProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('isLoadingTasks: ', isLoadingTasks);
+    console.log('isLoadingTasks: ', isLoadingTasks)
     fetchAllTasks()
   }, [isLoadingTasks])
 
