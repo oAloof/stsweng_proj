@@ -41,7 +41,7 @@ export const AuthenticationProvider = ({ children }) => {
       setIsLoadingAuth(false)
     } catch (error) {
       setIsLoadingAuth(false)
-      setIsAuthenticated(true)
+      setIsAuthenticated(false)
     }
   }
 
