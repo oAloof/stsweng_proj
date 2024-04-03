@@ -1,10 +1,12 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
+import { AuthenticationContext } from './AuthenticationContext'
 
 export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
-  const [setTasks] = useState([])
+  const [tasks, setTasks] = useState([])
+  const { isAuthenticated } = useContext(AuthenticationContext)
 
   /**
    * Fetches all tasks of a user from the server.
@@ -14,12 +16,14 @@ export const TasksProvider = ({ children }) => {
    *          message if the operation failed, and the tasks of the user.
    */
   const fetchAllTasks = async () => {
+    const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('/api/tasks/getTasks', {
+      const response = await fetch('http://localhost:4000/api/tasks/getTasks', {
         method: 'GET',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`
         }
       })
 
@@ -33,6 +37,7 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
+      console.log(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -44,20 +49,23 @@ export const TasksProvider = ({ children }) => {
   /**
    * Creates a new task by sending a POST request to the server. This will also set
    * the isLoadingTasks state to true to trigger a re-fetch of the tasks.
-   * 
+   *
    * @param {Object} task       The task object to be created.
-   * @returns {Promise<void>}   A promise that resolves when the task is created 
+   * @returns {Promise<void>}   A promise that resolves when the task is created
    *                            successfully.
-   * @throws {Error}            If there is an HTTP error or if the response data 
+   * @throws {Error}            If there is an HTTP error or if the response data
    *                            indicates failure.
    */
   const createTask = async (task) => {
+    const jwtToken = localStorage.getItem('token')
+    console.log('Inside createTask...', task)
     try {
-      const response = await fetch('/api/tasks/create', {
+      const response = await fetch('http://localhost:4000/api/tasks/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })
@@ -71,19 +79,66 @@ export const TasksProvider = ({ children }) => {
         console.error(data.error)
         return
       }
-      isLoadingTasks(true)
+      setIsLoadingTasks(true)
     } catch (err) {
       console.error(err)
     }
   }
 
+  const updateTask = async (task) => {
+    console.log('Inside updateTask...', task)
+    const jwtToken = localStorage.getItem('token')
+    try {
+      const response = await fetch('http://localhost:4000/api/tasks/update', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`
+        },
+        body: JSON.stringify(task)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      if (!data.success) {
+        console.error(data.error)
+        return
+      }
+      setIsLoadingTasks(true)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // Delete Task (no backend)
+  const dummyDeleteTask = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId))
+  }
+  // Update Task (no backend)
+  const dummyUpdateTask = (updatedTask) => {
+    setTasks(
+      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    )
+  }
+
   useEffect(() => {
     fetchAllTasks()
-  }, [isLoadingTasks])
+  }, [isAuthenticated, isLoadingTasks])
 
+  // when using context remember to pass in the stupid state or functions you're gonna use
   const contextValue = {
     isLoadingTasks,
-    createTask
+    createTask,
+    dummyDeleteTask,
+    dummyUpdateTask,
+    tasks,
+    setTasks,
+    createTask,
+    updateTask
   }
 
   return (

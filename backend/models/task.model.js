@@ -10,9 +10,9 @@ const taskSchema = new Schema(
     label: [String],
     description: { type: String },
     difficulty: {
-      type: String,
-      enum: ['easy', 'medium', 'hard'],
-      default: 'easy',
+      type: Number,
+      enum: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+      default: 0.5,
       required: true
     },
     exp: { type: Number },
@@ -30,8 +30,6 @@ const taskSchema = new Schema(
 )
 
 const Task = mongoose.model('Tasks', taskSchema)
-
-exports.getTask = (id) => {}
 
 /**
  * Retrieves all tasks of user.
@@ -55,9 +53,12 @@ exports.getTasks = async (userId) => {
  * @param {String} taskId The task Id.
  * @returns The task with the specific task Id.
  */
-exports.getOneTask = async (taskId) => {
+exports.getTaskById = async (taskId) => {
   try {
     const tasks = await Task.findById(taskId)
+    if (!tasks) {
+      return { success: false, error: 'Task not found.', result: null }
+    }
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
@@ -88,9 +89,9 @@ exports.createTask = async (obj) => {
  * @param {Object} obj The task object, containing properties like 'title', 'description', and 'status'.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
-exports.updateTask = async (taskId, obj) => {
+exports.updateTask = async (task) => {
   try {
-    const result = await Task.findByIdAndUpdate(taskId, obj)
+    const result = await Task.findByIdAndUpdate(task._id, task, { new: true })
     return { success: true, result }
   } catch (error) {
     console.error(error)
@@ -111,5 +112,43 @@ exports.deleteTask = async (taskId) => {
   } catch (error) {
     console.error(error)
     return { success: false, error: 'Failed to delete task.', result: null }
+  }
+}
+
+/**
+ * Sorts tasks based on a variable
+ *
+ * @param {String} query The variables to be sorted by
+ * @returns The task with the specific task Id.
+ */
+exports.sortTasks = async (query) => {
+  try {
+    const tasks = await Task.find({}).sort(query)
+    return { success: true, result: tasks }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+  }
+}
+
+/**
+ * Finds tasks based on a variable/s
+ *
+ * @param {Array} query The variables to be sorted by: [Category, [Labels]]
+ * @returns The task with the specific task Id.
+ */
+exports.getSpecificTasks = async (query) => {
+  let tasks
+
+  try {
+    if (query.length > 1) {
+      tasks = await Task.find({ category: query[0], label: query[1] })
+    } else {
+      tasks = await Task.find({ category: query[0] })
+    }
+    return { success: true, result: tasks }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
   }
 }

@@ -11,8 +11,15 @@ const UserModel = require('../models/user.model')
  */
 const cookieExtractor = (req) => {
   let token = null
-  if (req && req.signedCookies) {
-    token = req.signedCookies.jwtToken
+  // if (req && req.signedCookies) {
+  //   token = req.signedCookies.jwtToken
+  // }
+  // Get the token from the Authorization header
+  const bearerHeader = req.headers.authorization
+
+  if (bearerHeader) {
+    const bearer = bearerHeader.split(' ')
+    token = bearer[1]
   }
   return token
 }
@@ -26,9 +33,9 @@ module.exports = (passport) => {
   passport.use(
     new JwtStrategy(options, async (jwtPayload, done) => {
       try {
-        const user = await UserModel.getUser(jwtPayload.id)
-        if (user) {
-          return done(null, user)
+        const user = await UserModel.getUserById(jwtPayload.id)
+        if (user.success) {
+          return done(null, user.result)
         } else {
           return done(null, false)
         }
