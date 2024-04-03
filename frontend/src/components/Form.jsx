@@ -10,12 +10,20 @@ import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
 export default function Form() {
-  const { dummyCreateTask } = useContext(TasksContext)
+  const { createTask, dummyCreateTask } = useContext(TasksContext)
   const { handleSubmit, control, reset } = useForm()
-  const [newTask, setNewTask] = useState('')
 
   const onSubmit = (data) => {
-    dummyCreateTask(data)
+    const dataToSend = {
+      taskName: data.title,
+      category: data.category[0],
+      label: data.subLabel,
+      description: data.description,
+      difficulty: data.difficulty,
+      deadline: data.end,
+    }
+    dummyCreateTask(dataToSend)
+    createTask(dataToSend)
     reset()
   }
 

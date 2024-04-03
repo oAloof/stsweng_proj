@@ -20,6 +20,7 @@ export default function CalendarComponent() {
           itemSelector: '.fc-event',
           eventData: (eventEl) => ({
             title: eventEl.innerText.trim()
+            //taskID: (from the mongoDB)
           })
         })
 

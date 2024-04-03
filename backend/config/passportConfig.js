@@ -22,6 +22,7 @@ const cookieExtractor = (req) => {
     const bearer = bearerHeader.split(' ')
     token = bearer[1]
   }
+  console.log("Token: ", token);
   return token
 }
 
@@ -35,6 +36,7 @@ module.exports = (passport) => {
     new JwtStrategy(options, async (jwtPayload, done) => {
       try {
         const user = await UserModel.getUserById(jwtPayload.id)
+        console.log("User: ", user);
         if (user) {
           return done(null, user)
         } else {

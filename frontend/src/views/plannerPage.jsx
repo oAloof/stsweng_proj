@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react'
 import FullCalendar from '../components/FullCalendar'
 import Form from '../components/Form'
 import ModalMaker from '../components/ModalMaker'
-import { TasksProvider } from '../contexts/TasksContext'
 
 export default function PlannerPage() {
   return (
     <>
-      <TasksProvider>
         <div className="w-10/12">
           <FullCalendar />
         </div>
@@ -29,7 +27,6 @@ export default function PlannerPage() {
         </dialog>
 
         <ModalMaker />
-      </TasksProvider>
     </>
   )
 }

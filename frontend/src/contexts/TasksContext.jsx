@@ -5,10 +5,6 @@ export const TasksContext = createContext()
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
-
-  useEffect(() => {
-    console.log(tasks)
-  }, [tasks])
   
   /**
    * Fetches all tasks of a user from the server.
@@ -56,12 +52,14 @@ export const TasksProvider = ({ children }) => {
    *                            indicates failure.
    */
   const createTask = async (task) => {
+    const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('/api/tasks/create', {
+      const response = await fetch('http://localhost:4000/api/tasks/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
         },
         body: JSON.stringify(task)
       })

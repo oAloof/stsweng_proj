@@ -14,8 +14,14 @@ export default function App() {
       <AuthenticationProvider> 
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/planner" element={<PlannerPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+            <Route path="/planner" element={
+              <TasksProvider>
+                <PlannerPage />
+              </TasksProvider>
+            } />
+
         </Routes>
       </AuthenticationProvider>
     </Router>

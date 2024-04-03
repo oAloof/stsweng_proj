@@ -11,8 +11,8 @@ const taskSchema = new Schema(
     description: { type: String },
     difficulty: {
       type: String,
-      enum: ['easy', 'medium', 'hard'],
-      default: 'easy',
+      enum: ["0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"],
+      default: '0.5',
       required: true
     },
     exp: { type: Number },
