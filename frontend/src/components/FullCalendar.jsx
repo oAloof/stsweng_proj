@@ -80,6 +80,7 @@ export default function CalendarComponent({ onEventClick, method, edit }) {
             // Update the task with the new start and deadline
             task.deadline = event.start
             // Update the task in the backend
+            console.log(task)
             updateTask(task)
           })
         }
