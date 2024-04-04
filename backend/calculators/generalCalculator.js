@@ -57,11 +57,11 @@ generalCalculator.calculateExp = async (user, difficulty) => {
  * @returns The updated exp for the task.
  */
 
-generalCalculator.editDeduction = async (task, newtask) => {
+generalCalculator.editDeduction = async (task, newDeadline) => {
   const currentExp = task.exp
   let updatedExp = 0
 
-  const date1 = new Date(newtask.deadline)
+  const date1 = new Date(newDeadline)
   const date2 = new Date(task.deadline)
 
   if (date1 > date2) {

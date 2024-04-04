@@ -22,11 +22,10 @@ app.use(cookieParser())
 app.use(passport.initialize()) // to initialize passport for authentication
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, 
+  origin: [process.env.FRONTEND_URL],
   credentials: true
 }
 app.use(cors(corsOptions)) // to allow cross-origin requests
-
 // Configure passport
 require('./config/passportConfig')(passport)
 
@@ -47,17 +46,17 @@ app.use('/api/users', userRoutes)
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error('Could not connect to MongoDB:', err));
+  .catch((err) => console.error('Could not connect to MongoDB:', err))
 
 if (process.env.NODE_ENV !== 'production') {
-    // Additional local development setup if necessary
-    // For example, setting up a local server listener is only needed when not in production
-    const port = process.env.PORT || 4000;
-    app.listen(port, () => {
-        console.log(`Server running on port ${port}`);
-    });
+  // Additional local development setup if necessary
+  // For example, setting up a local server listener is only needed when not in production
+  const port = process.env.PORT || 4000
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
+  })
 }
 
 // For Vercel, export the serverless handler
-module.exports = app;
-module.exports.handler = serverless(app);
+module.exports = app
+module.exports.handler = serverless(app)
