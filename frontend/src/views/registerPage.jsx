@@ -13,11 +13,11 @@ export default function Login () {
   const navigate = useNavigate()
   const { register, isAuthenticated, isLoadingAuth } = useContext(AuthenticationContext)
 
-  const onSubmit = (data, event) => {
+  const onSubmit = async (data) => {
     try {
-      const result = register(data.username, data.password, data.firstName, data.lastName, data.email)
+      const result = await register(data.username, data.password, data.firstName, data.lastName, data.email)
       if (result.success) {
-        navigate('/login')
+        navigate('/')
       }
     } catch (error) {
       console.error(error)
