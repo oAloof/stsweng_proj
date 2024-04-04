@@ -37,7 +37,7 @@ export default function NavBar () {
             <li>
                 <Link to="/accounts">Profile</Link>
             </li>
-            <li><Link to="/">Logout</Link></li>
+            <li><button onClick={handleLogout} className="w-full text-left">Logout</button></li>
           </ul>
         </div>
       </div>

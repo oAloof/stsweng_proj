@@ -8,7 +8,9 @@ const userSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    experience: { type: Number, default: 0 },
+    streak: { type: Number, default: 0 },
   },
   {
     timestamps: true

@@ -44,13 +44,14 @@ app.use(
 
 app.use('/api/users', userRoutes)
 
-// Connect to database
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
 
 if (process.env.NODE_ENV !== 'production') {
+    // Additional local development setup if necessary
+    // For example, setting up a local server listener is only needed when not in production
     const port = process.env.PORT || 4000;
     app.listen(port, () => {
         console.log(`Server running on port ${port}`);
