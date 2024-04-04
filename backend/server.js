@@ -18,7 +18,6 @@ const app = express()
 app.use(express.json()) // to parse json content
 app.use(express.urlencoded({ extended: true })) // to parse body from url
 app.use(cookieParser())
-// app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
 app.use(passport.initialize()) // to initialize passport for authentication
 
 const corsOptions = {
