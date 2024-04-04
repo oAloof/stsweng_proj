@@ -12,14 +12,35 @@ generalCalculator.calculateExp = async (user, difficulty) => {
 
   // base exp
   switch (difficulty) {
-    case 'easy':
+    case 0.5:
       calculatedExp += 100
       break
-    case 'medium':
+    case 1.0:
+      calculatedExp += 150
+      break
+    case 1.5:
+      calculatedExp += 200
+      break
+    case 2.0:
+      calculatedExp += 250
+      break
+    case 2.5:
       calculatedExp += 300
       break
-    case 'hard':
+    case 3.0:
+      calculatedExp += 350
+      break
+    case 3.5:
+      calculatedExp += 400
+      break
+    case 4.0:
+      calculatedExp += 450
+      break
+    case 4.5:
       calculatedExp += 500
+      break
+    case 5.0:
+      calculatedExp += 550
       break
   }
 
@@ -67,7 +88,9 @@ generalCalculator.overdueDeduction = async (task) => {
   const date2 = new Date()
 
   if (date2 > date1) {
-    const overdue = Math.round(date2.getTime() - date1.getTime() / (1000 * 3600 * 24))
+    const overdue = Math.round(
+      date2.getTime() - date1.getTime() / (1000 * 3600 * 24)
+    )
     updatedExp = currentExp - currentExp * 0.05 * overdue
   } else {
     updatedExp = currentExp
@@ -91,7 +114,9 @@ generalCalculator.advanceAddition = async (task) => {
   const date2 = new Date()
 
   if (date2 > date1) {
-    const advance = Math.round(date1.getTime() - date2.getTime() / (1000 * 3600 * 24))
+    const advance = Math.round(
+      date1.getTime() - date2.getTime() / (1000 * 3600 * 24)
+    )
     updatedExp = currentExp + currentExp * 0.05 * advance
   } else {
     updatedExp = currentExp
@@ -99,3 +124,5 @@ generalCalculator.advanceAddition = async (task) => {
 
   return updatedExp
 }
+
+module.exports = generalCalculator

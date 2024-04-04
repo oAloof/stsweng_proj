@@ -2,8 +2,10 @@ require('dotenv').config() // loads the environment variables from .env file
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const passport = require('passport')
+const serverless = require('serverless-http')
 
 // Route Imports
 const taskRoutes = require('./routes/taskRoutes')
@@ -15,8 +17,15 @@ const app = express()
 // express app settings
 app.use(express.json()) // to parse json content
 app.use(express.urlencoded({ extended: true })) // to parse body from url
-app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
+app.use(cookieParser())
+// app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
 app.use(passport.initialize()) // to initialize passport for authentication
+
+const corsOptions = {
+  origin: process.env.FRONTEND_URL, 
+  credentials: true
+}
+app.use(cors(corsOptions)) // to allow cross-origin requests
 
 // Configure passport
 require('./config/passportConfig')(passport)
@@ -35,17 +44,20 @@ app.use(
 
 app.use('/api/users', userRoutes)
 
-// connect to the mongoDB database
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to database.')
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error('Could not connect to MongoDB:', err));
 
-    // start listening for requests
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is listening on port ${process.env.PORT}...`)
-    })
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+if (process.env.NODE_ENV !== 'production') {
+    // Additional local development setup if necessary
+    // For example, setting up a local server listener is only needed when not in production
+    const port = process.env.PORT || 4000;
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+}
+
+// For Vercel, export the serverless handler
+module.exports = app;
+module.exports.handler = serverless(app);

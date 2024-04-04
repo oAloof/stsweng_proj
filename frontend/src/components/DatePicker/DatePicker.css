@@ -11,3 +11,12 @@
 .react-datepicker__header {
  background-color: theme('colors.base-200');
 }
+
+.element.style {
+  background-color: red;
+}
+
+
+input {
+  background-color: theme('colors.base-200');
+}

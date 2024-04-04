@@ -1,11 +1,11 @@
 const UserModel = require('../models/user.model')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const UserController = {}
 
 UserController.checkAuthenticationStatus = async (req, res) => {
   if (!req.user) {
-    return res.status(401).send({ success: true, result: null })
+    return res.status(400).send({ success: true, result: null })
   }
 
   const userId = req.user._id
@@ -18,7 +18,6 @@ UserController.checkAuthenticationStatus = async (req, res) => {
   if (!user) {
     return res.status(401).send({ success: true, result: null })
   }
-
   res.status(200).send({ success: true, result: response.result })
 }
 
@@ -32,7 +31,7 @@ UserController.checkAuthenticationStatus = async (req, res) => {
  */
 UserController.registerUser = async (req, res) => {
   try {
-    const { username, firstName, lastName, password } = req.body
+    const { username, firstName, lastName, email, password } = req.body
     // Check if the user already exists
     let response = await UserModel.getUserByUsername(username)
     const existingUser = response.result
@@ -51,6 +50,7 @@ UserController.registerUser = async (req, res) => {
       username,
       firstName,
       lastName,
+      email,
       password: hashedPassword
     })
 
@@ -93,7 +93,7 @@ UserController.loginUser = async (req, res) => {
 
     // Create the JWT token
     const payload = { id: user._id, username: user.username }
-    const token = await jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '1h'
     })
 
@@ -101,12 +101,14 @@ UserController.loginUser = async (req, res) => {
     res.cookie('jwtToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
-      signed: true,
+      sameSite: 'None',
       maxAge: 3600000
     })
 
-    res.status(200).send({ success: true, result: user })
+    // remove the password from the user object
+    user.password = undefined
+
+    res.status(200).send({ success: true, result: user, jwtToken: token }) // Send the token in the response because cookies are not working
   } catch (error) {
     console.error(error)
     res

@@ -3,7 +3,8 @@ const expCalc = require('../calculators/generalCalculator')
 const TaskController = {}
 
 /**
- * Retrieves all tasks of user.
+ * Retrieves all tasks of user. This is a protected route, so the user must be
+ * authenticated to access it.
  *
  * @param {Object} req The request object.
  * @param {Object} res The response object.
@@ -33,7 +34,7 @@ TaskController.getTasks = async (req, res) => {
  */
 TaskController.getOneTask = async (req, res) => {
   try {
-    const response = await TaskModel.getTaskById(req.body.taskId)
+    const response = await TaskModel.getTaskById(req.body._id)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -54,15 +55,16 @@ TaskController.getOneTask = async (req, res) => {
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
 TaskController.create = async (req, res) => {
+  const exp = await expCalc.calculateExp(req.user, req.body.difficulty)
   // Parse the request body and extract the task properties into another object.
   const task = {
-    owner: req.user._id,
+    owner: req.user.id,
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: expCalc(req.user, req.body.difficulty),
+    exp,
     deadline: req.body.deadline
   }
 
@@ -90,18 +92,19 @@ TaskController.create = async (req, res) => {
 TaskController.update = async (req, res) => {
   // Parse the request body and extract the task properties into another object.
   const task = {
+    _id: req.body._id,
     owner: req.user._id,
     taskName: req.body.taskName,
     category: req.body.category,
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: expCalc(req.user, req.body.difficulty),
+    exp: await expCalc.calculateExp(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
   try {
-    const response = await TaskModel.updateTask(req.body.taskId, task)
+    const response = await TaskModel.updateTask(task)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -123,7 +126,8 @@ TaskController.update = async (req, res) => {
  */
 TaskController.delete = async (req, res) => {
   try {
-    const response = await TaskModel.deleteTask(req.body.taskId)
+    console.log(req)
+    const response = await TaskModel.deleteTask(req.body._id)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -133,6 +137,22 @@ TaskController.delete = async (req, res) => {
     res
       .status(500)
       .send({ success: false, error: 'Failed to delete task.', result: null })
+  }
+}
+
+
+TaskController.getByStatus = async (req, res) => {
+  try {
+    const response = await TaskModel.getByStatus(req.body.status, req.body.userId)
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(200).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to get tasks.', result: null })
   }
 }
 

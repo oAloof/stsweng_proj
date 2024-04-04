@@ -10,9 +10,9 @@ const taskSchema = new Schema(
     label: [String],
     description: { type: String },
     difficulty: {
-      type: String,
-      enum: ['easy', 'medium', 'hard'],
-      default: 'easy',
+      type: Number,
+      enum: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+      default: 0.5,
       required: true
     },
     exp: { type: Number },
@@ -89,9 +89,9 @@ exports.createTask = async (obj) => {
  * @param {Object} obj The task object, containing properties like 'title', 'description', and 'status'.
  * @returns The result of the operation, a success flag, and an error message if operation failed.
  */
-exports.updateTask = async (taskId, obj) => {
+exports.updateTask = async (task) => {
   try {
-    const result = await Task.findByIdAndUpdate(taskId, obj)
+    const result = await Task.findByIdAndUpdate(task._id, task, { new: true })
     return { success: true, result }
   } catch (error) {
     console.error(error)
@@ -107,7 +107,7 @@ exports.updateTask = async (taskId, obj) => {
  */
 exports.deleteTask = async (taskId) => {
   try {
-    const tasks = await Task.findByIdAndRemove(taskId)
+    const tasks = await Task.findByIdAndDelete(taskId)
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
@@ -127,7 +127,11 @@ exports.sortTasks = async (query) => {
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
-    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+    return {
+      success: false,
+      error: 'Failed to sort tasks by.' + query,
+      result: null
+    }
   }
 }
 
@@ -149,6 +153,34 @@ exports.getSpecificTasks = async (query) => {
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
-    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+    return {
+      success: false,
+      error: 'Failed to sort tasks by.' + query,
+      result: null
+    }
+  }
+}
+
+
+
+/**
+ * Find tasks of a user based on status
+ *
+ * @param {Array} taskId The variables to be sorted by: ['PLANNING', 'TODO', 'ONGOING', 'COMPLETED', 'DELAYED']
+ * @returns The task with the specific task Id.
+ */
+
+exports.getByStatus = async (task) => {
+  try {
+    if (!tasks) {
+      return { success: false, error: 'Task not found.', result: null }
+    }
+    const tasks = await Task.find({ status: task.status, owner: task.owner})
+    return { success: true, result: tasks }
+
+
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to get task.', result: null }
   }
 }

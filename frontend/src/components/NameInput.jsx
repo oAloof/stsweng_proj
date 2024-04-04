@@ -1,18 +1,15 @@
 import React from 'react'
 
-export default function TitleInput ({ handleOnChange, value }) {
+export default function NameInput ({ handleOnChange, value, placeholder }) {
   return (
     <>
       <div>
-        <div>TitleInput</div>
         <input
-          id='Title'
           type='text'
-          placeholder='Title'
+          placeholder={placeholder}
           className='input input-bordered w-full max-w-xs '
-          onChange={handleOnChange}
+          onChange={(e) => handleOnChange(e.target.value)}
           value={value}
-          defaultValue=''
         />
       </div>
     </>
