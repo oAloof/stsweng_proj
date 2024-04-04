@@ -10,12 +10,14 @@ import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
 export default function Form ({eventData}) {
-  const { createTask } = useContext(TasksContext)
+  const { createTask, updateTask } = useContext(TasksContext)
   const { handleSubmit, control, setValue, reset } = useForm()
 
   useEffect(() => {
     if (eventData) {
       Object.keys(eventData).forEach(field => {
+        // Ignore the _id field
+        if (field === '_id') return
           setValue(field, eventData[field])
       }) 
       document.getElementById('task-modal-btn').value = 'Update'
@@ -36,8 +38,10 @@ export default function Form ({eventData}) {
       start: data.start
     }
     if (eventData) {
-      console.log('updating task', dataToSend)
-      // updateTask(dataToSend)
+      // Add the _id field to the dataToSend object
+      dataToSend._id = eventData._id
+      console.log('Updating task...', dataToSend)
+      updateTask(dataToSend)
     } else {
       createTask(dataToSend)
     }

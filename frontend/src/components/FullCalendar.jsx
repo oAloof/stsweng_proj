@@ -55,6 +55,7 @@ export default function CalendarComponent ({ onEventClick }) {
         calendarApi.on('eventClick', ({ event }) => {
           // Open Modal
           const eventData = {
+            _id: event.id,
             title: event.title,
             category: [event.extendedProps.category],
             subLabel: event.extendedProps.label,
