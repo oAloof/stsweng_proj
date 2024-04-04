@@ -26,7 +26,7 @@ const corsOptions = {
   credentials: true
 }
 app.use(cors(corsOptions)) // to allow cross-origin requests
-
+console.log("URL: ", process.env.FRONTEND_URL);
 // Configure passport
 require('./config/passportConfig')(passport)
 
