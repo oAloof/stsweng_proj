@@ -1,0 +1,37 @@
+/* :root{
+  --fc-border-color: theme('colors.base-300');
+  --fc-button-hover-bg-color: theme('colors.base-300');
+  --fc-button-active-bg-color: theme('colors.base-300');
+  --fc-button-active-border-color: theme('colors.base-100');
+  --fc-button-active-bg-color: theme('colors.base-300');
+}
+.fc .fc-button-primary:active{
+  background-color: red;
+}
+
+.fc .fc-button-primary {
+  background-color: theme('colors.base-300');
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+}
+
+
+.fc .fc-toolbar.fc-header-toolbar {
+  background: theme('colors.base-200');
+  border-radius: 1rem;
+}
+
+
+.fc-toolbar-chunk {
+  padding: 0.5rem;
+}
+
+.fc .fc-button { 
+  border-radius: 0.5rem;
+  border: none;
+  color: black;
+}
+
+.fc-icon {
+  filter: invert(0%) sepia(4%) saturate(6%) hue-rotate(251deg) brightness(0%) contrast(300%);
+} */

@@ -2,11 +2,13 @@ require('dotenv').config() // loads the environment variables from .env file
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const passport = require('passport')
 
 // Route Imports
 const taskRoutes = require('./routes/taskRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 // express app
 const app = express()
@@ -14,8 +16,15 @@ const app = express()
 // express app settings
 app.use(express.json()) // to parse json content
 app.use(express.urlencoded({ extended: true })) // to parse body from url
-app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
+app.use(cookieParser())
+// app.use(cookieParser(process.env.COOKIE_SECRET)) // to parse cookies
 app.use(passport.initialize()) // to initialize passport for authentication
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Frontend URL
+  credentials: true
+}
+app.use(cors(corsOptions)) // to allow cross-origin requests
 
 // Configure passport
 require('./config/passportConfig')(passport)
@@ -31,6 +40,8 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   taskRoutes
 )
+
+app.use('/api/users', userRoutes)
 
 // connect to the mongoDB database
 mongoose
