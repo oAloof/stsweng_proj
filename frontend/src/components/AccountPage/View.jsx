@@ -6,7 +6,7 @@ export default function View ({ }) {
   const [type, setType] = useState(false)
   const [editPass, setEditPass] = useState(false)
   const [newIcon, setNewIcon] = useState(false)
-  const { edit, noEdit, accountView, noAccount, account, table, tableView, noTable} = useContext(EditContext)
+  const { edit, noEdit, accountView, noAccount, account, table, tableView, noTable } = useContext(EditContext)
   const { user } = useContext(AuthenticationContext)
 
   const Account = () => {

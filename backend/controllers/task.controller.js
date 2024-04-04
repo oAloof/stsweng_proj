@@ -141,7 +141,6 @@ TaskController.delete = async (req, res) => {
   }
 }
 
-
 TaskController.getByStatus = async (req, res) => {
   try {
     const response = await TaskModel.getByStatus(req.body.status, req.body.userId)
