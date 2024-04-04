@@ -12,7 +12,7 @@ export default function Card ({}) {
   }
 
   return (
-    <div className='shadow flex flex-col items-center space-y-5 p-5 max-w-[400px] rounded-xl	'>
+    <div className='shadow flex flex-col items-center space-y-5 p-5 max-w-[400px] rounded-xl'>
       <div className=''>
         <Icon iconLInk='link' userName='UserNumber1' />
       </div>
