@@ -69,7 +69,7 @@ export default function Form({ eventData, method }) {
         onClick={handleDelete} // Attach onClick event handler
       />
 
-      <svg
+      {/* <svg
         className="btn btn-ghost float float-end"
         id="delete-task-button"
         type="button" // Change type to "button"
@@ -88,7 +88,7 @@ export default function Form({ eventData, method }) {
           d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
           clip-rule="evenodd"
         />
-      </svg>
+      </svg> */}
 
       <div className="flex">
         <div className="m-5 flex flex-col space-y-4">

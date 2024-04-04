@@ -29,7 +29,8 @@ export default function CalendarComponent({ onEventClick, method, edit }) {
         label: task.label,
         description: task.description,
         difficulty: task.difficulty
-      }
+      },
+      color: 'red' // Color should change depending if its final or not
     }))
 
     setCalendarEvents(transformTasksToEvents)
