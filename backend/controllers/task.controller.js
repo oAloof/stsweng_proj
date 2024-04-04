@@ -3,7 +3,7 @@ const expCalc = require('../calculators/generalCalculator')
 const TaskController = {}
 
 /**
- * Retrieves all tasks of user. This is a protected route, so the user must be 
+ * Retrieves all tasks of user. This is a protected route, so the user must be
  * authenticated to access it.
  *
  * @param {Object} req The request object.
