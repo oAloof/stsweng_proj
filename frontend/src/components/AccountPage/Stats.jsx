@@ -35,4 +35,4 @@ export default function Stats ({ user, tasks }) {
 
     </div>
   )
-}
+} 

@@ -4,6 +4,7 @@ import LoginPage from './views/loginPage'
 import PlannerPage from './views/plannerPage'
 import RegisterPage from './views/registerPage'
 import AccountPage from './views/accountPage'
+import DashboardPage from './views/dashboardPage'
 
 // CONTEXTS
 import { AuthenticationProvider } from './contexts/AuthenticationContext'
@@ -25,6 +26,7 @@ export default function App () {
             }
           />
           <Route path='/accounts' element={<EditProvider><AccountPage /></EditProvider>} />
+          <Route path='/dashboard' element={<DashboardPage />} />
         </Routes>
       </AuthenticationProvider>
     </Router>

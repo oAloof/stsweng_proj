@@ -1,14 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import Card from '../components/AccountPage/Card'
-import Stats from '../components/AccountPage/Stats'
-import View from '../components/AccountPage/View'
 import NavBar from '../components/NavBar'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import TaskBar from '../components/Dashboard/TaskBar'
+import TaskStats from '../components/Dashboard/TaskStats'
+import Bar from '../components/Dashboard/Bar'
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
-export default function AccountPage () {
-  const navigate = useNavigate()
+export default function dashboardPage () {
   // const { isAuthenticated, isLoadingAuth, login } = useContext(AuthenticationContext)
 
   // useEffect(() => {
@@ -32,13 +30,13 @@ export default function AccountPage () {
   return (
     <div>
     <NavBar/>
-      <div className=' mx-auto min-h-screen flex justify-center space-x-5 p-20 max-w-[2000px]'>
+      <div className=' mx-auto min-h-screen flex justify-center space-x-5 p-20'>
         <div className='w-1/4'>
-          <Card />
+          <TaskBar/>
         </div>
         <div className='w-3/4 '>
-          <Stats user='user' tasks='Tasks' />
-          <View />
+        <TaskStats/>
+        {/* <Bar/> */}
         </div>
       </div>
     </div>
