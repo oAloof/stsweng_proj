@@ -44,22 +44,20 @@ app.use(
 
 app.use('/api/users', userRoutes)
 
-// Connect to database
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('Connected to MongoDB successfully...'))
-  .catch((err) => console.error('Could not connect to MongoDB:', err))
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error('Could not connect to MongoDB:', err));
 
 if (process.env.NODE_ENV !== 'production') {
-  const port = process.env.PORT || 4000
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-  })
+    // Additional local development setup if necessary
+    // For example, setting up a local server listener is only needed when not in production
+    const port = process.env.PORT || 4000;
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
 }
 
 // For Vercel, export the serverless handler
-module.exports = app
-module.exports.handler = serverless(app)
+module.exports = app;
+module.exports.handler = serverless(app);

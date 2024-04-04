@@ -9,7 +9,7 @@ import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function PlannerPage() {
   const navigate = useNavigate()
-  const { isAuthenticated, isLoadingAuth } = useContext(AuthenticationContext)
+  const { isAuthenticated, isLoadingAuth, user } = useContext(AuthenticationContext)
   const [selectedEventData, setSelectedEventData] = useState(null)
   const [edit, setEdit] = useState(false)
   const [del, setDelete] = useState(false)

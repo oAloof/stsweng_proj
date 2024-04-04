@@ -6,7 +6,7 @@ export const AuthenticationContext = createContext()
 export const AuthenticationProvider = ({ children }) => {
   const navigete = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState({ username: '', firstName: '', lastName: ''})
+  const [user, setUser] = useState({})
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
   const checkAuthentication = async () => {
@@ -37,7 +37,10 @@ export const AuthenticationProvider = ({ children }) => {
       setUser({
         username: data.result.username,
         firstName: data.result.firstName,
-        lastName: data.result.lastName
+        lastName: data.result.lastName,
+        email: data.result.email,
+        experience: data.result.experience,
+        streak: data.result.streak
       })
       setIsAuthenticated(true)
       setIsLoadingAuth(false)
@@ -99,7 +102,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token')
-    setUser({ username: '', firstName: '', lastName: '' })
+    setUser({})
     setIsAuthenticated(false)
     navigete('/')
   }

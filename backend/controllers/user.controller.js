@@ -105,6 +105,9 @@ UserController.loginUser = async (req, res) => {
       maxAge: 3600000
     })
 
+    // remove the password from the user object
+    user.password = undefined
+
     res.status(200).send({ success: true, result: user, jwtToken: token }) // Send the token in the response because cookies are not working
   } catch (error) {
     console.error(error)
