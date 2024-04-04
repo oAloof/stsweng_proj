@@ -140,4 +140,20 @@ TaskController.delete = async (req, res) => {
   }
 }
 
+
+TaskController.getByStatus = async (req, res) => {
+  try {
+    const response = await TaskModel.getByStatus(req.body.status, req.body.userId)
+    if (!response.success) {
+      return res.status(400).send(response)
+    }
+    res.status(200).send(response)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ success: false, error: 'Failed to get tasks.', result: null })
+  }
+}
+
 module.exports = TaskController
