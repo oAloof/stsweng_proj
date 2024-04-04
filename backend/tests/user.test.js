@@ -296,6 +296,7 @@ describe('User Controller', () => {
         password: 'test123'
       }
 
+      password = 'test123'
       req.body = basicUserDetails
 
       // Create the JWT token
@@ -322,7 +323,7 @@ describe('User Controller', () => {
 
       // Assert
       expect(userModel.getUserByUsername).toHaveBeenCalledWith(userDetails.username)
-      expect(bcrypt.compare).toHaveBeenCalledWith(basicUserDetails.password, userDetails.password)
+      expect(bcrypt.compare).toHaveBeenCalledWith(basicUserDetails.password, password)
       expect(res.cookie).toHaveBeenCalledWith('jwtToken', token, tokenCookieDetails)
       expect(res.status(200).send).toHaveBeenCalledWith(success)
     })

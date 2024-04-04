@@ -214,7 +214,7 @@ describe('Task Controller', () => {
 
       const taskID = '978230ahsdfaosd'
 
-      req.body.taskId = taskID
+      req.body._id = taskID
 
       taskModel.getTaskById.mockImplementation((id) => success) // Simulate success
 
@@ -231,7 +231,7 @@ describe('Task Controller', () => {
 
       const taskID = '978230ahsdfaosd'
 
-      req.body.taskId = taskID
+      req.body._id = taskID
 
       const error = { success: false, error: 'Failed to get task.', result: null }
 
