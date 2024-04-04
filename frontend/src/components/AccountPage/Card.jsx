@@ -7,6 +7,12 @@ export default function Card ({}) {
   const { editTask, accountView, noTable } = useContext(EditContext)
   const { user, isLoadingAuth } = useContext(AuthenticationContext)
 
+  // Calculate the level of the user based on the experience points
+  const level = Math.floor(user.experience / 100)
+
+  // Calculate the progress of the user to the next level
+  const progress = (user.experience % 100) / 100
+
   const Edit = () => {
     noTable()
     editTask()
@@ -39,10 +45,10 @@ export default function Card ({}) {
       </div>
       <div>
         <div className='flex justify-between'>
-          <p>Level 4</p>
-          <p>80/100</p>
+          <p>Level {level}</p>
+          <p>{progress}/100</p>
         </div>
-        <progress className='progress progress-primary w-56' value='80' max='100' />
+        <progress className='progress progress-primary w-56' value={progress} max='100' />
       </div>
       <button onClick={Edit} className='btn'>Edit Account Details</button>
     </div>
