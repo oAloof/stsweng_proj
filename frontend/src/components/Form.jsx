@@ -18,12 +18,14 @@ export default function Form ({eventData}) {
       Object.keys(eventData).forEach(field => {
         setValue(field, eventData[field]);
       }) 
+      document.getElementById('task-modal-btn').value = 'Update'
     } else {
       reset()
     }
   }, [eventData, setValue, reset]);
 
   const onSubmit = (data) => {
+    document.getElementById('my_modal_4').close()
     const dataToSend = {
       taskName: data.title,
       category: data.category[0],
@@ -33,7 +35,12 @@ export default function Form ({eventData}) {
       deadline: data.end,
       start: data.start
     }
-    createTask(dataToSend)
+    if (eventData) {
+      console.log('updating task', dataToSend)
+      // updateTask(dataToSend)
+    } else {
+      createTask(dataToSend)
+    }
     reset()
   }
 
@@ -125,6 +132,7 @@ export default function Form ({eventData}) {
 
       <div className='flex justify-end'>
         <input
+          id="task-modal-btn"
           className='btn flex absolute mt-6'
           type='submit'
           value='Submit'
