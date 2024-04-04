@@ -40,7 +40,6 @@ export default function Form ({eventData}) {
     if (eventData) {
       // Add the _id field to the dataToSend object
       dataToSend._id = eventData._id
-      console.log('Updating task...', dataToSend)
       updateTask(dataToSend)
     } else {
       createTask(dataToSend)
