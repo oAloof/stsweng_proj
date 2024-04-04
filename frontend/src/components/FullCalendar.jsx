@@ -29,7 +29,8 @@ export default function CalendarComponent({ onEventClick, method, edit }) {
         label: task.label,
         description: task.description,
         difficulty: task.difficulty
-      }
+      },
+      color: 'red' // Color should change depending if its final or not
     }))
 
     setCalendarEvents(transformTasksToEvents)
@@ -80,6 +81,7 @@ export default function CalendarComponent({ onEventClick, method, edit }) {
             // Update the task with the new start and deadline
             task.deadline = event.start
             // Update the task in the backend
+            console.log(task)
             updateTask(task)
           })
         }
