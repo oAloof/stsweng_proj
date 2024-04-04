@@ -21,8 +21,8 @@ export default function Stats ({ user, tasks }) {
           <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' className='inline-block w-8 h-8 stroke-current'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M13 10V3L4 14h7v7l9-11h-7z' /></svg>
         </div>
         <div className='stat-title'>Current Streak</div>
-        <div className='stat-value text-secondary'>17 Days</div>
-        <div className='stat-desc'>5 more than last streak</div>
+        <div className='stat-value text-secondary'>{user.streak} {user.streak > 0 ? 'Days' : 'Day'}</div>
+        <div className='stat-desc'>You got this!</div>
       </div>
 
       <div className='stat'>
