@@ -122,7 +122,9 @@ export default function Form ({eventData}) {
           />
 
           <Controller
-            render={({ field }) => <Difficulty onChange={field.onChange} />}
+            render={({ field }) => (
+              <Difficulty onChange={field.onChange} value={field.value} />
+            )}
             name='difficulty'
             control={control}
             defaultValue={0.5}
