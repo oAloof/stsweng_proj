@@ -125,7 +125,7 @@ TaskController.update = async (req, res) => {
  */
 TaskController.delete = async (req, res) => {
   try {
-    const response = await TaskModel.deleteTask(req.body.taskId)
+    const response = await TaskModel.deleteTask(req.body._id)
     if (!response.success) {
       return res.status(400).send(response)
     }

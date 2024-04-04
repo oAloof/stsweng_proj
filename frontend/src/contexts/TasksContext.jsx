@@ -84,6 +84,15 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Updates a task. This will also set the isLoadingTasks state to true to trigger a
+   * re-fetch of the tasks. If the task is successfully updated, the task will be
+   * updated in the tasks state. If the task is not successfully updated, an error
+   * message will be logged to the console.
+   * 
+   * @param {Object} task - The task object to be updated.
+   * @returns {Promise<void>} - A promise that resolves when the task is successfully updated.
+   */
   const updateTask = async (task) => {
     const jwtToken = localStorage.getItem('token')
     try {
@@ -112,15 +121,41 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
-  // Delete Task (no backend)
-  const dummyDeleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task.id !== taskId))
-  }
-  // Update Task (no backend)
-  const dummyUpdateTask = (updatedTask) => {
-    setTasks(
-      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-    )
+  /**
+   * Deletes a task from the server. This will also set the isLoadingTasks state to true
+   * to trigger a re-fetch of the tasks. If the task is successfully deleted, the task
+   * will be removed from the tasks state. If the task is not successfully deleted, an
+   * error message will be logged to the console.
+   * 
+   * @param {Object} task - The task object to be deleted.
+   * @returns {Promise<void>} - A promise that resolves when the task is successfully deleted.
+   */
+  const deleteTask = async (task) => {
+    const jwtToken = localStorage.getItem('token')
+    try {
+      const response = await fetch('http://localhost:4000/api/tasks/delete', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`
+        },
+        body: JSON.stringify(task)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      if (!data.success) {
+        console.error(data.error)
+        return
+      }
+      setIsLoadingTasks(true)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   useEffect(() => {
@@ -131,12 +166,10 @@ export const TasksProvider = ({ children }) => {
   const contextValue = {
     isLoadingTasks,
     createTask,
-    dummyDeleteTask,
-    dummyUpdateTask,
+    updateTask,
+    deleteTask,
     tasks,
     setTasks,
-    createTask,
-    updateTask
   }
 
   return (
