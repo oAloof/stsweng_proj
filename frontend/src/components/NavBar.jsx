@@ -1,7 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import {Link } from 'react-router-dom'
+import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function NavBar () {
+  const { logout } = useContext(AuthenticationContext)
+
+  const handleLogout = () => {
+    logout()
+  }
+
   return (
     <div className="navbar bg-base-200">
        <div className="navbar-start">

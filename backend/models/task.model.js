@@ -160,3 +160,27 @@ exports.getSpecificTasks = async (query) => {
     }
   }
 }
+
+
+
+/**
+ * Find tasks of a user based on status
+ *
+ * @param {Array} taskId The variables to be sorted by: ['PLANNING', 'TODO', 'ONGOING', 'COMPLETED', 'DELAYED']
+ * @returns The task with the specific task Id.
+ */
+
+exports.getByStatus = async (task) => {
+  try {
+    if (!tasks) {
+      return { success: false, error: 'Task not found.', result: null }
+    }
+    const tasks = await Task.find({ status: task.status, owner: task.owner})
+    return { success: true, result: tasks }
+
+
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: 'Failed to get task.', result: null }
+  }
+}

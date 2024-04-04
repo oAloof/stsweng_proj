@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import FullCalendar from '../components/FullCalendar'
 import Form from '../components/Form'
 import NavBar from '../components/NavBar'
 import Table from '../components/AccountPage/Table'
+import { useNavigate } from 'react-router-dom'
+
+import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function PlannerPage() {
+  const navigate = useNavigate()
+  const { isAuthenticated, isLoadingAuth } = useContext(AuthenticationContext)
   const [selectedEventData, setSelectedEventData] = useState(null)
   const [edit, setEdit] = useState(false)
   const [del, setDelete] = useState(false)
   const [method, setMethod] = useState('')
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated, navigate])
 
   const handleEventClick = (data) => {
     setSelectedEventData(data)
@@ -37,6 +48,10 @@ export default function PlannerPage() {
 
   const noDelete = () => {
     setDelete(false)
+  }
+
+  if (isLoadingAuth) {
+    return <div>Loading...</div>
   }
 
   return (

@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const AuthenticationContext = createContext()
 
 export const AuthenticationProvider = ({ children }) => {
+  const navigete = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState({ username: '', firstName: '', lastName: '' })
+  const [user, setUser] = useState({ username: '', firstName: '', lastName: ''})
   const [isLoadingAuth, setIsLoadingAuth] = useState(true)
 
   const checkAuthentication = async () => {
@@ -95,6 +97,13 @@ export const AuthenticationProvider = ({ children }) => {
     }
   }
 
+  const logout = () => {
+    localStorage.removeItem('token')
+    setUser({ username: '', firstName: '', lastName: '' })
+    setIsAuthenticated(false)
+    navigete('/')
+  }
+
   useEffect(() => {
     checkAuthentication()
   }, [])
@@ -105,7 +114,8 @@ export const AuthenticationProvider = ({ children }) => {
     isLoadingAuth,
     checkAuthentication,
     register,
-    login
+    login,
+    logout
   }
 
   return (

@@ -10,7 +10,7 @@ import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
 export default function Form({ eventData, method }) {
-  const { createTask, updateTask, deleteTask } = useContext(TasksContext)
+  const { createTask, updateTask } = useContext(TasksContext)
   const { handleSubmit, control, setValue, reset } = useForm()
 
   useEffect(() => {
