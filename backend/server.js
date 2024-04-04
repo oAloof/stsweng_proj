@@ -22,10 +22,8 @@ app.use(cookieParser())
 app.use(passport.initialize()) // to initialize passport for authentication
 
 const corsOptions = {
-  origin: 'https://stsweng-proj-frontend.vercel.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: [process.env.FRONTEND_URL],
+  credentials: true
 }
 app.use(cors(corsOptions)) // to allow cross-origin requests
 // Configure passport
