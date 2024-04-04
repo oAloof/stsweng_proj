@@ -6,6 +6,7 @@ export const TasksContext = createContext()
 export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
+  const [ongoingTasks, setOngoingTasks] = useState([])
   const { isAuthenticated } = useContext(AuthenticationContext)
 
   /**
@@ -31,6 +32,8 @@ export const TasksProvider = ({ children }) => {
         // Handle HTTP errors, e.g., 401 Unauthorized, 403 Forbidden
         throw new Error(`HTTP error! status: ${response.status}`)
       }
+
+      getAllOngoingTasks()
 
       const data = await response.json()
       if (!data.success) {
@@ -158,6 +161,25 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
+  const getAllOngoingTasks = () => {
+    function filterPlanning(task) {
+      return task.status == 'PLANNING';
+    }
+
+    function filterComplete(task) {
+      return task.status == 'COMPLETED';
+    }
+
+    var filteredPlanning = tasks.filter(filterPlanning);
+    var filteredComplete = tasks.filter(filterComplete);
+
+    var res = tasks.filter(item => !filteredPlanning.includes(item));
+
+    var final = res.filter(item => !filteredComplete.includes(item));
+    
+    setOngoingTasks(final)
+  }
+
   useEffect(() => {
     fetchAllTasks()
   }, [isAuthenticated, isLoadingTasks])
@@ -169,7 +191,9 @@ export const TasksProvider = ({ children }) => {
     updateTask,
     deleteTask,
     tasks,
-    setTasks
+    setTasks,
+    ongoingTasks,
+    getAllOngoingTasks
   }
 
   return (

@@ -4,29 +4,8 @@ import NavBar from '../components/NavBar'
 import TaskBar from '../components/Dashboard/TaskBar'
 import TaskStats from '../components/Dashboard/TaskStats'
 import Table from '../components/Dashboard/Table'
-import Bar from '../components/Dashboard/Bar'
-import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function dashboardPage () {
-  // const { isAuthenticated, isLoadingAuth, login } = useContext(AuthenticationContext)
-
-  // useEffect(() => {
-  //   console.log('isAuthenticated:', isAuthenticated);
-  //   if (isAuthenticated) {
-  //     navigate('/planner')
-  //   }
-  // }, [isAuthenticated, navigate])
-
-  // const onSubmit = async (data) => {
-  //   await login(data.username, data.password)
-  // }
-  // const handleRegister = () => {
-  //   navigate('/register')
-  // }
-
-  // if (isLoadingAuth) {
-  //   return <div>Loading...</div>
-  // }
 
   return (
     <div>
@@ -37,7 +16,6 @@ export default function dashboardPage () {
         </div>
         <div className='w-3/4 flex flex-col space-y-5'>
             <TaskStats/>
-
             <Table/>
         </div>
       </div>
