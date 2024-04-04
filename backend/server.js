@@ -21,7 +21,7 @@ app.use(cookieParser())
 app.use(passport.initialize()) // to initialize passport for authentication
 
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL],
+  origin: [process.env.FRONTEND_URL], // Frontend url
   credentials: true
 }
 app.use(cors(corsOptions)) // to allow cross-origin requests
