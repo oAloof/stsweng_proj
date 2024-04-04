@@ -97,6 +97,7 @@ export const TasksProvider = ({ children }) => {
    * @returns {Promise<void>} - A promise that resolves when the task is successfully updated.
    */
   const updateTask = async (task) => {
+    console.log("updating")
     const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch(`${apiUrl}/api/tasks/update`, {
