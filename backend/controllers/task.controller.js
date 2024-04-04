@@ -64,7 +64,7 @@ TaskController.create = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp,
+    exp: await expCalc.calculateExp(req.user, req.body.difficulty),
     deadline: req.body.deadline
   }
 
@@ -99,8 +99,9 @@ TaskController.update = async (req, res) => {
     label: req.body.label,
     description: req.body.description,
     difficulty: req.body.difficulty,
-    exp: await expCalc.calculateExp(req.user, req.body.difficulty),
-    deadline: req.body.deadline
+    exp: req.body.exp,
+    deadline: req.body.deadline,
+    status: req.body.status
   }
 
   try {
