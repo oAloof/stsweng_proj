@@ -28,7 +28,7 @@ export default function AccountPage () {
           <Card />
         </div>
         <div className='w-3/4 '>
-          <Stats user='user' tasks='Tasks' />
+          <Stats />
           <View />
         </div>
       </div>
