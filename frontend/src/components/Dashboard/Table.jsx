@@ -97,27 +97,34 @@ export default function AskConfirmationBeforeSave() {
   const handleYes = async () => {
     const { newRow, oldRow, reject, resolve } = promiseArguments;
     try {
+      let updatedExp = 0
+
+      if (newRow.deadline > oldRow.deadline) {
+        updatedExp = newRow.exp * 0.95
+      } else {
+        updatedExp = newRow.exp
+      }
+
       var array = newRow.label.split(", ")
       var taskz = {
-        owner: newRow.owner,
         _id: newRow.id,
         taskName: newRow.taskName,
         category: newRow.category,
         label: array,
         difficulty: newRow.rating,
         status: newRow.status,
-        exp: newRow.exp,
+        exp: updatedExp,
         description: newRow.description,
         deadline: new Date(newRow.deadline)
       }
       console.log(taskz)
       updateTask(taskz)
       const response = await mutateRow(newRow);
-      setSnackbar({ children: 'User successfully saved', severity: 'success' });
+      setSnackbar({ children: 'Status successfully saved', severity: 'success' });
       resolve(response);
       setPromiseArguments(null);
     } catch (error) {
-      setSnackbar({ children: 'Name cannot be empty', severity: 'error' });
+      setSnackbar({ children: 'Status cannot be empty', severity: 'error' });
       reject(oldRow);
       setPromiseArguments(null);
     }
