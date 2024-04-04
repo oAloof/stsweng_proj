@@ -40,9 +40,9 @@ export default function View ({ }) {
   }
 
   const handleSubmit = (event) => {
-    console.log('submitted')
     Account()
     event.preventDefault()
+    
   }
 
   return (
@@ -138,7 +138,7 @@ export default function View ({ }) {
               <div className='flex space-x-5'>
                 {!editPass && edit && <button className='btn shadow max-w-[250px]' onClick={EditPass}>Edit Password</button>}
                 {/* {!newIcon && edit && <button className="btn shadow max-w-[250px]" onClick={NewIcon}>Edit Profile Picture</button>} */}
-                {edit && <button className='btn shadow max-w-[250px]' type='submit'>Save Changes</button>}
+                {edit && <button className='btn shadow max-w-[250px]' type='submit' onSubmit={handleSubmit}>Save Changes</button>}
               </div>
             </form>
           </div>}
