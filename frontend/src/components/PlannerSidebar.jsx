@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useContext, useState } from 'react'
 import Table from '../components/AccountPage/Table'
+import { TasksContext } from '../contexts/TasksContext'
 
 export default function PlannerSidebar({ setEventEdit }) {
   const [edit, setEdit] = useState(false)
   const [del, setDelete] = useState(false)
+  const {planningTasks} = useContext(TasksContext);
+
 
   const viewEdit = () => {
     setEdit(true)
@@ -78,7 +81,7 @@ export default function PlannerSidebar({ setEventEdit }) {
       )}
       <div>
         <p class="stat-title ">Planned Tasks: </p>
-        <div className="stat-value text-secondary">15</div>
+        <div className="stat-value text-secondary">{planningTasks.length}</div>
       </div>
       <button
         className="btn"

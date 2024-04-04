@@ -2,10 +2,13 @@ import React, { useEffect, useContext } from 'react'
 import { EditContext } from '../../contexts/EditContext'
 import Icon from './Icon'
 import { AuthenticationContext } from '../../contexts/AuthenticationContext'
+import { TasksContext } from '../../contexts/TasksContext'
 
 export default function Card ({}) {
   const { editTask, accountView, noTable } = useContext(EditContext)
   const { user, isLoadingAuth } = useContext(AuthenticationContext)
+  const {completedTasks, completedLate, completedEarly } = useContext(TasksContext);
+
 
   // Calculate the level of the user based on the experience points
   const level = Math.floor(user.experience / 100)
@@ -31,15 +34,15 @@ export default function Card ({}) {
       <div className="min-w-[225px]">
         <div className='flex justify-between'>
           <p class="text-sm">Tasks Finished on Time:  </p>
-          <p class="text-sm font-semibold	">10</p>
+          <p class="text-sm font-semibold	">{completedEarly.length}</p>
         </div>
         <div className='flex justify-between'>
           <p class="text-sm">Tasks Finished Late:   </p>
-          <p class="text-sm font-semibold	">2</p>
+          <p class="text-sm font-semibold	">{completedLate.length}</p>
         </div>
         <div className='flex justify-between'>
           <p class="text-sm">Total Finished Tasks:  </p>
-          <p class="text-sm font-semibold	">12</p>
+          <p class="text-sm font-semibold	">{completedTasks.length}</p>
         </div>
       </div>
       <div>
