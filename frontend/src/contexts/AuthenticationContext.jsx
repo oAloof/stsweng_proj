@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router-dom'
 export const AuthenticationContext = createContext()
 
 export const AuthenticationProvider = ({ children }) => {
-  const apiUrl = import.meta.env.VITE_API_URL
+  // const apiUrl = import.meta.env.VITE_API_URL
+  // Define a default API URL
+  const defaultApiUrl = 'http://localhost:4000'
+  // Check if there's an API URL defined in the environment, otherwise use the default
+  const apiUrl = process.env.REACT_APP_API_URL || defaultApiUrl;
+  
   const navigete = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState({})

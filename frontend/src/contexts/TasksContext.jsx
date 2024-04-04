@@ -4,7 +4,12 @@ import { AuthenticationContext } from './AuthenticationContext'
 export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
-  const apiUrl = import.meta.env.VITE_API_URL
+  // const apiUrl = import.meta.env.VITE_API_URL
+  // Define a default API URL
+  const defaultApiUrl = 'http://localhost:4000'
+  // Check if there's an API URL defined in the environment, otherwise use the default
+  const apiUrl = process.env.REACT_APP_API_URL || defaultApiUrl;
+  
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
   const [ongoingTasks, setOngoingTasks] = useState([])
