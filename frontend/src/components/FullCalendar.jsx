@@ -6,7 +6,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import './FullCalendar.css'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent({ onEventClick, method }) {
+export default function CalendarComponent({ onEventClick, method, edit }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
   const { tasks, isLoadingTasks, updateTask, deleteTask } =
@@ -16,7 +16,7 @@ export default function CalendarComponent({ onEventClick, method }) {
 
   useEffect(() => {
     tasksRef.current = tasks // Update the ref whenever tasks change
-  }, [tasks])
+  }, [tasks, edit])
 
   useEffect(() => {
     const transformTasksToEvents = tasks.map((task) => ({
@@ -45,54 +45,49 @@ export default function CalendarComponent({ onEventClick, method }) {
             // taskID: (from the mongoDB)
           })
         })
+        console.log('insideinitfullcalendar' + edit)
+        if (edit) {
+          calendarApi.on('eventClick', ({ event }) => {
+            // Open Modal
+            if (method === 'delete') {
+              const currentTasks = tasksRef.current
+              const task = currentTasks.find(
+                (task) => task._id.toString() === event.id.toString()
+              )
+              console.log(task)
+              deleteTask(task)
+            }
+            const eventData = {
+              _id: event.id,
+              title: event.title,
+              category: [event.extendedProps.category],
+              subLabel: event.extendedProps.label,
+              description: event.extendedProps.description,
+              difficulty: event.extendedProps.difficulty,
+              end: new Date(event.start).toISOString(),
+              start: new Date(event.start).toISOString()
+            }
+            onEventClick(eventData)
+          })
 
-        // taskName: data.title,
-        // category: data.category[0],
-        // label: data.subLabel,
-        // description: data.description,
-        // difficulty: data.difficulty,
-        // deadline: data.end,
-        // start: data.start
-        calendarApi.on('eventClick', ({ event }) => {
-          // Open Modal
-          if (method === 'delete') {
+          calendarApi.on('eventDrop', ({ event }) => {
+            // Update tasks state (used in the backend)
             const currentTasks = tasksRef.current
+            // Look for the task in the tasks array
             const task = currentTasks.find(
               (task) => task._id.toString() === event.id.toString()
             )
-            console.log(task)
-            deleteTask(task)
-          }
-          const eventData = {
-            _id: event.id,
-            title: event.title,
-            category: [event.extendedProps.category],
-            subLabel: event.extendedProps.label,
-            description: event.extendedProps.description,
-            difficulty: event.extendedProps.difficulty,
-            end: new Date(event.start).toISOString(),
-            start: new Date(event.start).toISOString()
-          }
-          onEventClick(eventData)
-        })
-
-        calendarApi.on('eventDrop', ({ event }) => {
-          // Update tasks state (used in the backend)
-          const currentTasks = tasksRef.current
-          // Look for the task in the tasks array
-          const task = currentTasks.find(
-            (task) => task._id.toString() === event.id.toString()
-          )
-          // Update the task with the new start and deadline
-          task.deadline = event.start
-          // Update the task in the backend
-          updateTask(task)
-        })
+            // Update the task with the new start and deadline
+            task.deadline = event.start
+            // Update the task in the backend
+            updateTask(task)
+          })
+        }
       }
     }
 
     initFullCalendar()
-  }, [isLoadingTasks, method])
+  }, [isLoadingTasks, method, edit])
 
   return (
     <>
@@ -107,7 +102,7 @@ export default function CalendarComponent({ onEventClick, method }) {
             center: 'title',
             right: 'dayGridMonth,listWeek' // user can switch between the two
           }}
-          editable
+          editable={edit}
           droppable
           events={calendarEvents}
         />
