@@ -12,7 +12,7 @@ export default function MyDatePicker({ handleOnChange, value }) {
           // value={value}
           preventOpenOnFocus={true}
           selected={value ? new Date(value) : null}
-          onChange={(date) => handleOnChange(date)}
+          onChange={(date) => handleOnChange(date.toISOString())}
           minDate={new Date()}
           showTimeSelect
           timeFormat="h:mm aa"

@@ -60,10 +60,9 @@ export default function CalendarComponent ({ onEventClick }) {
             subLabel: event.extendedProps.label,
             description: event.extendedProps.description,
             difficulty: event.extendedProps.difficulty,
-            end: new Date(event.end).toISOString(),
+            end: new Date(event.start).toISOString(),
             start: new Date(event.start).toISOString()
           }
-          console.log("Event Data: ", eventData)
           onEventClick(eventData)
         })
 

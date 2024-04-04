@@ -16,7 +16,7 @@ export default function Form ({eventData}) {
   useEffect(() => {
     if (eventData) {
       Object.keys(eventData).forEach(field => {
-        setValue(field, eventData[field]);
+          setValue(field, eventData[field])
       }) 
       document.getElementById('task-modal-btn').value = 'Update'
     } else {
