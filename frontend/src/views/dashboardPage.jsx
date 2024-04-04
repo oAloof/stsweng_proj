@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import NavBar from '../components/NavBar'
 import TaskBar from '../components/Dashboard/TaskBar'
 import TaskStats from '../components/Dashboard/TaskStats'
+import Table from '../components/Dashboard/Table'
 import Bar from '../components/Dashboard/Bar'
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
@@ -34,9 +35,10 @@ export default function dashboardPage () {
         <div className='w-1/4'>
           <TaskBar/>
         </div>
-        <div className='w-3/4 '>
-        <TaskStats/>
-        {/* <Bar/> */}
+        <div className='w-3/4 flex flex-col space-y-5'>
+            <TaskStats/>
+
+            <Table/>
         </div>
       </div>
     </div>
