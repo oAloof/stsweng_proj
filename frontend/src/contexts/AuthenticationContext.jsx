@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 export const AuthenticationContext = createContext()
 
 export const AuthenticationProvider = ({ children }) => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const navigete = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState({})
@@ -12,7 +13,7 @@ export const AuthenticationProvider = ({ children }) => {
   const checkAuthentication = async () => {
     const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:4000/api/users/check-auth', {
+      const response = await fetch(`${apiUrl}/api/users/check-auth`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -53,7 +54,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const register = async (username, password, firstName, lastName, email) => {
     try {
-      const response = await fetch('http://localhost:4000/api/users/register', {
+      const response = await fetch(`${apiUrl}/api/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -77,7 +78,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch('http://localhost:4000/api/users/login', {
+      const response = await fetch(`${apiUrl}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

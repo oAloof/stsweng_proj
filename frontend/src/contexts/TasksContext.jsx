@@ -4,6 +4,7 @@ import { AuthenticationContext } from './AuthenticationContext'
 export const TasksContext = createContext()
 
 export const TasksProvider = ({ children }) => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
   const [ongoingTasks, setOngoingTasks] = useState([])
@@ -19,7 +20,7 @@ export const TasksProvider = ({ children }) => {
   const fetchAllTasks = async () => {
     const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:4000/api/tasks/getTasks', {
+      const response = await fetch(`${apiUrl}/api/tasks/getTasks`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -62,7 +63,7 @@ export const TasksProvider = ({ children }) => {
     const jwtToken = localStorage.getItem('token')
     console.log('Inside createTask...', task)
     try {
-      const response = await fetch('http://localhost:4000/api/tasks/create', {
+      const response = await fetch(`${apiUrl}/api/tasks/create`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -99,7 +100,7 @@ export const TasksProvider = ({ children }) => {
   const updateTask = async (task) => {
     const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:4000/api/tasks/update', {
+      const response = await fetch(`${apiUrl}/api/tasks/update`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -136,7 +137,7 @@ export const TasksProvider = ({ children }) => {
   const deleteTask = async (task) => {
     const jwtToken = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:4000/api/tasks/delete', {
+      const response = await fetch(`${apiUrl}/api/tasks/delete`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
