@@ -6,17 +6,16 @@ import TaskStats from '../components/Dashboard/TaskStats'
 import Table from '../components/Dashboard/Table'
 
 export default function dashboardPage () {
-
   return (
     <div>
-    <NavBar/>
+      <NavBar />
       <div className=' mx-auto min-h-screen flex justify-center space-x-5 p-20'>
         <div className='w-1/4'>
-          <TaskBar/>
+          <TaskBar />
         </div>
         <div className='w-3/4 flex flex-col space-y-5'>
-            <TaskStats/>
-            <Table/>
+          <TaskStats />
+          <Table />
         </div>
       </div>
     </div>

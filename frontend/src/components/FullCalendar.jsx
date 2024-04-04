@@ -6,7 +6,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import './FullCalendar.css'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent({ onEventClick, method, edit }) {
+export default function CalendarComponent ({ onEventClick, method, edit }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
   const { tasks, isLoadingTasks, updateTask, deleteTask } =
@@ -94,11 +94,11 @@ export default function CalendarComponent({ onEventClick, method, edit }) {
   return (
     <>
       <div>
-        <div ref={externalEventsRef} id="external-events"></div>
+        <div ref={externalEventsRef} id='external-events' />
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
+          initialView='dayGridMonth'
           headerToolbar={{
             left: 'prev,next',
             center: 'title',
