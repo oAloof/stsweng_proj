@@ -1,4 +1,4 @@
-:root{
+/* :root{
   --fc-border-color: theme('colors.base-300');
   --fc-button-hover-bg-color: theme('colors.base-300');
   --fc-button-active-bg-color: theme('colors.base-300');
@@ -34,4 +34,4 @@
 
 .fc-icon {
   filter: invert(0%) sepia(4%) saturate(6%) hue-rotate(251deg) brightness(0%) contrast(300%);
-}
+} */

@@ -6,8 +6,9 @@ export default function MyDatePicker({ handleOnChange, value }) {
   return (
     <>
       <div>
-        <div>Due Date</div>
+        <div >Due Date</div>
         <DatePicker
+          className="input input-bordered w-full max-w-xs"
           // value={value}
           preventOpenOnFocus={true}
           selected={value ? new Date(value) : null}

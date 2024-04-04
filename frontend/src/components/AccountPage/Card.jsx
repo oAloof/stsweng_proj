@@ -16,8 +16,20 @@ export default function Card ({}) {
       <div className=''>
         <Icon iconLInk='link' userName='UserNumber1' />
       </div>
-      <div>
-        <p >Username</p>
+      <p class="font-medium	">Username</p>
+      <div className="min-w-[225px]">
+        <div className='flex justify-between'>
+          <p class="text-sm">Tasks Finished on Time:  </p>
+          <p class="text-sm font-semibold	">10</p>
+        </div>
+        <div className='flex justify-between'>
+          <p class="text-sm">Tasks Finished Late:   </p>
+          <p class="text-sm font-semibold	">2</p>
+        </div>
+        <div className='flex justify-between'>
+          <p class="text-sm">Total Finished Tasks:  </p>
+          <p class="text-sm font-semibold	">12</p>
+        </div>
       </div>
       <div>
         <div className='flex justify-between'>
