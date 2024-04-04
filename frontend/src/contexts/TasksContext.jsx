@@ -8,6 +8,7 @@ export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
   const [ongoingTasks, setOngoingTasks] = useState([])
+  const [completedTasks, setCompletedTasks] = useState([])
   const { isAuthenticated } = useContext(AuthenticationContext)
 
   /**
@@ -40,6 +41,7 @@ export const TasksProvider = ({ children }) => {
         return
       }
       getAllOngoingTasks(data.result)
+      getAllCompletedTasks(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -178,6 +180,17 @@ export const TasksProvider = ({ children }) => {
     setOngoingTasks(final)
   }
 
+  const getAllCompletedTasks = (tasks) => {
+    function filterComplete(task) {
+      return task.status == 'COMPLETED'
+    }
+    var filteredComplete = tasks.filter(filterComplete)
+
+    var final = tasks.filter(item => !filteredComplete.includes(item))
+    
+    setCompletedTasks(final)
+  }
+
   useEffect(() => {
     fetchAllTasks()
   }, [isAuthenticated, isLoadingTasks])
@@ -191,7 +204,8 @@ export const TasksProvider = ({ children }) => {
     tasks,
     setTasks,
     ongoingTasks,
-    getAllOngoingTasks
+    getAllOngoingTasks,
+    completedTasks
   }
 
   return (
