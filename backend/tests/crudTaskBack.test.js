@@ -323,7 +323,7 @@ describe('Task Controller', () => {
 
       const success = { success: true }
 
-      req.body.taskId = taskID
+      req.body._id = taskID
 
       taskModel.deleteTask.mockImplementation((id) => success) // Simulate success
 
@@ -339,7 +339,7 @@ describe('Task Controller', () => {
     // Arrange
       const taskID = '978230ahsdfaosd'
 
-      req.body.taskId = taskID
+      req.body._id = taskID
 
       const error = { success: false, error: 'Failed to delete task.', result: null }
 

@@ -107,7 +107,7 @@ exports.updateTask = async (task) => {
  */
 exports.deleteTask = async (taskId) => {
   try {
-    const tasks = await Task.findByIdAndRemove(taskId)
+    const tasks = await Task.findByIdAndDelete(taskId)
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
@@ -127,7 +127,11 @@ exports.sortTasks = async (query) => {
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
-    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+    return {
+      success: false,
+      error: 'Failed to sort tasks by.' + query,
+      result: null
+    }
   }
 }
 
@@ -149,6 +153,10 @@ exports.getSpecificTasks = async (query) => {
     return { success: true, result: tasks }
   } catch (error) {
     console.error(error)
-    return { success: false, error: 'Failed to sort tasks by.' + query, result: null }
+    return {
+      success: false,
+      error: 'Failed to sort tasks by.' + query,
+      result: null
+    }
   }
 }

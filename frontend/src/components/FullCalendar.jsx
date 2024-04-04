@@ -6,10 +6,11 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import './FullCalendar.css'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function CalendarComponent ({ onEventClick }) {
+export default function CalendarComponent({ onEventClick, method }) {
   const calendarRef = useRef(null)
   const externalEventsRef = useRef(null)
-  const { tasks, isLoadingTasks, updateTask } = useContext(TasksContext)
+  const { tasks, isLoadingTasks, updateTask, deleteTask } =
+    useContext(TasksContext)
   const [calendarEvents, setCalendarEvents] = useState([])
   const tasksRef = useRef(tasks)
 
@@ -54,6 +55,14 @@ export default function CalendarComponent ({ onEventClick }) {
         // start: data.start
         calendarApi.on('eventClick', ({ event }) => {
           // Open Modal
+          if (method === 'delete') {
+            const currentTasks = tasksRef.current
+            const task = currentTasks.find(
+              (task) => task._id.toString() === event.id.toString()
+            )
+            console.log(task)
+            deleteTask(task)
+          }
           const eventData = {
             _id: event.id,
             title: event.title,
@@ -71,7 +80,9 @@ export default function CalendarComponent ({ onEventClick }) {
           // Update tasks state (used in the backend)
           const currentTasks = tasksRef.current
           // Look for the task in the tasks array
-          const task = currentTasks.find((task) => task._id.toString() === event.id.toString())
+          const task = currentTasks.find(
+            (task) => task._id.toString() === event.id.toString()
+          )
           // Update the task with the new start and deadline
           task.deadline = event.start
           // Update the task in the backend
@@ -81,17 +92,16 @@ export default function CalendarComponent ({ onEventClick }) {
     }
 
     initFullCalendar()
-  }, [isLoadingTasks])
+  }, [isLoadingTasks, method])
 
   return (
     <>
       <div>
-        <div ref={externalEventsRef} id='external-events'>
-        </div>
+        <div ref={externalEventsRef} id="external-events"></div>
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
-          initialView='dayGridMonth'
+          initialView="dayGridMonth"
           headerToolbar={{
             left: 'prev,next',
             center: 'title',

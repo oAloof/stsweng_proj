@@ -3,7 +3,7 @@ const expCalc = require('../calculators/generalCalculator')
 const TaskController = {}
 
 /**
- * Retrieves all tasks of user. This is a protected route, so the user must be 
+ * Retrieves all tasks of user. This is a protected route, so the user must be
  * authenticated to access it.
  *
  * @param {Object} req The request object.
@@ -34,7 +34,7 @@ TaskController.getTasks = async (req, res) => {
  */
 TaskController.getOneTask = async (req, res) => {
   try {
-    const response = await TaskModel.getTaskById(req.body.taskId)
+    const response = await TaskModel.getTaskById(req.body._id)
     if (!response.success) {
       return res.status(400).send(response)
     }
@@ -126,6 +126,7 @@ TaskController.update = async (req, res) => {
  */
 TaskController.delete = async (req, res) => {
   try {
+    console.log(req)
     const response = await TaskModel.deleteTask(req.body._id)
     if (!response.success) {
       return res.status(400).send(response)

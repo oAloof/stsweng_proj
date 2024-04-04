@@ -89,7 +89,7 @@ export const TasksProvider = ({ children }) => {
    * re-fetch of the tasks. If the task is successfully updated, the task will be
    * updated in the tasks state. If the task is not successfully updated, an error
    * message will be logged to the console.
-   * 
+   *
    * @param {Object} task - The task object to be updated.
    * @returns {Promise<void>} - A promise that resolves when the task is successfully updated.
    */
@@ -126,7 +126,7 @@ export const TasksProvider = ({ children }) => {
    * to trigger a re-fetch of the tasks. If the task is successfully deleted, the task
    * will be removed from the tasks state. If the task is not successfully deleted, an
    * error message will be logged to the console.
-   * 
+   *
    * @param {Object} task - The task object to be deleted.
    * @returns {Promise<void>} - A promise that resolves when the task is successfully deleted.
    */
@@ -169,7 +169,7 @@ export const TasksProvider = ({ children }) => {
     updateTask,
     deleteTask,
     tasks,
-    setTasks,
+    setTasks
   }
 
   return (

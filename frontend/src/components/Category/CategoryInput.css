@@ -3,14 +3,12 @@
   overflow: hidden;
   border-radius: 0.5rem;
   min-height: 44px;
-
- 
 } 
 
-.react-tagsinput--focused {
+/* .react-tagsinput--focused {
   border-width: 2px;
   border-style: solid;
-}
+} */
 
 .react-tagsinput-tag {
   background-color: theme('colors.primary');
