@@ -94,14 +94,14 @@ export default function Form({ eventData, method }) {
         <div className="m-5 flex flex-col space-y-4">
           <div className="flex space-x-4">
             <Controller
-              name="start"
+              name="end"
               control={control}
               render={() => <TimeStamp date={getDate()} />}
               defaultValue={getDate()}
             />
 
             <Controller
-              name="end"
+              name="start"
               control={control}
               defaultValue={null}
               render={({ field }) => (
