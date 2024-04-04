@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use(passport.initialize()) // to initialize passport for authentication
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: process.env.FRONTEND_URL, 
   credentials: true
 }
 app.use(cors(corsOptions)) // to allow cross-origin requests
