@@ -12,51 +12,38 @@ jest.mock('../calculators/generalCalculator', () => ({
 }))
 
 describe('Experience Calculator', () => {
-  let difficulty = ''
-  let correctCalculatedExp = 0
   let user
 
   describe('Calculate Exp', () => {
-    it('easy', async () => {
-      // Arrange
-      difficulty = 'easy'
-      correctCalculatedExp = 100
+    // Define test cases for each difficulty level
+    const testCases = [
+      { difficulty: 0.5, expectedExp: 100 },
+      { difficulty: 1.0, expectedExp: 150 },
+      { difficulty: 1.5, expectedExp: 200 },
+      { difficulty: 2.0, expectedExp: 250 },
+      { difficulty: 2.5, expectedExp: 300 },
+      { difficulty: 3.0, expectedExp: 350 },
+      { difficulty: 3.5, expectedExp: 400 },
+      { difficulty: 4.0, expectedExp: 450 },
+      { difficulty: 4.5, expectedExp: 500 },
+      { difficulty: 5.0, expectedExp: 550 }
+    ]
 
-      generalCalculator.calculateExp.mockImplementation(() => correctCalculatedExp)
+    testCases.forEach(({ difficulty, expectedExp }) => {
+      it(`difficulty: ${difficulty} - expected exp: ${expectedExp}`, async () => {
+        // Arrange
+        user = { /* Define user object */ }
+        generalCalculator.calculateExp.mockImplementation(() => expectedExp)
 
-      // Act
-      const result = await generalCalculator.calculateExp(user, difficulty)
+        // Act
+        const result = await generalCalculator.calculateExp(user, difficulty)
 
-      // Assert
-      expect(result).toBe(correctCalculatedExp)
-    })
-    it('medium', async () => {
-      // Arrange
-      difficulty = 'medium'
-      correctCalculatedExp = 300
-
-      generalCalculator.calculateExp.mockImplementation(() => correctCalculatedExp)
-
-      // Act
-      const result = await generalCalculator.calculateExp(user, difficulty)
-
-      // Assert
-      expect(result).toBe(correctCalculatedExp)
-    })
-    it('hard', async () => {
-      // Arrange
-      difficulty = 'hard'
-      correctCalculatedExp = 500
-
-      generalCalculator.calculateExp.mockImplementation(() => correctCalculatedExp)
-
-      // Act
-      const result = await generalCalculator.calculateExp(user, difficulty)
-
-      // Assert
-      expect(result).toBe(correctCalculatedExp)
+        // Assert
+        expect(result).toBe(expectedExp)
+      })
     })
   })
+
   describe('Edit Deduction', () => {
     const task = {
       exp: 100,
