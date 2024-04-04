@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { EditContext } from '../../contexts/EditContext'
 import Icon from './Icon'
+import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 
 export default function Card ({}) {
   const { editTask, accountView, noTable } = useContext(EditContext)
+  const { user, isLoadingAuth } = useContext(AuthenticationContext)
 
   const Edit = () => {
     noTable()
@@ -11,12 +13,16 @@ export default function Card ({}) {
     accountView()
   }
 
+  if (isLoadingAuth) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className='shadow flex flex-col items-center space-y-5 p-5 max-w-[400px] rounded-xl'>
       <div className=''>
-        <Icon iconLInk='link' userName='UserNumber1' />
+        <Icon iconLInk='link' userName={user.username} />
       </div>
-      <p class="font-medium	">Username</p>
+      <p class="font-medium	">{user.username}</p>
       <div className="min-w-[225px]">
         <div className='flex justify-between'>
           <p class="text-sm">Tasks Finished on Time:  </p>
