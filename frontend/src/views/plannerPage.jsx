@@ -39,7 +39,7 @@ export default function PlannerPage () {
     <>
       <NavBar/>
       <div className='flex p-10 space-x-5'>
-        <div className='w-2/12 flex flex-col shadow p-5 space-y-5 relative min-w-[150px] '>
+        <div className='w-2/12 flex flex-col shadow p-5 space-y-5 relative min-w-[150px] max-h-min'>
           <p class="font-semibold	text-xl">Planner</p>
           <button
             className='btn'
@@ -68,7 +68,7 @@ export default function PlannerPage () {
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 -mt-1" onClick={noDelete}>✕</button>
               <p class="font-semibold mr-5 mb-3">How to Delete Tasks:</p>
               <ol class="list-decimal ml-5">
-                <li>Click on the task you want to edit and click the delete button.</li>
+                <li>Click on the task you want to delete and click the delete button.</li>
               </ol>
             </div>
           }
