@@ -25,7 +25,7 @@ export default function App () {
               </TasksProvider>
             }
           />
-          <Route path='/accounts' element={<EditProvider><AccountPage /></EditProvider>} />
+          <Route path='/accounts' element={<TasksProvider><EditProvider><AccountPage /></EditProvider></TasksProvider>} />
           <Route path='/dashboard' element={<TasksProvider><DashboardPage /></TasksProvider>} />
         </Routes>
       </AuthenticationProvider>

@@ -34,13 +34,12 @@ export const TasksProvider = ({ children }) => {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      getAllOngoingTasks()
-
       const data = await response.json()
       if (!data.success) {
         console.error(data.error)
         return
       }
+      getAllOngoingTasks(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -98,6 +97,7 @@ export const TasksProvider = ({ children }) => {
    * @returns {Promise<void>} - A promise that resolves when the task is successfully updated.
    */
   const updateTask = async (task) => {
+    console.log("updating")
     const jwtToken = localStorage.getItem('token')
     try {
       const response = await fetch(`${apiUrl}/api/tasks/update`, {
@@ -162,21 +162,19 @@ export const TasksProvider = ({ children }) => {
     }
   }
 
-  const getAllOngoingTasks = () => {
+  const getAllOngoingTasks = (tasks) => {
     function filterPlanning(task) {
-      return task.status == 'PLANNING';
+      return task.status == 'PLANNING'
     }
-
     function filterComplete(task) {
-      return task.status == 'COMPLETED';
+      return task.status == 'COMPLETED'
     }
 
-    var filteredPlanning = tasks.filter(filterPlanning);
-    var filteredComplete = tasks.filter(filterComplete);
+    var filteredPlanning = tasks.filter(filterPlanning)
+    var filteredComplete = tasks.filter(filterComplete)
 
-    var res = tasks.filter(item => !filteredPlanning.includes(item));
-
-    var final = res.filter(item => !filteredComplete.includes(item));
+    var res = tasks.filter(item => !filteredPlanning.includes(item))
+    var final = res.filter(item => !filteredComplete.includes(item))
     
     setOngoingTasks(final)
   }

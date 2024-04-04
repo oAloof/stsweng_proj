@@ -44,7 +44,7 @@ function computeMutation(newRow, oldRow) {
 export default function AskConfirmationBeforeSave() {
   const mutateRow = useFakeMutation();
   const noButtonRef = React.useRef(null);
-  const {ongoingTasks, tasks, isLoadingTasks, getAllOngoingTasks } = useContext(TasksContext);
+  const {ongoingTasks, tasks, isLoadingTasks, updateTask } = useContext(TasksContext);
 
   const [promiseArguments, setPromiseArguments] = React.useState(null);
   const [tableTasks, setTableTasks] = useState([]);
@@ -67,16 +67,17 @@ export default function AskConfirmationBeforeSave() {
     [],
   );
 
-
-
   useEffect(() => {
     const transformTasks = ongoingTasks.map((task) => ({
+      owner: task.owner,
       id: task._id,
       taskName: task.taskName,
       category: task.category,
       label: task.label.join(', '),
       rating: task.difficulty,
       status: task.status,
+      exp: task.exp,
+      description: task.description,
       deadline: new Date(task.deadline)
     }));
 
@@ -95,9 +96,22 @@ export default function AskConfirmationBeforeSave() {
 
   const handleYes = async () => {
     const { newRow, oldRow, reject, resolve } = promiseArguments;
-
     try {
-      // Make the HTTP request to save in the backend
+      var array = newRow.label.split(", ")
+      var taskz = {
+        owner: newRow.owner,
+        _id: newRow.id,
+        taskName: newRow.taskName,
+        category: newRow.category,
+        label: array,
+        difficulty: newRow.rating,
+        status: newRow.status,
+        exp: newRow.exp,
+        description: newRow.description,
+        deadline: new Date(newRow.deadline)
+      }
+      console.log(taskz)
+      updateTask(taskz)
       const response = await mutateRow(newRow);
       setSnackbar({ children: 'User successfully saved', severity: 'success' });
       resolve(response);
