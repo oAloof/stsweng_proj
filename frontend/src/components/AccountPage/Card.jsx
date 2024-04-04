@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { EditContext } from '../../contexts/EditContext'
 import Icon from './Icon'
 import { AuthenticationContext } from '../../contexts/AuthenticationContext'
@@ -9,7 +9,6 @@ export default function Card ({}) {
 
   // Calculate the level of the user based on the experience points
   const level = Math.floor(user.experience / 100)
-
   // Calculate the progress of the user to the next level
   const progress = (user.experience % 100) / 100
 
