@@ -24,8 +24,10 @@ export default function PlannerPage() {
   const [editable, setEditable] = useState(true)
 
   useEffect(() => {
-    console.log(editable)
-  }, [editable])
+    if (editable && selectedEventData) {
+      document.getElementById('my_modal_4').showModal()
+    }
+  }, [editable, selectedEventData])
 
   const handleSetEditable = (e) => {
     setEditable(e)
@@ -34,7 +36,6 @@ export default function PlannerPage() {
   const handleEventClick = (data) => {
     setSelectedEventData(data)
     console.log(editable)
-    document.getElementById('my_modal_4').showModal()
   }
 
   const handleMethod = (method) => {
