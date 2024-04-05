@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { EditContext } from '../../contexts/EditContext'
+import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 
 export default function View ({ }) {
   const [type, setType] = useState(false)
   const [editPass, setEditPass] = useState(false)
   const [newIcon, setNewIcon] = useState(false)
-  const { edit, noEdit, accountView, noAccount, account, table, tableView, noTable} = useContext(EditContext)
+  const { edit, noEdit, accountView, noAccount, account, table, tableView, noTable } = useContext(EditContext)
+  const { user } = useContext(AuthenticationContext)
 
   const Account = () => {
     accountView()
@@ -38,9 +40,9 @@ export default function View ({ }) {
   }
 
   const handleSubmit = (event) => {
-    console.log('submitted')
     Account()
     event.preventDefault()
+    
   }
 
   return (
@@ -99,21 +101,21 @@ export default function View ({ }) {
               <div className='flex space-x-5'>
                 <label className='input input-bordered flex items-center gap-2 min-w-[375px] text-sm'>
                   Username:
-                  <input type='text' className='grow font-bold text-sm' placeholder='Change Username' defaultValue='Gaelord' disabled={!edit && 'disabled'} />
+                  <input type='text' className='grow font-bold text-sm' placeholder='Change Username' value={user.username} disabled={!edit && 'disabled'} />
                 </label>
                 <label className='input input-bordered flex items-center gap-2 min-w-[375px] text-sm'>
                   Email:
-                  <input type='text' className='grow font-bold text-sm' placeholder='Change Email' defaultValue='Email@mail' disabled={!edit && 'disabled'} />
+                  <input type='text' className='grow font-bold text-sm' placeholder='Change Email' value={user.email} disabled={!edit && 'disabled'} />
                 </label>
               </div>
               <div className='flex space-x-5'>
                 <label className='input input-bordered flex items-center gap-2 min-w-[375px] text-sm'>
                   First Name:
-                  <input type='text' className='grow font-bold text-sm' placeholder='Change First Name' defaultValue='Tron' disabled={!edit && 'disabled'} />
+                  <input type='text' className='grow font-bold text-sm' placeholder='Change First Name' value={user.firstName} disabled={!edit && 'disabled'} />
                 </label>
                 <label className='input input-bordered flex items-center gap-2 min-w-[375px] text-sm'>
                   Last Name:
-                  <input type='text' className='grow font-bold text-sm' placeholder='Change Last Name' defaultValue='Uy' disabled={!edit && 'disabled'} />
+                  <input type='text' className='grow font-bold text-sm' placeholder='Change Last Name' value={user.lastName} disabled={!edit && 'disabled'} />
                 </label>
               </div>
               {editPass && edit &&
@@ -136,7 +138,7 @@ export default function View ({ }) {
               <div className='flex space-x-5'>
                 {!editPass && edit && <button className='btn shadow max-w-[250px]' onClick={EditPass}>Edit Password</button>}
                 {/* {!newIcon && edit && <button className="btn shadow max-w-[250px]" onClick={NewIcon}>Edit Profile Picture</button>} */}
-                {edit && <button className='btn shadow max-w-[250px]' type='submit'>Save Changes</button>}
+                {edit && <button className='btn shadow max-w-[250px]' type='submit' onSubmit={handleSubmit}>Save Changes</button>}
               </div>
             </form>
           </div>}

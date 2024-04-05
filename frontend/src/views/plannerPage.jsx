@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
-export default function PlannerPage() {
+export default function PlannerPage () {
   const navigate = useNavigate()
   const { isAuthenticated, isLoadingAuth, user } = useContext(
     AuthenticationContext
@@ -55,9 +55,9 @@ export default function PlannerPage() {
     <>
       <NavBar />
       <div>
-        <div className="flex p-10 space-x-5">
+        <div className='flex p-10 space-x-5'>
           <PlannerSidebar setEventEdit={handleSetEditable} />
-          <div className="w-10/12 flex-col">
+          <div className='w-10/12 flex-col'>
             <FullCalendar
               onEventClick={handleEventClick}
               method={method}
@@ -65,16 +65,16 @@ export default function PlannerPage() {
             />
           </div>
         </div>
-        <dialog id="my_modal_4" className="modal">
-          <div className="modal-box min-w-max">
+        <dialog id='my_modal_4' className='modal'>
+          <div className='modal-box min-w-max'>
             <Form
               eventData={selectedEventData}
               method={handleMethod}
               editable={editable} // Pass editable as prop
             />
-            <div className="modal-action justify-start">
-              <form method="dialog">
-                <button className="btn" onClick={closeModal}>
+            <div className='modal-action justify-start'>
+              <form method='dialog'>
+                <button className='btn' onClick={closeModal}>
                   Close
                 </button>
               </form>

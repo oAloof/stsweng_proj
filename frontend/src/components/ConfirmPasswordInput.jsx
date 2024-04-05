@@ -16,7 +16,7 @@ export default function ConfirmPasswordInput ({ handleOnChange, value }) {
         />
       </svg>
       <input
-        type='confirmPassword'
+        type='password'
         className='grow'
         placeholder='Confirm-Password'
         value={value}

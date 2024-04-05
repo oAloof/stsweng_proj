@@ -3,7 +3,7 @@ import Card from '../components/AccountPage/Card'
 import Stats from '../components/AccountPage/Stats'
 import View from '../components/AccountPage/View'
 import NavBar from '../components/NavBar'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AuthenticationContext } from '../contexts/AuthenticationContext'
 
 export default function AccountPage () {
@@ -22,13 +22,13 @@ export default function AccountPage () {
 
   return (
     <div>
-    <NavBar/>
+      <NavBar />
       <div className=' mx-auto min-h-screen flex justify-center space-x-5 p-20 max-w-[2000px]'>
         <div className='w-1/4'>
           <Card />
         </div>
         <div className='w-3/4 '>
-          <Stats user='user' tasks='Tasks' />
+          <Stats />
           <View />
         </div>
       </div>

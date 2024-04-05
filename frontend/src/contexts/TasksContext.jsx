@@ -8,6 +8,13 @@ export const TasksProvider = ({ children }) => {
   const [isLoadingTasks, setIsLoadingTasks] = useState(true)
   const [tasks, setTasks] = useState([])
   const [ongoingTasks, setOngoingTasks] = useState([])
+  const [completedTasks, setCompletedTasks] = useState([])
+  const [planningTasks, setPlanningTasks] = useState([])
+  const [completedLate, setCompletedLate] = useState([])
+  const [completedEarly, setCompletedEarly] = useState([])
+  const [dueToday, setdueToday] = useState([])
+  const [dueWeek, setdueWeek] = useState([])
+  const [overdue, setOverdue] = useState([])
   const { isAuthenticated } = useContext(AuthenticationContext)
 
   /**
@@ -40,6 +47,13 @@ export const TasksProvider = ({ children }) => {
         return
       }
       getAllOngoingTasks(data.result)
+      getAllCompletedTasks(data.result)
+      getAllPlanningTasks(data.result)
+      getAllCompletedLate(data.result)
+      getAllCompletedEarly(data.result)
+      getAllDueToday(data.result)
+      getAllDueThisWeek(data.result)
+      getAllOverdue(data.result)
       setTasks(data.result)
       setIsLoadingTasks(false)
     } catch (err) {
@@ -162,20 +176,96 @@ export const TasksProvider = ({ children }) => {
   }
 
   const getAllOngoingTasks = (tasks) => {
-    function filterPlanning(task) {
+    function filterPlanning (task) {
       return task.status == 'PLANNING'
     }
-    function filterComplete(task) {
+    function filterComplete (task) {
       return task.status == 'COMPLETED'
     }
 
-    var filteredPlanning = tasks.filter(filterPlanning)
-    var filteredComplete = tasks.filter(filterComplete)
+    const filteredPlanning = tasks.filter(filterPlanning)
+    const filteredComplete = tasks.filter(filterComplete)
 
-    var res = tasks.filter(item => !filteredPlanning.includes(item))
-    var final = res.filter(item => !filteredComplete.includes(item))
-    
+    const res = tasks.filter(item => !filteredPlanning.includes(item))
+    const final = res.filter(item => !filteredComplete.includes(item))
+
     setOngoingTasks(final)
+  }
+
+  const getAllCompletedTasks = (tasks) => {
+    function filterComplete (task) {
+      return task.status == 'COMPLETED'
+    }
+    const filteredComplete = tasks.filter(filterComplete)
+
+    setCompletedTasks(filteredComplete)
+  }
+
+  const getAllPlanningTasks = (tasks) => {
+    function filterComplete (task) {
+      return task.status == 'PLANNING'
+    }
+    const filteredComplete = tasks.filter(filterComplete)
+
+    setPlanningTasks(filteredComplete)
+  }
+
+  const getAllCompletedLate = (tasks) => {
+    function filterLate (task) {
+      return ((task.updatedAt > task.deadline) && (task.status == 'COMPLETED'))
+    }
+    const filteredLate = tasks.filter(filterLate)
+
+    setCompletedLate(filteredLate)
+  }
+
+  const getAllCompletedEarly = (tasks) => {
+    function filterLate (task) {
+      return ((task.updatedAt <= task.deadline) && (task.status == 'COMPLETED'))
+    }
+    const filteredEarly = tasks.filter(filterLate)
+
+    setCompletedEarly(filteredEarly)
+  }
+
+  const getAllDueToday = (tasks) => {
+    function filterToday (task) {
+      const todaysDate = new Date()
+      const date = new Date(task.deadline)
+      return (date.getDate() == todaysDate.getDate()) && (date.getMonth() == todaysDate.getMonth()) && (date.getFullYear() == todaysDate.getFullYear())
+    }
+    const filteredToday = ongoingTasks.filter(filterToday)
+
+    setdueToday(filteredToday)
+  }
+
+  const getAllDueThisWeek = (tasks) => {
+    function filterWeek (task) {
+      const todaysDate = new Date()
+      const endDate = new Date()
+      const date = new Date(task.deadline)
+
+      todaysDate.setDate(todaysDate.getDate() - 1)
+      endDate.setDate(endDate.getDate() + 6)
+
+      return date >= todaysDate && date <= endDate
+    }
+    const filteredWeek = ongoingTasks.filter(filterWeek)
+
+    setdueWeek(filteredWeek)
+  }
+
+  const getAllOverdue = (tasks) => {
+    function filterToday (task) {
+      const todaysDate = new Date()
+      const date = new Date(task.deadline)
+      return date < todaysDate
+    }
+    const filteredToday = ongoingTasks.filter(filterToday)
+
+    console.log(filteredToday)
+
+    setOverdue(filteredToday)
   }
 
   useEffect(() => {
@@ -191,7 +281,14 @@ export const TasksProvider = ({ children }) => {
     tasks,
     setTasks,
     ongoingTasks,
-    getAllOngoingTasks
+    planningTasks,
+    getAllOngoingTasks,
+    completedTasks,
+    completedLate,
+    completedEarly,
+    dueToday,
+    dueWeek,
+    overdue
   }
 
   return (

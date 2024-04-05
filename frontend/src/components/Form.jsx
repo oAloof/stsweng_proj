@@ -9,7 +9,7 @@ import Category from './Category/CategoryInput'
 import Difficulty from './DifficultyInput'
 import { TasksContext } from '../contexts/TasksContext'
 
-export default function Form({ eventData, method }) {
+export default function Form ({ eventData, method }) {
   const { createTask, updateTask } = useContext(TasksContext)
   const { handleSubmit, control, setValue, reset } = useForm()
 
@@ -47,25 +47,25 @@ export default function Form({ eventData, method }) {
     reset()
   }
 
-  function handleDelete() {
+  function handleDelete () {
     console.log('delete')
     method('delete')
     document.getElementById('my_modal_4').close()
   }
 
-  function getDate() {
+  function getDate () {
     const date = new Date()
     const result = date.toISOString().split('T')[0]
     return result
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
+    <form onSubmit={handleSubmit(onSubmit)} className=''>
       <input
-        className="btn btn-ghost float float-end"
-        id="delete-task-button"
-        type="button" // Change type to "button"
-        value="delete"
+        className='btn btn-ghost float float-end'
+        id='delete-task-button'
+        type='button' // Change type to "button"
+        value='delete'
         onClick={handleDelete} // Attach onClick event handler
       />
 
@@ -90,18 +90,18 @@ export default function Form({ eventData, method }) {
         />
       </svg> */}
 
-      <div className="flex">
-        <div className="m-5 flex flex-col space-y-4">
-          <div className="flex space-x-4">
+      <div className='flex'>
+        <div className='m-5 flex flex-col space-y-4'>
+          <div className='flex space-x-4'>
             <Controller
-              name="end"
+              name='end'
               control={control}
               render={() => <TimeStamp date={getDate()} />}
               defaultValue={getDate()}
             />
 
             <Controller
-              name="start"
+              name='start'
               control={control}
               defaultValue={null}
               render={({ field }) => (
@@ -113,7 +113,7 @@ export default function Form({ eventData, method }) {
             />
           </div>
 
-          <div className="flex-col space-y-4">
+          <div className='flex-col space-y-4'>
             <Controller
               render={({ field }) => (
                 <TitleInput
@@ -121,9 +121,9 @@ export default function Form({ eventData, method }) {
                   value={field.value}
                 />
               )}
-              name="title"
+              name='title'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
 
             <Controller
@@ -133,19 +133,19 @@ export default function Form({ eventData, method }) {
                   value={field.value}
                 />
               )}
-              name="description"
+              name='description'
               control={control}
-              defaultValue=""
+              defaultValue=''
             />
           </div>
         </div>
 
-        <div className="m-5 flex-col space-y-4">
+        <div className='m-5 flex-col space-y-4'>
           <Controller
             render={({ field }) => (
               <Category handleOnChange={field.onChange} value={field.value} />
             )}
-            name="category"
+            name='category'
             control={control}
             defaultValue={[]}
           />
@@ -154,7 +154,7 @@ export default function Form({ eventData, method }) {
             render={({ field }) => (
               <SubLabel handleOnChange={field.onChange} value={field.value} />
             )}
-            name="subLabel"
+            name='subLabel'
             control={control}
             defaultValue={[]}
           />
@@ -163,19 +163,19 @@ export default function Form({ eventData, method }) {
             render={({ field }) => (
               <Difficulty onChange={field.onChange} value={field.value} />
             )}
-            name="difficulty"
+            name='difficulty'
             control={control}
             defaultValue={0.5}
           />
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className='flex justify-end'>
         <input
-          id="task-modal-btn"
-          className="btn flex absolute mt-6"
-          type="submit"
-          value="Submit"
+          id='task-modal-btn'
+          className='btn flex absolute mt-6'
+          type='submit'
+          value='Submit'
         />
       </div>
     </form>
